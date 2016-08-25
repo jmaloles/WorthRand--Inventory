@@ -15,7 +15,7 @@
 
     <body id="app-layout">
 
-        @yield('content')
+        @yield('content')3
 
     </body>
 </html>
