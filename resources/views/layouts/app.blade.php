@@ -23,7 +23,6 @@
 
         <style>
             body {
-                font-family: 'Lato';
                 background-color: #eee;
             }
         </style>
