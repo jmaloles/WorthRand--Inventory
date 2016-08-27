@@ -1,4 +1,4 @@
-<nav class="navbar-fixed-top navbar-default" style="background-color: #d9534f; border-color: #d9534f; border-radius: 0px 0px 0px 0px;">
+<nav class="navbar-fixed-top navbar-default" style="background-color: white;box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12); border-radius: 0px 0px 0px 0px;">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
