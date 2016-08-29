@@ -9,21 +9,21 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="#">
-                <img src="{{ URL::to('/') }}/logo (1).png" alt="" style="margin-top: -2.1rem;">
+                <img src="{{ URL::to('/') }}/logo_4.png" alt="Brand" style="margin-top: -1.2rem; width: 125px; height: 43px;">
             </a>
-            <a class="navbar-brand" href="{{ route('home') }}">WorthRand - CRM</a>
+            <a class="navbar-brand" href="{{ route('home') }}" style="margin-left: -2rem;">WorthRand - CRM</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->email }} <span class="caret"></span></a>
+                <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hello, {{ Auth::user()->name }} <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="{{ url('logout') }}">Logout</a></li>
                     </ul>
                 </li>
-                <li><a href="#">Report an issue</a></li>
+                <li><a href="#"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;&nbsp;Report an issue</a></li>
+                <li><a href="#"><i class="fa fa-question-circle" aria-hidden="true"></i>&nbsp;&nbsp;Help</a></li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
