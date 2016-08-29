@@ -2,7 +2,11 @@
 
 
 Route::get('/', function () {
-    return redirect()->to('/login');
+    if(Auth::guard()->guest()) {
+        return redirect()->to('login');
+    }
+
+    return redirect()->to('/home');
 });
 
 Route::auth();
