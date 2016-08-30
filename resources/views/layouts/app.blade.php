@@ -10,6 +10,9 @@
         @yield('header')
 
         <link rel="stylesheet" href="{{ URL::to('/') }}/bootstrap-3.3.7-dist/css/bootstrap.css">
+        <link rel="stylesheet" href="{{ URL::to('/') }}/font-awesome-4.5.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="{{ URL::to('/') }}/font-css/worthrand-css.css">
+
         <script src="{{ URL::to('/') }}/bootstrap-3.3.7-dist/js/jquery.min.js"></script>
         <script src="{{ URL::to('/') }}/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 
@@ -19,5 +22,10 @@
 
         @yield('content')3
 
+        <style>
+            body {
+                background-color: #eee;
+            }
+        </style>
     </body>
 </html>

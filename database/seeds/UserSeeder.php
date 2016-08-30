@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
                 array(
                     'name'       => env('NAME', 'Christan Jake Gatchalian'),
                     'email'      => env('EMAIL', 'cgatchalian@excelasiasolutions.com'),
-                    'password'   => env('PASS', 'admin123'),
+                    'password'   => bcrypt(env('PASS', 'admin123')),
                     'role'       => env('ROLE', 'admin'),
                     'created_at' => date('Y-m-d h:i:s'),
                     'updated_at' => date('Y-m-d h:i:s')

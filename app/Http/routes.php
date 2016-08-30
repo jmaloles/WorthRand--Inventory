@@ -2,9 +2,13 @@
 
 
 Route::get('/', function () {
-    return view('welcome');
+    if(Auth::guard()->guest()) {
+        return redirect()->to('login');
+    }
+
+    return redirect()->to('/home');
 });
 
 Route::auth();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/home', 'HomeController@index')->name('home');
