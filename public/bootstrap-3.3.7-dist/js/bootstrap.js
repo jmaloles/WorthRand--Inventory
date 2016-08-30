@@ -612,11 +612,12 @@ if (typeof jQuery === 'undefined') {
       .attr('aria-expanded', true)
 
     this.transitioning = 1
-
+    this.$element.parent(".nav-item").addClass('sidebar-item-active');
     var complete = function () {
       this.$element
         .removeClass('collapsing')
         .addClass('collapse in')[dimension]('')
+
       this.transitioning = 0
       this.$element
         .trigger('shown.bs.collapse')
@@ -655,11 +656,12 @@ if (typeof jQuery === 'undefined') {
 
     var complete = function () {
       this.transitioning = 0
+      this.$element.parent(".nav-item").removeClass('sidebar-item-active');
       this.$element
         .removeClass('collapsing')
         .addClass('collapse')
         .trigger('hidden.bs.collapse')
-    }
+      }
 
     if (!$.support.transition) return complete.call(this)
 
