@@ -12,7 +12,7 @@ class RenameItemsToCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::rename('items','categories')
+        Schema::rename('items','categories');
     }
 
     /**
@@ -22,8 +22,6 @@ class RenameItemsToCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::table('items', function (Blueprint $table) {
-            //
-        });
+
     }
 }
