@@ -13,7 +13,7 @@ Route::auth();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['middleware' => ['check_if_admin']], function() {
+Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
     Route::group(['prefix' => 'admin'], function() {
 
         Route::get('dashboard', 'UserController@adminDashboard')->name('admin_dashboard');
