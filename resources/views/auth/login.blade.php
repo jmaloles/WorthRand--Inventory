@@ -21,7 +21,7 @@
                             <div class="form-group-lg form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                 {{--<label for="email" class="col-md-4 control-label">E-Mail Address</label>--}}
 
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}"
+                                <input id="email" type="email" placeholder="Enter your Username" class="form-control" name="email" value="{{ old('email') }}"
                                 style="border-radius: 0px;">
 
                                 @if ($errors->has('email'))
@@ -32,7 +32,7 @@
                             </div>
 
                             <div class="form-group-lg form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                                    <input id="password" type="password" class="form-control" name="password"
+                                    <input id="password" type="password" placeholder="Enter your Password" class="form-control" name="password"
                                            style="border-radius: 0px;">
 
                                     @if ($errors->has('password'))
