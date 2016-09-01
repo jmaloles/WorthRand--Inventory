@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOrderentriesTable extends Migration
+class CreateCategoriesTabe extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +12,12 @@ class CreateOrderentriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('collection_customer_order', function (Blueprint $table) {
+        Schema::table('categories', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('customer_order_id')->unsigned();
-            $table->string('fsg_order_no');
-            $table->string('status');
-            $table->rememberToken();
+            $table->string('model');
+            $table->string('sn');
+            $table->string('tag_no');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -30,6 +28,8 @@ class CreateOrderentriesTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('categories', function (Blueprint $table) {
+            //
+        });
     }
 }

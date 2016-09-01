@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnQuantityInCustomerOrderTable extends Migration
+class RenameCategoriesToItemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,7 @@ class AddColumnQuantityInCustomerOrderTable extends Migration
      */
     public function up()
     {
-        Schema::table('customer_order',function(Blueprint $table) {
-        $table->integer('quantity');
-        });
-
+        Schema::rename('categories','items');
     }
 
     /**
@@ -25,6 +22,6 @@ class AddColumnQuantityInCustomerOrderTable extends Migration
      */
     public function down()
     {
-        //
+
     }
 }
