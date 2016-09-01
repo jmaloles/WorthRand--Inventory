@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnRoleInUsersTable extends Migration
+class RenameItemsToCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,7 @@ class AddColumnRoleInUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('role');
-        });
+        Schema::rename('items','categories');
     }
 
     /**
@@ -24,8 +22,6 @@ class AddColumnRoleInUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
+
     }
 }
