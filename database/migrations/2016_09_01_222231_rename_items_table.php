@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class RenameItemsToCategoriesTable extends Migration
+class RenameItemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class RenameItemsToCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::rename('items','categories');
+        Schema::rename('items', 'after_markets');
     }
 
     /**
@@ -22,6 +22,6 @@ class RenameItemsToCategoriesTable extends Migration
      */
     public function down()
     {
-
+        Schema::rename('after_markets', 'items');
     }
 }
