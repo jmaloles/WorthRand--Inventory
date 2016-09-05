@@ -49,9 +49,11 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Foundation\Http\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'verify_if_user_is_admin' => \App\Http\Middleware\VerifyIfUserIsAdmin::class,
-        'verify_if_user_is_collection' => \App\Http\Middleware\VerifyIfUserIsCollection::class,
-        'verify_if_user_is_collection' => \App\Http\Middleware\VerifyIfUserIsUser::class,
-        'verify_if_user_is_collection' => \App\Http\Middleware\VerifyIfUserIsAssistant::class
+
+        'verify_if_user_is_super_admin' => \App\Http\Middleware\VerifyIfUserIsSuperAdmin::class,
+        'verify_if_user_is_admin'       => \App\Http\Middleware\VerifyIfUserIsAdmin::class,
+        'verify_if_user_is_collection'  => \App\Http\Middleware\VerifyIfUserIsCollection::class,
+        'verify_if_user_is_user'        => \App\Http\Middleware\VerifyIfUserIsUser::class,
+        'verify_if_user_is_assistant'   => \App\Http\Middleware\VerifyIfUserIsAssistant::class
     ];
 }

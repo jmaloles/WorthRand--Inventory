@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Auth;
 
-class VerifyIfUserIsAdmin
+class VerifyIfUserIsSuperAdmin
 {
     /**
      * Handle an incoming request.
@@ -17,7 +17,7 @@ class VerifyIfUserIsAdmin
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            if ($request->user()->role != 'admin') {
+            if ($request->user()->role != 'super_admin') {
                 abort(403, 'Unauthorized action.');
             }
         }
