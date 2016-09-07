@@ -3,13 +3,9 @@
 @section('content')
 <div class="container-fluid">
     <div class="row">
-        <div class="col-lg-6 col-lg-offset-3">
-            <img src="{{ URL::to('/') }}/worthrandlogo_50x50.png" alt="" style="margin-top: 7rem; margin-bottom: 3rem;">
-        </div>
-    </div>
-    <div class="row">
         <div class="col-md-5 col-lg-push-3-9">
             <div class="row">
+                <br><br>
                 <div class="panel panel-default" style="
                 box-shadow: 10px 10px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
                 ">
