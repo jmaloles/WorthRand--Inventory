@@ -38,6 +38,11 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
         Route::get('create/user/', 'UserController@adminCreateUser')->name('admin_create_user');
         Route::post('create/user/', 'UserController@adminPostUser')->name('post_create_user');
         Route::get('/sales_engineers', 'UserController@showSalesEngineers')->name('admin_sales_engineer_index');
+
+        Route::get('/items', 'ItemController@index')->name('items');
+
+        Route::get('/item/create/category', 'ItemController@adminCreateCategory')->name('admin_create_category');
+        Route::post('/item/create/category', 'ItemController@adminPostCategory')->name('admin_post_category');
     });
 });
 
@@ -52,6 +57,8 @@ Route::group(['middleware' => ['verify_if_user_is_collection']], function() {
         Route::get('dashboard', 'UserController@collectionDashboard')->name('collection_dashboard');
     });
 });
+
+
 
 
 
