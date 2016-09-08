@@ -106,4 +106,11 @@ class UserController extends Controller
 
         return $create_user;
     }
+
+    public function showSalesEngineers()
+    {
+        $users = User::whereRole('sales_engineer')->get();
+
+        return view('sales_engineer.admin.index', compact('users'));
+    }
 }
