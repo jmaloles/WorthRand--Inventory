@@ -90,7 +90,9 @@ class UserController extends Controller
 
     public function adminUserIndex()
     {
-        return view('user.admin.index');
+        $users = User::where('role', '!=', 'super_admin')->where('role', '!=', 'admin')->get();
+
+        return view('user.admin.index', compact('users'));
     }
 
     public function adminCreateUser()
