@@ -13,6 +13,11 @@
                             ">DASHBOARD</div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div id="chart-div"></div>
+                        {!! $lava->render('PieChart', 'USERS', 'chart-div') !!}
+                    </div>
                 </div>
             </div>
         </div>

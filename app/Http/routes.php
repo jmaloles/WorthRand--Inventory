@@ -28,6 +28,10 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
     Route::group(['prefix' => 'admin'], function() {
 
         Route::get('dashboard', 'UserController@adminDashboard')->name('admin_dashboard');
+
+        Route::get('users', 'UserController@adminUserIndex')->name('admin_user_index');
+        Route::get('create/user/', 'UserController@adminCreateUser')->name('admin_create_user');
+        Route::post('create/user/', 'UserController@adminPostUser')->name('post_create_user');
     });
 });
 

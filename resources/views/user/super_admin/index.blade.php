@@ -6,19 +6,14 @@
 
 @section('content')
     <div class="container">
-        <div class="col-lg-12">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="row">
-                @include('layouts.admin-sidebar')
+                @include('layouts.sidebar')
                 <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            DASHBOARD
+                            USERS
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div id="chart-div"></div>
-                        {!! $lava->render('PieChart', 'USERS', 'chart-div') !!}
                     </div>
                 </div>
             </div>
