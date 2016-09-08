@@ -36,7 +36,7 @@ class User extends Authenticatable
             $alert = "success";
             $icon = "check";
 
-            return redirect()->back()->with('message', 'User was successfully created')->with('alert', $alert)
+            return redirect()->back()->with('message', 'User ' . $user->name . ' was successfully created')->with('alert', $alert)
                                      ->with('icon', $icon);
         } else {
             $alert = "danger";
