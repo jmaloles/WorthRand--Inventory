@@ -13,12 +13,46 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                         USERS
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="col-lg-5">
-                        <a href="{{ route('admin_create_user') }}" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;Add User</a>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="col-lg-5">
+                            <a href="{{ route('admin_create_user') }}" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;Add User</a>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="col-lg-12">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>E-mail</th>
+                                        <th>Role</th>
+                                        <th class="text-right">Actions</th>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($users as $user)
+                                            <tr>
+                                                <td>{{ $user->id }}</td>
+                                                <td>{{ $user->name }}</td>
+                                                <td>{{ $user->email }}</td>
+                                                <td>{{ ucfirst($user->role) }}</td>
+                                                <td class="text-right">
+                                                    <a href="#" class="btn btn-sm btn-danger">Deactivate</a>
+                                                    <a href="#" class="btn btn-sm btn-primary">View Profile</a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
