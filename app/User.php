@@ -23,4 +23,27 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public static function createUser($createUserRequest)
+    {
+        $user = new User();
+        $user->name = $createUserRequest->get('name');
+        $user->email = $createUserRequest->get('email');
+        $user->password = bcrypt($createUserRequest->get('password'));
+        $user->role = $createUserRequest->get('role');
+
+        if($user->save()) {
+            $alert = "success";
+            $icon = "check";
+
+            return redirect()->back()->with('message', 'User was successfully created')->with('alert', $alert)
+                                     ->with('icon', $icon);
+        } else {
+            $alert = "danger";
+            $icon = "times";
+
+            return redirect()->back()->with('message', 'Adding user was unsuccessful')->with('alert', $alert)
+                ->with('icon', $icon);
+        }
+    }
 }
