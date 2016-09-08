@@ -49,7 +49,7 @@ class UserSeeder extends Seeder
                     'name'       => env('NAME', 'Tester Sales Engineer'),
                     'email'      => env('EMAIL', 'tester_sales_e@yahoo.com'),
                     'password'   => bcrypt(env('PASS', 'admin123')),
-                    'role'       => env('ROLE', 'user'),
+                    'role'       => env('ROLE', 'sales_engineer'),
                     'created_at' => date('Y-m-d h:i:s'),
                     'updated_at' => date('Y-m-d h:i:s')
                 ),
