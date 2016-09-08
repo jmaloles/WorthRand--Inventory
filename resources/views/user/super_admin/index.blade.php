@@ -11,7 +11,7 @@
                 @include('layouts.sidebar')
                 <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading"">
+                        <div class="panel-heading">
                             USERS
                         </div>
                     </div>
