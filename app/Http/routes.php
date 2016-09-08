@@ -23,6 +23,11 @@ Route::group(['middleware' => ['verify_if_user_is_super_admin']], function() {
     });
 });
 
+
+
+
+
+
 // Admin Account
 Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
     Route::group(['prefix' => 'admin'], function() {
@@ -35,6 +40,10 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
     });
 });
 
+
+
+
+
 // Collection Account
 Route::group(['middleware' => ['verify_if_user_is_collection']], function() {
     Route::group(['prefix' => 'collection'], function() {
@@ -43,13 +52,20 @@ Route::group(['middleware' => ['verify_if_user_is_collection']], function() {
     });
 });
 
-// User Account
-Route::group(['middleware' => ['verify_if_user_is_user']], function() {
-    Route::group(['prefix' => 'user'], function() {
 
-        Route::get('dashboard', 'UserController@userDashboard')->name('user_dashboard');
+
+
+// User Account
+Route::group(['middleware' => ['verify_if_user_is_sales_engineer']], function() {
+    Route::group(['prefix' => 'sales_engineer'], function() {
+
+        Route::get('dashboard', 'UserController@salesEngineerDashboard')->name('se_dashboard');
     });
 });
+
+
+
+
 
 // Assistant Account
 Route::group(['middleware' => ['verify_if_user_is_assistant']], function() {
