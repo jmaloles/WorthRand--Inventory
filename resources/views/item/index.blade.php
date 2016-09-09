@@ -30,7 +30,26 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="col-lg-12">
-
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <th>#</th>
+                                            <th>Name</th>
+                                            <th>Actions</th>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($categories as $category)
+                                            <tr>
+                                                <td>{{ $category->id }}</td>
+                                                <td>{{ $category->name }}</td>
+                                                <td>
+                                                    <a href="" class="btn btn-success">View</a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
