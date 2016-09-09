@@ -14,7 +14,9 @@ class ItemController extends Controller
 
     public function index()
     {
-        return view('item.index');
+        $categories = Category::all();
+
+        return view('item.index', compact('categories'));
     }
 
     public function adminCreateCategory()
