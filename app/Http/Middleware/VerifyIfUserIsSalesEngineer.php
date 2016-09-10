@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Auth;
 
-class VerifyIfUserIsUser
+class VerifyIfUserIsSalesEngineer
 {
     /**
      * Handle an incoming request.
@@ -17,7 +17,7 @@ class VerifyIfUserIsUser
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            if ($request->user()->role != 'user') {
+            if ($request->user()->role != 'sales_engineer') {
                 abort(403, 'Unauthorized action.');
             }
         }

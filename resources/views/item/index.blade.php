@@ -12,14 +12,17 @@
                 <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                        USERS
+                            ITEMS
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="col-lg-5">
-                            <a href="{{ route('admin_create_user') }}" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;Add User</a>
+                            <div class="col-lg-12">
+                                <a href="{{ route('admin_create_group') }}" class="btn btn-success"><i class="fa fa-list" aria-hidden="true"></i>&nbsp;Add Group</a>
+                                <a href="{{ route('admin_create_user') }}" class="btn btn-success"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Add Project</a>
+                                <a href="{{ route('admin_create_user') }}" class="btn btn-success"><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Add Aftermarket</a>
+                                <a href="{{ route('admin_create_user') }}" class="btn btn-success"><i class="fa fa-file-text" aria-hidden="true"></i>&nbsp;Add Seal</a>
                             </div>
                         </div>
                     </div>
@@ -30,22 +33,17 @@
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>E-mail</th>
-                                        <th>Role</th>
-                                        <th class="text-right">Actions</th>
+                                            <th>#</th>
+                                            <th class="text-center">Name</th>
+                                            <th class="text-right">Actions</th>
                                         </thead>
                                         <tbody>
-                                        @foreach($users as $user)
+                                        @foreach($groups as $group)
                                             <tr>
-                                                <td>{{ $user->id }}</td>
-                                                <td>{{ $user->name }}</td>
-                                                <td>{{ $user->email }}</td>
-                                                <td>{{ ucfirst($user->role) }}</td>
+                                                <td>{{ $group->id }}</td>
+                                                <td class="text-center">{{ $group->name }}</td>
                                                 <td class="text-right">
-                                                    <a href="#" class="btn btn-sm btn-danger">Deactivate</a>
-                                                    <a href="#" class="btn btn-sm btn-primary">View Profile</a>
+                                                    <a href="" class="btn btn-sm btn-success">View</a>
                                                 </td>
                                             </tr>
                                         @endforeach

@@ -90,7 +90,9 @@ class UserController extends Controller
 
     public function adminUserIndex()
     {
-        return view('user.admin.index');
+        $users = User::where('role', '!=', 'super_admin')->where('role', '!=', 'admin')->get();
+
+        return view('user.admin.index', compact('users'));
     }
 
     public function adminCreateUser()
@@ -103,5 +105,12 @@ class UserController extends Controller
         $create_user = User::createUser($createUserRequest);
 
         return $create_user;
+    }
+
+    public function showSalesEngineers()
+    {
+        $users = User::whereRole('sales_engineer')->get();
+
+        return view('sales_engineer.admin.index', compact('users'));
     }
 }
