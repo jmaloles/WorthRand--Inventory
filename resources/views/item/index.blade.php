@@ -19,7 +19,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="col-lg-12">
-                                <a href="{{ route('admin_create_category') }}" class="btn btn-success"><i class="fa fa-list" aria-hidden="true"></i>&nbsp;Add Category</a>
+                                <a href="{{ route('admin_create_group') }}" class="btn btn-success"><i class="fa fa-list" aria-hidden="true"></i>&nbsp;Add Group</a>
                                 <a href="{{ route('admin_create_user') }}" class="btn btn-success"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Add Project</a>
                                 <a href="{{ route('admin_create_user') }}" class="btn btn-success"><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Add Aftermarket</a>
                                 <a href="{{ route('admin_create_user') }}" class="btn btn-success"><i class="fa fa-file-text" aria-hidden="true"></i>&nbsp;Add Seal</a>
@@ -34,16 +34,16 @@
                                     <table class="table">
                                         <thead>
                                             <th>#</th>
-                                            <th>Name</th>
-                                            <th>Actions</th>
+                                            <th class="text-center">Name</th>
+                                            <th class="text-right">Actions</th>
                                         </thead>
                                         <tbody>
-                                        @foreach($categories as $category)
+                                        @foreach($groups as $group)
                                             <tr>
-                                                <td>{{ $category->id }}</td>
-                                                <td>{{ $category->name }}</td>
-                                                <td>
-                                                    <a href="" class="btn btn-success">View</a>
+                                                <td>{{ $group->id }}</td>
+                                                <td class="text-center">{{ $group->name }}</td>
+                                                <td class="text-right">
+                                                    <a href="" class="btn btn-sm btn-success">View</a>
                                                 </td>
                                             </tr>
                                         @endforeach
