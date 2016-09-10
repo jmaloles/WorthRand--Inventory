@@ -5,29 +5,28 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Requests\CreateCategoryRequest;
-use App\Category;
+use App\Http\Requests\CreateGroupRequest;
+use App\Group;
 
 class ItemController extends Controller
 {
     //
-
     public function index()
     {
-        $categories = Category::all();
+        $groups = Group::all();
 
-        return view('item.index', compact('categories'));
+        return view('item.index', compact('groups'));
     }
 
-    public function adminCreateCategory()
+    public function adminCreateGroup()
     {
         return view('item.category.admin.create');
     }
 
-    public function adminPostCategory(CreateCategoryRequest $createCategoryRequest)
+    public function adminPostGroup(CreateGroupRequest $createGroupRequest)
     {
-        $create_category = Category::createCategory($createCategoryRequest);
+        $create_group = Group::createGroup($createGroupRequest);
 
-        return $create_category;
+        return $create_group;
     }
 }
