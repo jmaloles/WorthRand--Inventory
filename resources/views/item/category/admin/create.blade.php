@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="list-group">
-                        <button class="white list-group-item list-group-item-success" onclick='document.getElementById("createCategoryForm").submit();'><i class="fa fa-check"></i>&nbsp; Create Category</button>
+                        <button class="white list-group-item list-group-item-success" onclick='document.getElementById("createGroupForm").submit();'><i class="fa fa-check"></i>&nbsp; Create Group</button>
                         <a class="white list-group-item" href="{{ route('items') }}"><i class="fa fa-arrow-left"></i>&nbsp; Back</a>
                     </div>
                 </div>
@@ -24,7 +24,7 @@
                     <div class="row">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <i class="fa fa-plus-circle"></i> ADD CATEGORY
+                                <i class="fa fa-plus-circle"></i> ADD GROUP
                             </div>
                         </div>
                     </div>
@@ -32,11 +32,11 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    <form class="form-horizontal" id="createCategoryForm" action="{{ route('admin_post_category') }}" method="POST">
+                                    <form class="form-horizontal" id="createGroupForm" action="{{ route('admin_post_group') }}" method="POST">
                                         {{ csrf_field() }}
 
                                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                                            <label for="name" class="col-md-4 control-label">Category Name</label>
+                                            <label for="name" class="col-md-4 control-label">Group Name</label>
 
                                             <div class="col-md-6">
                                                 <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
