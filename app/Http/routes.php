@@ -25,9 +25,6 @@ Route::group(['middleware' => ['verify_if_user_is_super_admin']], function() {
 
 
 
-
-
-
 // Admin Account
 Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
     Route::group(['prefix' => 'admin'], function() {
@@ -41,8 +38,8 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
 
         Route::get('/items', 'ItemController@index')->name('items');
 
-        Route::get('/item/create/category', 'ItemController@adminCreateCategory')->name('admin_create_category');
-        Route::post('/item/create/category', 'ItemController@adminPostCategory')->name('admin_post_category');
+        Route::get('/item/create/group', 'ItemController@adminCreateGroup')->name('admin_create_group');
+        Route::post('/item/create/group', 'ItemController@adminPostGroup')->name('admin_post_group');
     });
 });
 
