@@ -60,15 +60,6 @@
     }
 }
 
-@media (min-width: 768px) {
-    .main {
-        padding-right: 40px;
-        padding-left: 40px;
-    }
-    .main {
-        padding: 34.5px;
-    }
-}
 
 
 .float-right {

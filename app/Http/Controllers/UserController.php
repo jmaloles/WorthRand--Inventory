@@ -13,6 +13,11 @@ use App\Group;
 class UserController extends Controller
 {
     //
+    public function __construct()
+    {
+        $this->middleware('verify_if_user_is_admin');
+    }
+
     public function superAdminDashboard()
     {
         $users = User::all();
@@ -91,7 +96,7 @@ class UserController extends Controller
                 'title' => 'Project Sales',
                 'is3D' => true,
                 'height' => 400,
-                'width' => 500
+                'width' => 600
             ));
 
         /*

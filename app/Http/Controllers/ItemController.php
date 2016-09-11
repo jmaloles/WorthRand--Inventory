@@ -11,6 +11,11 @@ use App\Group;
 class ItemController extends Controller
 {
     //
+    public function __construct()
+    {
+        $this->middleware('verify_if_user_is_admin');
+    }
+
     public function index()
     {
         $groups = Group::all();

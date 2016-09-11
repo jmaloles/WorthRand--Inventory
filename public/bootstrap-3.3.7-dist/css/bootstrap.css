@@ -3984,6 +3984,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   position: relative;
   display: block;
   padding: 10px 15px;
+  color: white;
 }
 .nav > li > a:hover,
 .nav > li > a:focus {
@@ -4089,7 +4090,10 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   float: left;
 }
 .nav-pills > li > a {
-  border-radius: 4px;
+  border-radius: 0px;
+  margin-left: -2rem;
+  margin-right: -3rem;
+  padding-left: 2rem;
 }
 .nav-pills > li + li {
   margin-left: 2px;
@@ -4495,7 +4499,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar-default {
   background-color: #f8f8f8;
-  border-color: #e7e7e7;
+  border-color: #c1c1c1;
 }
 .navbar-default .navbar-brand {
   color: black;
@@ -5452,10 +5456,10 @@ button.list-group-item-danger.active:focus {
   margin-bottom: 20px;
   background-color: #fff;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: 0px;
   /*-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
           box-shadow: 0 1px 1px rgba(0, 0, 0, .05);*/
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  /*box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);*/
 }
 .panel-body {
   padding: 15px;
@@ -5465,6 +5469,7 @@ button.list-group-item-danger.active:focus {
   border-bottom: 1px solid transparent;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
+  font-size: 18px;
 }
 .panel-heading > .dropdown .dropdown-toggle {
   color: inherit;
@@ -5685,7 +5690,7 @@ button.list-group-item-danger.active:focus {
   border-bottom: 1px solid #ddd;
 }
 .panel-default {
-  border-color: #ddd;
+  border-color: #c1c1c1;
 }
 .panel-default > .panel-heading {
   color: #333;
