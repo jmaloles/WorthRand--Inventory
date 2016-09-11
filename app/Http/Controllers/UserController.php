@@ -85,12 +85,14 @@ class UserController extends Controller
             $reasons->addRow(array($user->name, $user->id));
         }
 
-        $piechart = $lava->PieChart('USERS', $reasons, [
-            'title' => 'Project Sales',
-            'is3D' => true,
-            'height' => 400,
-            'width' => 600
-        ]);
+        $piechart = $lava->PieChart('USERS')
+            ->setOptions(array(
+                'datatable' => $reasons,
+                'title' => 'Project Sales',
+                'is3D' => true,
+                'height' => 400,
+                'width' => 500
+            ));
 
         /*
          * GROUP CHART
@@ -112,13 +114,16 @@ class UserController extends Controller
             $data->addRow(array($group->name, $group->id));
         }
 
-        $barchart = $group_chart->PieChart('GROUPS', $data, [
+        $pie_chart = $group_chart->PieChart('GROUPS')
+        ->setOptions(array(
+            'datatable' => $data,
             'title' => 'Grouped Project',
             'is3D' => true,
             'height' => 400,
-            'width' => 600
-        ]);
-        return view('home', compact('group_chart', 'lava'));
+            'width' => 500
+        ));
+
+        return view('auth.admin.dashboard', compact('group_chart', 'lava'));
     }
 
     public function collectionDashboard()
