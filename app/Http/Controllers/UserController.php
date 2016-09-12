@@ -83,6 +83,11 @@ class UserController extends Controller
         return view('auth.assistant.dashboard');
     }
 
+    public function salesEngineerDashboard()
+    {
+        return view('auth.sales_engineer.dashboard');
+    }
+
     public function superAdminUserIndex()
     {
         return view('user.super_admin.index');
