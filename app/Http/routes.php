@@ -55,11 +55,6 @@ Route::group(['middleware' => ['verify_if_user_is_collection']], function() {
     });
 });
 
-
-
-
-
-
 // User Account
 Route::group(['middleware' => ['verify_if_user_is_sales_engineer']], function() {
     Route::group(['prefix' => 'sales_engineer'], function() {
@@ -67,10 +62,6 @@ Route::group(['middleware' => ['verify_if_user_is_sales_engineer']], function() 
         Route::get('dashboard', 'UserController@salesEngineerDashboard')->name('se_dashboard');
     });
 });
-
-
-
-
 
 // Assistant Account
 Route::group(['middleware' => ['verify_if_user_is_assistant']], function() {
