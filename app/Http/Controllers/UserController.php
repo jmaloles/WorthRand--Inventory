@@ -13,10 +13,6 @@ use App\Group;
 class UserController extends Controller
 {
     //
-    public function __construct()
-    {
-        $this->middleware('verify_if_user_is_admin');
-    }
 
     public function superAdminDashboard()
     {
@@ -90,14 +86,12 @@ class UserController extends Controller
             $reasons->addRow(array($user->name, $user->id));
         }
 
-        $piechart = $lava->PieChart('USERS')
-            ->setOptions(array(
-                'datatable' => $reasons,
-                'title' => 'Project Sales',
-                'is3D' => true,
-                'height' => 400,
-                'width' => 600
-            ));
+        $pie_chart_1 = $lava->PieChart('USERS', $reasons, [
+            'title' => 'Registered User',
+            'is3D' => true,
+            'height' => 400,
+            'width' => 600
+        ]);
 
         /*
          * GROUP CHART
@@ -119,14 +113,12 @@ class UserController extends Controller
             $data->addRow(array($group->name, $group->id));
         }
 
-        $pie_chart = $group_chart->PieChart('GROUPS')
-        ->setOptions(array(
+        $pie_chart = $group_chart->PieChart('GROUPS', $data, [
             'datatable' => $data,
-            'title' => 'Grouped Project',
             'is3D' => true,
             'height' => 400,
             'width' => 500
-        ));
+        ]);
 
         return view('auth.admin.dashboard', compact('group_chart', 'lava'));
     }

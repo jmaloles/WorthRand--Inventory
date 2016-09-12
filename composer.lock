@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a24c92dc9f1aa12cd110c231b66be356",
-    "content-hash": "a322bb0c4a05f34a92ed86d02c6513b3",
+    "hash": "fe92b7a50df9bdd6e93c7d842ef21574",
+    "content-hash": "7d9f5cbcc3a298cee1e9ce3d8e96eea5",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -710,29 +710,31 @@
         },
         {
             "name": "khill/lavacharts",
-            "version": "2.5.10",
+            "version": "3.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinkhill/lavacharts.git",
-                "reference": "b8e57d8d404a5ac398683a0d34bdfcdc46b2feeb"
+                "reference": "c95cf815948db511c9c44270d50f7bc37861d81d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinkhill/lavacharts/zipball/b8e57d8d404a5ac398683a0d34bdfcdc46b2feeb",
-                "reference": "b8e57d8d404a5ac398683a0d34bdfcdc46b2feeb",
+                "url": "https://api.github.com/repos/kevinkhill/lavacharts/zipball/c95cf815948db511c9c44270d50f7bc37861d81d",
+                "reference": "c95cf815948db511c9c44270d50f7bc37861d81d",
                 "shasum": ""
             },
             "require": {
                 "nesbot/carbon": "~1.14",
-                "php": ">=5.3.0"
+                "php": ">=5.4.0"
             },
             "require-dev": {
                 "mockery/mockery": "~0.9",
                 "mybuilder/phpunit-accelerator": "~1.1",
                 "phpunit/phpunit": "~4.5",
-                "sami/sami": "~2.0",
-                "satooshi/php-coveralls": "~0.6",
-                "squizlabs/php_codesniffer": "~2.0"
+                "satooshi/php-coveralls": "~1.0",
+                "squizlabs/php_codesniffer": "~2.5"
+            },
+            "suggest": {
+                "khill/datatableplus": "Adds extra features to DataTables such as csv and laravel collection parsing."
             },
             "type": "library",
             "autoload": {
@@ -748,7 +750,42 @@
                 {
                     "name": "Kevin Hill",
                     "email": "kevinkhill@gmail.com",
-                    "role": "Developer"
+                    "role": "Creator"
+                },
+                {
+                    "name": "deringer",
+                    "homepage": "https://github.com/deringer",
+                    "role": "Contributor"
+                },
+                {
+                    "name": "stevebauman",
+                    "homepage": "https://github.com/stevebauman",
+                    "role": "Contributor"
+                },
+                {
+                    "name": "rajivseelam",
+                    "homepage": "https://github.com/rajivseelam",
+                    "role": "Contributor"
+                },
+                {
+                    "name": "tobias-kuendig",
+                    "homepage": "https://github.com/tobias-kuendig",
+                    "role": "Contributor"
+                },
+                {
+                    "name": "Stonos",
+                    "homepage": "https://github.com/Stonos",
+                    "role": "Contributor"
+                },
+                {
+                    "name": "MicahKV",
+                    "email": "micah138@yahoo.com",
+                    "role": "Contributor"
+                },
+                {
+                    "name": "SendDerek",
+                    "homepage": "https://github.com/SendDerek",
+                    "role": "Contributor"
                 }
             ],
             "description": "PHP wrapper library for the Google Chart API",
@@ -758,7 +795,7 @@
                 "google",
                 "graphs"
             ],
-            "time": "2016-01-22 13:40:54"
+            "time": "2016-04-28 14:43:39"
         },
         {
             "name": "laravel/framework",
@@ -2232,6 +2269,74 @@
                 "environment"
             ],
             "time": "2016-09-01 10:05:43"
+        },
+        {
+            "name": "zizaco/entrust",
+            "version": "5.2.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Zizaco/entrust.git",
+                "reference": "b749bff868026336dec1ba1a16c150728697353d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Zizaco/entrust/zipball/b749bff868026336dec1ba1a16c150728697353d",
+                "reference": "b749bff868026336dec1ba1a16c150728697353d",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/cache": "~5.0",
+                "illuminate/console": "~5.0",
+                "illuminate/support": "~5.0",
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "illuminate/database": "~5.0",
+                "mockery/mockery": "dev-master",
+                "phpunit/phpunit": "~4.1",
+                "sami/sami": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/commands"
+                ],
+                "psr-4": {
+                    "Zizaco\\Entrust\\": "src/Entrust/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andrew Elkins",
+                    "homepage": "http://andrewelkins.com"
+                },
+                {
+                    "name": "Zizaco Zizuini",
+                    "email": "zizaco@gmail.com"
+                },
+                {
+                    "name": "Ben Batschelet",
+                    "homepage": "http://github.com/bbatsche"
+                },
+                {
+                    "name": "Michele Angioni",
+                    "email": "michele.angioni@gmail.com"
+                }
+            ],
+            "description": "This package provides a flexible way to add Role-based Permissions to Laravel",
+            "keywords": [
+                "acl",
+                "auth",
+                "illuminate",
+                "laravel",
+                "permission",
+                "roles"
+            ],
+            "time": "2016-03-24 15:24:42"
         }
     ],
     "packages-dev": [
@@ -3609,7 +3714,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "zizaco/entrust": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

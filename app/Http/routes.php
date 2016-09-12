@@ -14,21 +14,16 @@ Route::auth();
 Route::get('/home', 'HomeController@index')->name('home');
 
 // Super Admin Account
-Route::group(['middleware' => ['verify_if_user_is_super_admin']], function() {
-    Route::group(['prefix' => 'super_admin'], function() {
 
-        Route::get('dashboard', 'UserController@superAdminDashboard')->name('super_admin_dashboard');
+Route::group(['prefix' => 'super_admin'], function() {
 
-        Route::get('users', 'UserController@superAdminUserIndex')->name('super_admin_user_index');
-    });
+    Route::get('dashboard', 'UserController@superAdminDashboard')->name('super_admin_dashboard');
+
+    Route::get('users', 'UserController@superAdminUserIndex')->name('super_admin_user_index');
 });
 
-
-
 // Admin Account
-Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
-    Route::group(['prefix' => 'admin'], function() {
-
+Route::group(['middleware' => ['role:admin']], function() {
         Route::get('dashboard', 'UserController@adminDashboard')->name('admin_dashboard');
 
         Route::get('users', 'UserController@adminUserIndex')->name('admin_user_index');
@@ -40,42 +35,4 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
 
         Route::get('/item/create/group', 'ItemController@adminCreateGroup')->name('admin_create_group');
         Route::post('/item/create/group', 'ItemController@adminPostGroup')->name('admin_post_group');
-    });
-});
-
-
-
-
-
-// Collection Account
-Route::group(['middleware' => ['verify_if_user_is_collection']], function() {
-    Route::group(['prefix' => 'collection'], function() {
-
-        Route::get('dashboard', 'UserController@collectionDashboard')->name('collection_dashboard');
-    });
-});
-
-
-
-
-
-
-// User Account
-Route::group(['middleware' => ['verify_if_user_is_sales_engineer']], function() {
-    Route::group(['prefix' => 'sales_engineer'], function() {
-
-        Route::get('dashboard', 'UserController@salesEngineerDashboard')->name('se_dashboard');
-    });
-});
-
-
-
-
-
-// Assistant Account
-Route::group(['middleware' => ['verify_if_user_is_assistant']], function() {
-    Route::group(['prefix' => 'assistant'], function() {
-
-        Route::get('dashboard', 'UserController@assistantDashboard')->name('assistant_dashboard');
-    });
 });
