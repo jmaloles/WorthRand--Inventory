@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Requests\CreateGroupRequest;
 use App\Group;
+use App\Http\Requests\CreateAfterMarketRequest;
 
 class ItemController extends Controller
 {
@@ -33,5 +34,15 @@ class ItemController extends Controller
         $create_group = Group::createGroup($createGroupRequest);
 
         return $create_group;
+    }
+
+    public function createAfterMarket()
+    {
+        return view('item.after_market.admin.create');
+    }
+
+    public function postAfterMarket(CreateAfterMarketRequest $createAfterMarketRequest)
+    {
+        # code...
     }
 }

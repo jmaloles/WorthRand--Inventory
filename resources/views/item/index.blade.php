@@ -22,7 +22,7 @@
                             <div class="btn-group" role="group" aria-label="...">
                                 <a href="{{ route('admin_create_group') }}" class="btn btn-default"><i class="fa fa-list" aria-hidden="true"></i>&nbsp;Add Group</a>
                                 <a href="{{ route('admin_create_user') }}" class="btn btn-default"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Add Project</a>
-                                <a href="{{ route('admin_create_user') }}" class="btn btn-default"><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Add Aftermarket</a>
+                                <a href="{{ route('create_after_market') }}" class="btn btn-default"><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Add Aftermarket</a>
                                 <a href="{{ route('admin_create_user') }}" class="btn btn-default"><i class="fa fa-file-text" aria-hidden="true"></i>&nbsp;Add Seal</a>
                         </div>
                     </div>
