@@ -14,6 +14,7 @@
 
         <script src="{{ URL::to('/') }}/bootstrap-3.3.7-dist/js/jquery.min.js"></script>
         <script src="{{ URL::to('/') }}/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+        <script src="{{ URL::to('/') }}/searchable-dropdown/dist/jquery.autocomplete.min.js"></script>
         @include('layouts.header')
     </head>
 
