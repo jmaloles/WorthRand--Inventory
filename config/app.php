@@ -165,7 +165,6 @@ return [
         /*
          * Zizaco Entrust
          */
-        Zizaco\Entrust\EntrustServiceProvider::class,
     ],
 
     /*
@@ -210,8 +209,7 @@ return [
         'Storage' => Illuminate\Support\Facades\Storage::class,
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
-        'View' => Illuminate\Support\Facades\View::class,
-        'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
+        'View' => Illuminate\Support\Facades\View::class
     ],
 
 ];
