@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Auth;
 
-class VerifyIfUserIsAdmin
+class VerifyIfUserIsSalesEngineer
 {
     /**
      * Handle an incoming request.
@@ -22,7 +22,7 @@ class VerifyIfUserIsAdmin
             } else {
                 return redirect()->guest('login');
             }
-        } else if ($request->user()->role != 'admin') {
+        } else if ($request->user()->role != 'sales_engineer') {
             abort(403, 'Unauthorized action.');
         }
 

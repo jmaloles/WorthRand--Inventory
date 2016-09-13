@@ -95,7 +95,7 @@
                                         <label for="inputChildren" class="col-sm-4 control-label">Choose User Role:</label>
                                         <div class="col-sm-6">
                                             <select class="form-control" name="role">
-                                                <option value="user">Sales Engineer</option>
+                                                <option value="sales_engineer">Sales Engineer</option>
                                                 <option value="collection">Collection</option>
                                                 <option value="assistant">Assistant</option>
                                             </select>

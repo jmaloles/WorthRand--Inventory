@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ea33ee7ea8332812c9d954343ca90b9d",
-    "content-hash": "a546fafee25fea966b25794a0d3fb424",
+    "hash": "1673fda37f61d098675b1743a49b45a8",
+    "content-hash": "a322bb0c4a05f34a92ed86d02c6513b3",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -373,16 +373,16 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "v2.5.4",
+            "version": "v2.5.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "abbdfd1cff43a7b99d027af3be709bc8fc7d4769"
+                "reference": "9f8c05cd5225a320d56d4bfdb4772f10d045a0c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/abbdfd1cff43a7b99d027af3be709bc8fc7d4769",
-                "reference": "abbdfd1cff43a7b99d027af3be709bc8fc7d4769",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/9f8c05cd5225a320d56d4bfdb4772f10d045a0c9",
+                "reference": "9f8c05cd5225a320d56d4bfdb4772f10d045a0c9",
                 "shasum": ""
             },
             "require": {
@@ -391,7 +391,7 @@
             },
             "require-dev": {
                 "phpunit/phpunit": "4.*",
-                "symfony/console": "2.*"
+                "symfony/console": "2.*||^3.0"
             },
             "suggest": {
                 "symfony/console": "For helpful console commands such as SQL execution and import of files."
@@ -440,7 +440,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2016-01-05 22:11:12"
+            "time": "2016-09-09 19:13:33"
         },
         {
             "name": "doctrine/inflector",
@@ -710,31 +710,29 @@
         },
         {
             "name": "khill/lavacharts",
-            "version": "3.0.4",
+            "version": "2.5.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinkhill/lavacharts.git",
-                "reference": "c95cf815948db511c9c44270d50f7bc37861d81d"
+                "reference": "b8e57d8d404a5ac398683a0d34bdfcdc46b2feeb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinkhill/lavacharts/zipball/c95cf815948db511c9c44270d50f7bc37861d81d",
-                "reference": "c95cf815948db511c9c44270d50f7bc37861d81d",
+                "url": "https://api.github.com/repos/kevinkhill/lavacharts/zipball/b8e57d8d404a5ac398683a0d34bdfcdc46b2feeb",
+                "reference": "b8e57d8d404a5ac398683a0d34bdfcdc46b2feeb",
                 "shasum": ""
             },
             "require": {
                 "nesbot/carbon": "~1.14",
-                "php": ">=5.4.0"
+                "php": ">=5.3.0"
             },
             "require-dev": {
                 "mockery/mockery": "~0.9",
                 "mybuilder/phpunit-accelerator": "~1.1",
                 "phpunit/phpunit": "~4.5",
-                "satooshi/php-coveralls": "~1.0",
-                "squizlabs/php_codesniffer": "~2.5"
-            },
-            "suggest": {
-                "khill/datatableplus": "Adds extra features to DataTables such as csv and laravel collection parsing."
+                "sami/sami": "~2.0",
+                "satooshi/php-coveralls": "~0.6",
+                "squizlabs/php_codesniffer": "~2.0"
             },
             "type": "library",
             "autoload": {
@@ -750,42 +748,7 @@
                 {
                     "name": "Kevin Hill",
                     "email": "kevinkhill@gmail.com",
-                    "role": "Creator"
-                },
-                {
-                    "name": "deringer",
-                    "homepage": "https://github.com/deringer",
-                    "role": "Contributor"
-                },
-                {
-                    "name": "stevebauman",
-                    "homepage": "https://github.com/stevebauman",
-                    "role": "Contributor"
-                },
-                {
-                    "name": "rajivseelam",
-                    "homepage": "https://github.com/rajivseelam",
-                    "role": "Contributor"
-                },
-                {
-                    "name": "tobias-kuendig",
-                    "homepage": "https://github.com/tobias-kuendig",
-                    "role": "Contributor"
-                },
-                {
-                    "name": "Stonos",
-                    "homepage": "https://github.com/Stonos",
-                    "role": "Contributor"
-                },
-                {
-                    "name": "MicahKV",
-                    "email": "micah138@yahoo.com",
-                    "role": "Contributor"
-                },
-                {
-                    "name": "SendDerek",
-                    "homepage": "https://github.com/SendDerek",
-                    "role": "Contributor"
+                    "role": "Developer"
                 }
             ],
             "description": "PHP wrapper library for the Google Chart API",
@@ -795,7 +758,7 @@
                 "google",
                 "graphs"
             ],
-            "time": "2016-04-28 14:43:39"
+            "time": "2016-01-22 13:40:54"
         },
         {
             "name": "laravel/framework",

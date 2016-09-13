@@ -8,10 +8,12 @@ use App\Http\Requests;
 use App\User;
 use Khill\Lavacharts\Lavacharts;
 use App\Http\Requests\CreateUserRequest;
+use App\Group;
 
 class UserController extends Controller
 {
     //
+
     public function superAdminDashboard()
     {
         $users = User::all();
@@ -30,14 +32,46 @@ class UserController extends Controller
             $reasons->addRow(array($user->name, $user->id));
         }
 
-        $barchart = $lava->PieChart('USERS', $reasons, [
-            'title' => 'Count per User',
+        $piechart = $lava->PieChart('USERS')
+        ->setOptions(array(
+            'datatable' => $reasons,
+            'title' => 'Project Sales',
             'is3D' => true,
             'height' => 400,
-            'width' => 600
-        ]);
+            'width' => 500
+        ));
 
-        return view('home')->with('lava', $lava);
+        /*
+         * GROUP CHART
+         */
+
+        $groups = Group::all();
+        // Test if date was submitted
+        /*if($request->date) {
+            $users = $users->whereRaw("date(txt_sms_activities.created_at) = '" . $request->date . "'");
+        }*/
+
+        // create datatable
+        $lava = new Lavacharts();
+
+        $data = $lava->DataTable();
+        $data->addStringColumn('Groups')
+            ->addNumberColumn('Percent');
+        foreach($groups as $group) {
+            $data->addRow(array($groups->name, $groups->id));
+        }
+
+        $pie_chart = $group_chart->PieChart('GROUPS')
+            ->setOptions(array(
+                'datatable' => $data,
+                'title' => 'Grouped Project',
+                'is3D' => true,
+                'height' => 400,
+                'width' => 500
+            )
+        );
+            
+        return view('home', compact('group_chart'));
     }
 
     public function adminDashboard()
@@ -58,14 +92,46 @@ class UserController extends Controller
             $reasons->addRow(array($user->name, $user->id));
         }
 
-        $piechart = $lava->PieChart('USERS', $reasons, [
+        $piechart = $lava->PieChart('USERS')
+        ->setOptions(array(
+            'datatable' => $reasons,
             'title' => 'Project Sales',
             'is3D' => true,
             'height' => 400,
-            'width' => 600
-        ]);
+            'width' => 500
+        ));
 
-        return view('auth.admin.dashboard', compact('lava'));
+        /*
+         * GROUP CHART
+         */
+
+        $groups = Group::all();
+        // Test if date was submitted
+        /*if($request->date) {
+            $users = $users->whereRaw("date(txt_sms_activities.created_at) = '" . $request->date . "'");
+        }*/
+
+        // create datatable
+        $group_chart = new Lavacharts();
+
+        $data = $group_chart->DataTable();
+        $data->addStringColumn('Groups')
+            ->addNumberColumn('Percent');
+        foreach($groups as $group) {
+            $data->addRow(array($group->name, $group->id));
+        }
+
+        $pie_chart = $group_chart->PieChart('GROUPS')
+            ->setOptions(array(
+                'datatable' => $data,
+                'title' => 'Grouped Project',
+                'is3D' => true,
+                'height' => 400,
+                'width' => 500
+            )
+        );
+
+        return view('auth.admin.dashboard', compact('group_chart', 'lava'));
     }
 
     public function collectionDashboard()
@@ -83,6 +149,11 @@ class UserController extends Controller
         return view('auth.assistant.dashboard');
     }
 
+    public function salesEngineerDashboard()
+    {
+        return view('auth.sales_engineer.dashboard');
+    }
+
     public function superAdminUserIndex()
     {
         return view('user.super_admin.index');
@@ -90,7 +161,9 @@ class UserController extends Controller
 
     public function adminUserIndex()
     {
-        return view('user.admin.index');
+        $users = User::where('role', '!=', 'super_admin')->where('role', '!=', 'admin')->get();
+
+        return view('user.admin.index', compact('users'));
     }
 
     public function adminCreateUser()
@@ -103,5 +176,12 @@ class UserController extends Controller
         $create_user = User::createUser($createUserRequest);
 
         return $create_user;
+    }
+
+    public function showSalesEngineers()
+    {
+        $users = User::whereRole('sales_engineer')->get();
+
+        return view('sales_engineer.admin.index', compact('users'));
     }
 }
