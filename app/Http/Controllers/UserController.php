@@ -32,12 +32,14 @@ class UserController extends Controller
             $reasons->addRow(array($user->name, $user->id));
         }
 
-        $barchart = $lava->PieChart('USERS', $reasons, [
-            'title' => 'Count per User',
+        $piechart = $lava->PieChart('USERS')
+        ->setOptions(array(
+            'datatable' => $reasons,
+            'title' => 'Project Sales',
             'is3D' => true,
             'height' => 400,
-            'width' => 600
-        ]);
+            'width' => 500
+        ));
 
         /*
          * GROUP CHART
@@ -59,12 +61,16 @@ class UserController extends Controller
             $data->addRow(array($groups->name, $groups->id));
         }
 
-        $barchart = $lava->PieChart('USERS', $data, [
-            'title' => 'Grouped Project',
-            'is3D' => true,
-            'height' => 400,
-            'width' => 600
-        ]);
+        $pie_chart = $group_chart->PieChart('GROUPS')
+            ->setOptions(array(
+                'datatable' => $data,
+                'title' => 'Grouped Project',
+                'is3D' => true,
+                'height' => 400,
+                'width' => 500
+            )
+        );
+            
         return view('home', compact('group_chart'));
     }
 
@@ -86,12 +92,14 @@ class UserController extends Controller
             $reasons->addRow(array($user->name, $user->id));
         }
 
-        $pie_chart_1 = $lava->PieChart('USERS', $reasons, [
-            'title' => 'Registered User',
+        $piechart = $lava->PieChart('USERS')
+        ->setOptions(array(
+            'datatable' => $reasons,
+            'title' => 'Project Sales',
             'is3D' => true,
             'height' => 400,
-            'width' => 600
-        ]);
+            'width' => 500
+        ));
 
         /*
          * GROUP CHART
@@ -113,12 +121,15 @@ class UserController extends Controller
             $data->addRow(array($group->name, $group->id));
         }
 
-        $pie_chart = $group_chart->PieChart('GROUPS', $data, [
-            'datatable' => $data,
-            'is3D' => true,
-            'height' => 400,
-            'width' => 500
-        ]);
+        $pie_chart = $group_chart->PieChart('GROUPS')
+            ->setOptions(array(
+                'datatable' => $data,
+                'title' => 'Grouped Project',
+                'is3D' => true,
+                'height' => 400,
+                'width' => 500
+            )
+        );
 
         return view('auth.admin.dashboard', compact('group_chart', 'lava'));
     }
