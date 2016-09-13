@@ -14,7 +14,7 @@
         <li class="nav-item  {{ Request::route()->getName() == 'admin_dashboard' ? 'active' : '' }}"><a href="{{ route('admin_dashboard') }}" class="nav-link" class="nav-link"><span class="glyphicon glyphicon-dashboard"></span>&nbsp; Dashboard</a></li>
         <li class="nav-item {{ Request::route()->getName() == 'admin_user_index' ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin_user_index') }}"><span class="glyphicon glyphicon-user"></span>&nbsp; Users</a></li>
         <li class="nav-item {{ Request::route()->getName() == 'admin_sales_engineer_index' ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin_sales_engineer_index') }}"><i class="fa fa-users"></i>&nbsp; Sales Engineers</a></li>
-        <li class="nav-item"><a class="nav-link"  href="#"><i class="fa fa-star" aria-hidden="true"></i>&nbsp; Customers</a></li>
+        <li class="nav-item {{ Request::route()->getName() == 'admin_customer_index' ? 'active' : ''}}"><a class="nav-link"  href="{{route('admin_customer_index')}}"><i class="fa fa-star" aria-hidden="true"></i>&nbsp; Customers</a></li>
         <li class="nav-item {{ Request::route()->getName() == 'items' ? 'active' : '' }}"><a class="nav-link" href="{{ route('items') }}"><i class="fa fa-diamond" aria-hidden="true"></i>&nbsp; Items</a></li>
         <li class="nav-item"><a class="nav-link"  href="#"><i class="fa fa-cog"></i>&nbsp; Projects</a></li>
         <li class="nav-item"><a class="nav-link"  href="#"><i class="fa fa-cogs"></i>&nbsp; Aftermarkets</a></li>
