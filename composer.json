@@ -8,8 +8,7 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
         "doctrine/dbal": "v2.5.*",
-        "zizaco/entrust": "5.2.x-dev",
-        "khill/lavacharts": "~3.0"
+        "khill/lavacharts": "2.5.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
