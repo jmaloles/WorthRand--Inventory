@@ -8,6 +8,8 @@ use App\Http\Requests;
 use App\Http\Requests\CreateGroupRequest;
 use App\Group;
 use App\Http\Requests\CreateAfterMarketRequest;
+use App\Http\Requests\CreateProjectRequest;
+use App\Project;
 
 class ItemController extends Controller
 {
@@ -44,5 +46,15 @@ class ItemController extends Controller
     public function postAfterMarket(CreateAfterMarketRequest $createAfterMarketRequest)
     {
         # code...
+    }
+
+    public function createProject() {
+        return view('item.project.admin.create');
+    }
+
+    public function postProject(CreateProjectRequest $createProjectRequest)  {
+        $create_project = Project::createProject($createProjectRequest);
+
+        return $create_project;
     }
 }
