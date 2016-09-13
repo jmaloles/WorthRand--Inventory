@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-static-top" style="order-radius: 0px 0px 0px 0px;">
+<nav class="navbar navbar-default navbar-static-top" style="order-radius: 0px 0px 0px 0px; background-color: white;">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -23,7 +23,9 @@
                 @else
                 <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hello, {{ Auth::user()->name }} <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="{{ url('logout') }}">Logout</a></li>
+                        <li><a href="#"><i class="fa fa-user"></i>&nbsp;&nbsp;Profile</a></li>
+                        <li><a href="#"><i class="fa fa-lock"></i>&nbsp;&nbsp;Change Password</a></li>
+                        <li><a href="{{ url('logout') }}"><i class="fa fa-sign-out"></i>&nbsp;&nbsp;Logout</a></li>
                     </ul>
                 </li>
                 <li><a href="#"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;&nbsp;Report an issue</a></li>
