@@ -10,6 +10,7 @@ use App\Group;
 use App\Http\Requests\CreateAfterMarketRequest;
 use App\Http\Requests\CreateProjectRequest;
 use App\Project;
+use App\AfterMarket;
 
 class ItemController extends Controller
 {
@@ -45,7 +46,9 @@ class ItemController extends Controller
 
     public function postAfterMarket(CreateAfterMarketRequest $createAfterMarketRequest)
     {
-        # code...
+        $post_after_market = AfterMarket::postAfterMarket($createAfterMarketRequest);
+
+        return $post_after_market;
     }
 
     public function createProject() {
@@ -56,5 +59,12 @@ class ItemController extends Controller
         $create_project = Project::createProject($createProjectRequest);
 
         return $create_project;
+    }
+
+    public function getProjects()
+    {
+        $fetch_projects = Project::fetchProjects();
+
+        return $fetch_projects;
     }
 }

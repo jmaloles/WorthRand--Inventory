@@ -18,9 +18,9 @@
                 <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
                     @if(Session::has('message'))
                     <div class="row">
-                        <div class="alert alert-success alert-dismissible" role="alert" style="margin-top: -2.3rem; border-radius: 0px 0px 0px 0px;">
+                        <div class="alert alert-success alert-dismissible" role="alert" style="margin-top: -1.3rem; border-radius: 0px 0px 0px 0px;">
                             <div class="container"><i class="fa fa-check"></i>&nbsp;&nbsp;{{ Session::get('message') }}
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+                                <button type="button" class="close" style="margin-right: 4rem;" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
                         </div>
                     </div>
                     @endif
@@ -39,16 +39,18 @@
                                 <div class="panel-body">
                                     <form class="form-horizontal" id="createAfterMarketForm" action="{{ route('post_after_market') }}" method="POST">
                                         {{ csrf_field() }}
+                                        
 
-                                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                                        <div class="form-group{{ $errors->has('project_id') ? ' has-error' : '' }}">
                                             <label for="name" class="col-md-4 control-label">Project:</label>
 
                                             <div class="col-md-6">
-                                                <input type="text" name="project" id="project_dropdown"/>
+                                                <input type="text" class="form-control" name="project" id="project_dropdown" required autofocus />
+                                                <input type="hidden" name="project_id" id="project_id">
 
-                                                @if ($errors->has('name'))
+                                                @if ($errors->has('project_id'))
                                                     <span class="help-block">
-                                                    <strong>{{ $errors->first('name') }}</strong>
+                                                    <strong>{{ $errors->first('project_id') }}</strong>
                                                 </span>
                                                 @endif
                                             </div>
@@ -91,6 +93,20 @@
                                                 @if ($errors->has('part_number'))
                                                     <span class="help-block">
                                                     <strong>{{ $errors->first('part_number') }}</strong>
+                                                </span>
+                                                @endif
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group{{ $errors->has('ccn_number') ? ' has-error' : '' }}">
+                                            <label for="ccn_number" class="col-md-4 control-label">CCN Number:</label>
+
+                                            <div class="col-md-6">
+                                                <input id="ccn_number" type="text" class="form-control" name="ccn_number" value="{{ old('ccn_number') }}" required autofocus>
+
+                                                @if ($errors->has('ccn_number'))
+                                                    <span class="help-block">
+                                                    <strong>{{ $errors->first('ccn_number') }}</strong>
                                                 </span>
                                                 @endif
                                             </div>
@@ -178,10 +194,12 @@
 
     <script>
         $('#project_dropdown').autocomplete({
-        serviceUrl: '/autocomplete/countries',
-        onSelect: function (suggestion) {
-            alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
-    }
-});
+            serviceUrl: "{{ route('fetch_projects') }}",
+            type: 'get',
+            dataType: 'json',
+            onSelect: function (suggestions) {
+                document.getElementById("project_id").value = suggestions.data;
+            }
+        });
     </script>
 @endsection
