@@ -22,6 +22,7 @@
         padding: 20px;*/
         width: 210px;
         position: fixed;
+        height: 100%;
         top: 51px;
         bottom: 0;
         left: 0;
@@ -44,7 +45,9 @@
 
 }
 
-
+.main {
+    margin-top: 7rem;
+}
 
 @media (max-width: 767px) {
     .sidebar {
