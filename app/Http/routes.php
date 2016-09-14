@@ -48,7 +48,10 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
         Route::get('/projects', 'ItemController@indexProject')->name('admin_project_index');
         Route::get('/project/{project}', 'ItemController@showProject')->name('admin_project_show');
         Route::get('/project/{project}/information', 'ItemController@adminProjectInformation')->name('admin_project_information');
-        Route::patch('/project/{project/update', 'ItemController@adminUpdateProjectInformation')->name('admin_project_information_update');
+        Route::patch('/project/{project}/update', 'ItemController@adminUpdateProjectInformation')->name('admin_project_information_update');
+        Route::get('/project/{project}/pricing_history', 'ItemController@adminProjectPricingHistoryIndex')->name('admin_project_pricing_history_index');
+        Route::get('/project/{project}/pricing_history/create', 'ItemController@adminProjectPricingHistoryCreate')->name('admin_project_pricing_history_create');
+        Route::post('/project/{project}/pricing_history/create', 'ItemController@postAdminProjectPricingHistory')->name('post_admin_project_pricing_history');
 
             /*
              * JSONS for Items
