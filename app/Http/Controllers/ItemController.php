@@ -11,6 +11,7 @@ use App\Http\Requests\CreateAfterMarketRequest;
 use App\Http\Requests\CreateProjectRequest;
 use App\Project;
 use App\AfterMarket;
+use App\Http\Requests\UpdateProjectInformationRequest;
 
 class ItemController extends Controller
 {
@@ -66,5 +67,35 @@ class ItemController extends Controller
         $fetch_projects = Project::fetchProjects();
 
         return $fetch_projects;
+    }
+
+    public function indexProject()
+    {
+        $projects = Project::all();
+
+        return view('item.project.admin.index', compact('projects'));
+    }
+
+    public function showProject(Project $project)
+    {
+        return view('item.project.admin.show', compact('project'));
+    }
+
+    public function adminProjectInformation(Project $project)
+    {
+        return view('item.project.admin.information', compact('project'));
+    }
+
+    public function showAfterMarket()
+    {
+        return view('item.after_market.admin.show');
+    }
+
+    public function adminUpdateProjectInformation(Request $request, UpdateProjectInformationRequest $updateProjectInformationRequest)
+    {
+        $project = Project::find($request->get('project_id'));
+        $project->update($updateProjectInformationRequest->except(array('_token', '_method')));
+
+        return redirect()->back()->with('message', 'Project ['.$project->name.'] was successfully updated');
     }
 }
