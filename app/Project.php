@@ -10,6 +10,10 @@ class Project extends Model
         'name', 'model', 'ccn_number', 'part_number', 'reference_number', 'drawing_number', 'material_number', 'serial_number', 'tag_number'
     ];
 
+    public function after_markets()
+    {
+        return $this->hasMany(AfterMarket::class);
+    }
 
     public static function createProject($createProjectRequest)
     {

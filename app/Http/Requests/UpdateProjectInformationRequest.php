@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Input;
 
-class CreateProjectRequest extends Request
+class UpdateProjectInformationRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -32,7 +33,7 @@ class CreateProjectRequest extends Request
             'material_number' => 'required',
             'serial_number' => 'required',
             'tag_number' => 'required',
-            'drawing_number' => 'required|unique:projects,drawing_number'
+            'drawing_number' => 'required|unique:projects,drawing_number,'.Input::get('project_id')
         ];
     }
 }
