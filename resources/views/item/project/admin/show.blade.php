@@ -12,7 +12,7 @@
                     <ul class="nav nav-pills nav-stacked col-lg-12 col-md-12 col-sm-12 col-xs-12" style="font-size: 14px;">
                         <li class="nav-item"><a class="nav-link"  href="{{ route('admin_project_information', $project->id) }}"><i class="fa fa-info-circle"></i>&nbsp; Information</a></li>
                         <li class="nav-item"><a class="nav-link"  href="#"><i class="fa fa-th-list"></i>&nbsp; Pricing History</a></li>
-                        <li class="nav-item"><a class="nav-link"  href="{{ route('admin_project_index') }}"><i class="fa fa-file-text-o"></i>&nbsp; back</a></li>
+                        <li class="nav-item"><a class="nav-link"  href="{{ route('admin_project_index') }}"><i class="fa fa-arrow-left"></i>&nbsp; back</a></li>
                     </ul>
                 </nav>
 
