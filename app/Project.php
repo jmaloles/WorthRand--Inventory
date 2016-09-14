@@ -24,9 +24,23 @@ class Project extends Model
         $customer->serial_number = $createProjectRequest->get('serial_number');
         $customer->tag_number = $createProjectRequest->get('tag_number');
 
-
         if ($customer->save()) {
             return redirect()->back()->with('message', 'Customer was successfully created');
         }
+    }
+
+    public static function fetchProjects()
+    {
+        $jsonProject = array();
+        $projects = Project::all();
+
+        foreach($projects as $project) {
+            $jsonProject['suggestions'][] = [
+                'data' => $project->id,
+                'value' => $project->name
+            ];
+        }
+
+        return json_encode($jsonProject);
     }
 }

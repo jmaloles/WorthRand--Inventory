@@ -11,10 +11,11 @@
         <link rel="stylesheet" href="{{ URL::to('/') }}/bootstrap-3.3.7-dist/css/bootstrap.css">
         <link rel="stylesheet" href="{{ URL::to('/') }}/font-awesome-4.5.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="{{ URL::to('/') }}/font-css/worthrand-css.css">
+        <link rel="stylesheet" href="{{ URL::to('/') }}/searchable-dropdown/content/styles.css">
 
         <script src="{{ URL::to('/') }}/bootstrap-3.3.7-dist/js/jquery.min.js"></script>
         <script src="{{ URL::to('/') }}/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-        <script src="{{ URL::to('/') }}/searchable-dropdown/dist/jquery.autocomplete.min.js"></script>
+        <script src="{{ URL::to('/') }}/searchable-dropdown/dist/jquery.autocomplete.js"></script>
         @include('layouts.header')
     </head>
 

@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-5 col-lg-push-3-9">
+        <div class="col-md-5 col-lg-push-3-9 main">
             <div class="row">
                 <br><br>
                 <div class="panel panel-default" style="

@@ -31,7 +31,9 @@ class CreateAfterMarketRequest extends Request
             'material_number' => 'required',
             'serial_number' => 'required',
             'tag_number' => 'required',
-            'drawing_number' => 'required|unique:after_markets,drawing_number'
+            'drawing_number' => 'required|unique:after_markets,drawing_number',
+            'ccn_number' => 'required',
+            'project_id' => 'required'
         ];
     }
 }

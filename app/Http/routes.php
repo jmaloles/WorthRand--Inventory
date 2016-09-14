@@ -45,11 +45,14 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
         Route::get('create/project', 'ItemController@createProject')->name('create_project');
         Route::post('create/project', 'ItemController@postProject')->name('post_project');
 
+            /*
+             * JSONS for Items
+             */
+            Route::get('/get_projects', 'ItemController@getProjects')->name('fetch_projects');
+
         # CUSTOMERS
         Route::get('customers', 'CustomerController@adminCustomerIndex')->name('admin_customer_index');
         Route::get('create/customer', 'CustomerController@adminCreateCustomer')->name('admin_customer_create');
         Route::post('create/customer', 'CustomerController@adminPostCustomer')->name('post_create_customer');
-
-
     });
 });

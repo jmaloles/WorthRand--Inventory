@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-static-top" style="order-radius: 0px 0px 0px 0px; background-color: white;">
+<nav class="navbar navbar-default navbar-fixed-top" style="order-radius: 0px 0px 0px 0px; background-color: white;">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
