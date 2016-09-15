@@ -11,7 +11,7 @@
                 <nav class="col-lg-2 col-md-3 col-sm-3 col-xs-12 sidebar" {{--style="background-color: #565656;"--}}>
                     <ul class="nav nav-pills nav-stacked col-lg-12 col-md-12 col-sm-12 col-xs-12" style="font-size: 14px;">
                         <li class="nav-item"><a class="nav-link" href="#" onclick='document.getElementById("createProjectForm").submit();'><i class="fa fa-check"></i>&nbsp; Update Information</a></li>
-                        <li class="nav-item"><a class="nav-link"  href="{{ route('items') }}"><i class="fa fa-arrow-left"></i>&nbsp; Back</a></li>
+                        <li class="nav-item"><a class="nav-link"  href="{{ route('admin_project_show', $project->id) }}"><i class="fa fa-arrow-left"></i>&nbsp; Back</a></li>
                     </ul>
                 </nav>
 
@@ -37,7 +37,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    <form class="form-horizontal" id="createProjectForm" action="{{ route('admin_project_information_update') }}" method="POST">
+                                    <form class="form-horizontal" id="createProjectForm" action="{{ route('admin_project_information_update', $project->id) }}" method="POST">
                                         {{ csrf_field() }}
                                         {{ method_field('PATCH') }}
                                         <input type="hidden" name="project_id" value="{{ $project->id }}">
@@ -55,7 +55,7 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        
+
                                         <div class="form-group{{ $errors->has('model') ? ' has-error' : '' }}">
                                             <label for="model" class="col-md-4 control-label">Model:</label>
 
