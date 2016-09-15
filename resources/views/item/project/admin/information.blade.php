@@ -37,7 +37,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    <form class="form-horizontal" id="createProjectForm" action="{{ route('admin_project_information_update') }}" method="POST">
+                                    <form class="form-horizontal" id="createProjectForm" action="{{ route('admin_project_information_update', $project->id) }}" method="POST">
                                         {{ csrf_field() }}
                                         {{ method_field('PATCH') }}
                                         <input type="hidden" name="project_id" value="{{ $project->id }}">
