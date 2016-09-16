@@ -98,7 +98,7 @@ class UserController extends Controller
             'title' => 'Project Sales',
             'is3D' => true,
             'height' => 400,
-            'width' => 500
+            'width' => 400
         ));
 
         /*
@@ -118,16 +118,18 @@ class UserController extends Controller
         $data->addStringColumn('Groups')
             ->addNumberColumn('Percent');
         foreach($groups as $group) {
-            $data->addRow(array($group->name, $group->id));
+            $data->addRow(array($group->name, 5000000));
         }
 
-        $pie_chart = $group_chart->PieChart('GROUPS')
+        $pie_chart = $group_chart->ColumnChart('GROUPS')
             ->setOptions(array(
                 'datatable' => $data,
                 'title' => 'Grouped Project',
-                'is3D' => true,
                 'height' => 400,
-                'width' => 500
+                'width' => 500,
+                'logScale' => TRUE,
+                'hAxis' => \Lava::HorizontalAxis(['gridlines' => ['count' => -1, 'color' => '#CCC']]),
+                'vAxis' => \Lava::VerticalAxis(['gridlines' => ['count' => -1, 'color' => '#CCC']])
             )
         );
 

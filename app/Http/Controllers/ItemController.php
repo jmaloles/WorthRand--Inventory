@@ -98,4 +98,14 @@ class ItemController extends Controller
 
         return redirect()->back()->with('message', 'Project ['.$project->name.'] was successfully updated');
     }
+
+    public function adminProjectPricingHistoryIndex(Project $project)
+    {
+        return view('item.project.admin.pricing_history.index', compact('project'));
+    }
+
+    public function adminProjectPricingHistoryCreate(Project $project)
+    {
+        return view('item.project.admin.pricing_history.create', compact('project'));
+    }
 }

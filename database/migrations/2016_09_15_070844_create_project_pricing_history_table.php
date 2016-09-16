@@ -14,7 +14,7 @@ class CreateProjectPricingHistoryTable extends Migration
     {
         Schema::create('project_pricing_history', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('price');
+            $table->integer('project_id');
             $table->date('pricing_date');
             $table->string('price');
             $table->timestamps();
@@ -28,8 +28,6 @@ class CreateProjectPricingHistoryTable extends Migration
      */
     public function down()
     {
-        Schema::table('project_pricing_history', function (Blueprint $table) {
-            //
-        });
+        Schema::drop('project_pricing_history');
     }
 }
