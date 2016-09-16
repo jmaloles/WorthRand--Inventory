@@ -127,7 +127,6 @@ class UserController extends Controller
                 'title' => 'Grouped Project',
                 'height' => 400,
                 'width' => 500,
-                'logScale' => TRUE,
                 'hAxis' => \Lava::HorizontalAxis(['gridlines' => ['count' => -1, 'color' => '#CCC']]),
                 'vAxis' => \Lava::VerticalAxis(['gridlines' => ['count' => -1, 'color' => '#CCC']])
             )
