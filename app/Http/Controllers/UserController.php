@@ -116,9 +116,11 @@ class UserController extends Controller
 
         $data = $group_chart->DataTable();
         $data->addStringColumn('Groups')
+            ->addNumberColumn('Target')
+            ->addRow(array('Target Sale', 5000000))
             ->addNumberColumn('Percent');
         foreach($groups as $group) {
-            $data->addRow(array($group->name, 5000000));
+            $data->addRow(array($group->name, $group->id));
         }
 
         $pie_chart = $group_chart->ColumnChart('GROUPS')
