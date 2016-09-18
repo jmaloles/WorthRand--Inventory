@@ -17,19 +17,19 @@ class Project extends Model
 
     public static function createProject($createProjectRequest)
     {
-        $customer = new Project();
-        $customer->name = $createProjectRequest->get('name');
-        $customer->model = $createProjectRequest->get('model');
-        $customer->ccn_number = $createProjectRequest->get('ccn_number');
-        $customer->part_number = $createProjectRequest->get('part_number');
-        $customer->reference_number = $createProjectRequest->get('reference_number');
-        $customer->drawing_number = $createProjectRequest->get('drawing_number');
-        $customer->material_number = $createProjectRequest->get('material_number');
-        $customer->serial_number = $createProjectRequest->get('serial_number');
-        $customer->tag_number = $createProjectRequest->get('tag_number');
+        $project = new Project();
+        $project->name = ucwords($createProjectRequest->get('name'), " ");
+        $project->model = strtoupper($createProjectRequest->get('model'));
+        $project->ccn_number = strtoupper($createProjectRequest->get('ccn_number'));
+        $project->part_number = strtoupper($createProjectRequest->get('part_number'));
+        $project->reference_number = strtoupper($createProjectRequest->get('reference_number'));
+        $project->drawing_number = strtoupper($createProjectRequest->get('drawing_number'));
+        $project->material_number = strtoupper($createProjectRequest->get('material_number'));
+        $project->serial_number = strtoupper($createProjectRequest->get('serial_number'));
+        $project->tag_number = strtoupper($createProjectRequest->get('tag_number'));
 
-        if ($customer->save()) {
-            return redirect()->back()->with('message', 'Customer was successfully created');
+        if ($project->save()) {
+            return redirect()->back()->with('message', 'Project ['.$project->name.'] was successfully created');
         }
     }
 
