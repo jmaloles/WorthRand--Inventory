@@ -5,11 +5,11 @@
 @stop
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="row">
                 @include('layouts.admin-sidebar')
-                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             ITEMS
@@ -19,14 +19,16 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="col-lg-12">
-                                <a href="{{ route('admin_create_group') }}" class="btn btn-success"><i class="fa fa-list" aria-hidden="true"></i>&nbsp;Add Group</a>
-                                <a href="{{ route('admin_create_user') }}" class="btn btn-success"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Add Project</a>
-                                <a href="{{ route('admin_create_user') }}" class="btn btn-success"><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Add Aftermarket</a>
-                                <a href="{{ route('admin_create_user') }}" class="btn btn-success"><i class="fa fa-file-text" aria-hidden="true"></i>&nbsp;Add Seal</a>
-                            </div>
+                            <div class="btn-group" role="group" aria-label="...">
+                                <a href="{{ route('admin_create_group') }}" class="btn btn-default"><i class="fa fa-list" aria-hidden="true"></i>&nbsp;Add Group</a>
+                                <a href="{{ route('create_project') }}" class="btn btn-default"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Add Project</a>
+                                <a href="{{ route('create_after_market') }}" class="btn btn-default"><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Add Aftermarket</a>
+                                <a href="{{ route('admin_create_user') }}" class="btn btn-default"><i class="fa fa-file-text" aria-hidden="true"></i>&nbsp;Add Seal</a>
                         </div>
                     </div>
-                    <br>
+                    
+                    <br><br><br>
+
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="col-lg-12">

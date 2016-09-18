@@ -41,9 +41,8 @@ class AuthController extends Controller
         $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
 
         if(Auth::guard()->guest()) {
-
         } else {
-            $this->redirectTo = Auth::user()->role;
+            $this->redirectTo = Auth::user()->role . '/dashboard';
         }
     }
 

@@ -16,10 +16,14 @@ class VerifyIfUserIsSuperAdmin
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (Auth::guard($guard)->check()) {
-            if ($request->user()->role != 'super_admin') {
-                abort(403, 'Unauthorized action.');
+        if (Auth::guard($guard)->guest()) {
+            if ($request->ajax() || $request->wantsJson()) {
+                return response('Unauthorized.', 401);
+            } else {
+                return redirect()->guest('login');
             }
+        } else if ($request->user()->role != 'super_admin') {
+            abort(403, 'Unauthorized action.');
         }
 
         return $next($request);

@@ -13,6 +13,7 @@ use App\Group;
 class UserController extends Controller
 {
     //
+
     public function superAdminDashboard()
     {
         $users = User::all();
@@ -31,12 +32,14 @@ class UserController extends Controller
             $reasons->addRow(array($user->name, $user->id));
         }
 
-        $barchart = $lava->PieChart('USERS', $reasons, [
-            'title' => 'Count per User',
+        $piechart = $lava->PieChart('USERS')
+        ->setOptions(array(
+            'datatable' => $reasons,
+            'title' => 'Project Sales',
             'is3D' => true,
             'height' => 400,
-            'width' => 600
-        ]);
+            'width' => 500
+        ));
 
         /*
          * GROUP CHART
@@ -58,12 +61,16 @@ class UserController extends Controller
             $data->addRow(array($groups->name, $groups->id));
         }
 
-        $barchart = $lava->PieChart('USERS', $data, [
-            'title' => 'Grouped Project',
-            'is3D' => true,
-            'height' => 400,
-            'width' => 600
-        ]);
+        $pie_chart = $group_chart->PieChart('GROUPS')
+            ->setOptions(array(
+                'datatable' => $data,
+                'title' => 'Grouped Project',
+                'is3D' => true,
+                'height' => 400,
+                'width' => 500
+            )
+        );
+            
         return view('home', compact('group_chart'));
     }
 
@@ -86,13 +93,13 @@ class UserController extends Controller
         }
 
         $piechart = $lava->PieChart('USERS')
-            ->setOptions(array(
-                'datatable' => $reasons,
-                'title' => 'Project Sales',
-                'is3D' => true,
-                'height' => 400,
-                'width' => 500
-            ));
+        ->setOptions(array(
+            'datatable' => $reasons,
+            'title' => 'Project Sales',
+            'is3D' => true,
+            'height' => 400,
+            'width' => 400
+        ));
 
         /*
          * GROUP CHART
@@ -109,19 +116,23 @@ class UserController extends Controller
 
         $data = $group_chart->DataTable();
         $data->addStringColumn('Groups')
+            ->addNumberColumn('Target')
+            ->addRow(array('Target Sale', 5000000))
             ->addNumberColumn('Percent');
         foreach($groups as $group) {
             $data->addRow(array($group->name, $group->id));
         }
 
-        $pie_chart = $group_chart->PieChart('GROUPS')
-        ->setOptions(array(
-            'datatable' => $data,
-            'title' => 'Grouped Project',
-            'is3D' => true,
-            'height' => 400,
-            'width' => 500
-        ));
+        $pie_chart = $group_chart->ColumnChart('GROUPS')
+            ->setOptions(array(
+                'datatable' => $data,
+                'title' => 'Grouped Project',
+                'height' => 400,
+                'width' => 500,
+                'hAxis' => \Lava::HorizontalAxis(['gridlines' => ['count' => -1, 'color' => '#CCC']]),
+                'vAxis' => \Lava::VerticalAxis(['gridlines' => ['count' => -1, 'color' => '#CCC']])
+            )
+        );
 
         return view('auth.admin.dashboard', compact('group_chart', 'lava'));
     }
@@ -139,6 +150,11 @@ class UserController extends Controller
     public function assistantDashboard()
     {
         return view('auth.assistant.dashboard');
+    }
+
+    public function salesEngineerDashboard()
+    {
+        return view('auth.sales_engineer.dashboard');
     }
 
     public function superAdminUserIndex()
