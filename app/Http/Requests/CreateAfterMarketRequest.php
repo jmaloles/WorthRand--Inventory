@@ -28,7 +28,7 @@ class CreateAfterMarketRequest extends Request
             'model' => 'required',
             'part_number' => 'required',
             'reference_number' => 'required',
-            'material_number' => 'required',
+            'material_number' => 'required|unique:after_markets,material_number',
             'serial_number' => 'required',
             'tag_number' => 'required',
             'drawing_number' => 'required|unique:after_markets,drawing_number',
