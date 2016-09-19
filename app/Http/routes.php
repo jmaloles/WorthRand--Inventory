@@ -43,6 +43,7 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
         Route::get('/after_market/create', 'ItemController@createAfterMarket')->name('create_after_market');
         Route::post('/after_market/create', 'ItemController@postAfterMarket')->name('post_after_market');
         Route::get('/after_market/{after_market}', 'ItemController@showAfterMarket')->name('admin_after_market_show');
+        Route::get('/aftermarkets', 'ItemController@indexAftermarket')->name('admin_after_market_index');
         Route::get('/create/project', 'ItemController@createProject')->name('create_project');
         Route::post('/create/project', 'ItemController@postProject')->name('post_project');
         Route::get('/projects', 'ItemController@indexProject')->name('admin_project_index');
