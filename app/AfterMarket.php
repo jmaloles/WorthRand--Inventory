@@ -8,6 +8,11 @@ class AfterMarket extends Model
 {
     //
 
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
+    }
+
     public static function postAfterMarket($createAfterMarketRequest)
     {
         $after_market = new AfterMarket();
@@ -26,4 +31,5 @@ class AfterMarket extends Model
             return redirect()->back()->with('message', 'AfterMarket [' . $after_market->name . '] was successfully saved');
         }
     }
+    
 }
