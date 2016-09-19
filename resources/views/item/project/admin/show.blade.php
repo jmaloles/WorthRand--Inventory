@@ -11,7 +11,7 @@
                 <nav class="col-lg-2 col-md-3 col-sm-3 col-xs-12 sidebar" {{--style="background-color: #565656;"--}}>
                     <ul class="nav nav-pills nav-stacked col-lg-12 col-md-12 col-sm-12 col-xs-12" style="font-size: 14px;">
                         <li class="nav-item"><a class="nav-link"  href="{{ route('admin_project_information', $project->id) }}"><i class="fa fa-info-circle"></i>&nbsp; Information</a></li>
-                        <li class="nav-item"><a class="nav-link"  href="#"><i class="fa fa-th-list"></i>&nbsp; Pricing History</a></li>
+                        <li class="nav-item"><a class="nav-link"  href="{{ route('admin_project_pricing_history_index', $project->id) }}"><i class="fa fa-th-list"></i>&nbsp; Pricing History</a></li>
                         <li class="nav-item"><a class="nav-link"  href="{{ route('admin_project_index') }}"><i class="fa fa-arrow-left"></i>&nbsp; back</a></li>
                     </ul>
                 </nav>
@@ -19,7 +19,7 @@
                 <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            {{ $project->name }}
+                            {{ strtoupper($project->name) }}
                         </div>
                     </div>
 

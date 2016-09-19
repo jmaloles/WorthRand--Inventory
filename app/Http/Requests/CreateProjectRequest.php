@@ -29,7 +29,7 @@ class CreateProjectRequest extends Request
             'ccn_number' => 'required',
             'part_number' => 'required',
             'reference_number' => 'required',
-            'material_number' => 'required',
+            'material_number' => 'required|unique:projects,material_number',
             'serial_number' => 'required',
             'tag_number' => 'required',
             'drawing_number' => 'required|unique:projects,drawing_number'

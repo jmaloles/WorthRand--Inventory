@@ -24,7 +24,7 @@
 
                         <div class="col-lg-6">
                             <div id="group-chart-div"></div>
-                            {!! $group_chart->render('PieChart', 'GROUPS', 'group-chart-div') !!}
+                            {!! $group_chart->render('ColumnChart', 'GROUPS', 'group-chart-div') !!}
                         </div>
                     </div>
                 </div>

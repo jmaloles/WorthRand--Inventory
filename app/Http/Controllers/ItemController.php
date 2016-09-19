@@ -12,14 +12,10 @@ use App\Http\Requests\CreateProjectRequest;
 use App\Project;
 use App\AfterMarket;
 use App\Http\Requests\UpdateProjectInformationRequest;
+use DB;
 
 class ItemController extends Controller
 {
-    //
-    public function __construct()
-    {
-        $this->middleware('verify_if_user_is_admin');
-    }
 
     public function index()
     {
@@ -97,5 +93,43 @@ class ItemController extends Controller
         $project->update($updateProjectInformationRequest->except(array('_token', '_method')));
 
         return redirect()->back()->with('message', 'Project ['.$project->name.'] was successfully updated');
+    }
+
+    public function adminProjectPricingHistoryIndex(Project $project)
+    {
+        return view('item.project.admin.pricing_history.index', compact('project'));
+    }
+
+    public function adminProjectPricingHistoryCreate(Project $project)
+    {
+        return view('item.project.admin.pricing_history.create', compact('project'));
+    }
+
+    public function adminPricingHistoryIndex()
+    {
+        return view('item.pricing_history.admin.index');
+    }
+
+    public function getItemBasedOnCategory($category)
+    {
+        $itemArray = array();
+        $items = DB::table($category)->get();
+
+        foreach($items as $item) {
+            $itemArray['suggestions'][] = [
+                'data' => $item->id,
+                'value' => $item->name,
+                'material_number' => $item->material_number,
+                'ccn_number' => $item->ccn_number,
+                'part_number' => $item->part_number,
+                'model' => $item->model,
+                'reference_number' => $item->reference_number,
+                'serial_number' => $item->serial_number,
+                'drawing_number' => $item->drawing_number,
+                'tag_number' => $item->tag_number
+            ];
+        }
+
+        return json_encode($itemArray);
     }
 }

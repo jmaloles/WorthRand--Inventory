@@ -52,11 +52,13 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
         Route::get('/project/{project}/pricing_history', 'ItemController@adminProjectPricingHistoryIndex')->name('admin_project_pricing_history_index');
         Route::get('/project/{project}/pricing_history/create', 'ItemController@adminProjectPricingHistoryCreate')->name('admin_project_pricing_history_create');
         Route::post('/project/{project}/pricing_history/create', 'ItemController@postAdminProjectPricingHistory')->name('post_admin_project_pricing_history');
+        Route::get('/pricing_history', 'ItemController@adminPricingHistoryIndex')->name('admin_pricing_history_index');
 
             /*
              * JSONS for Items
              */
             Route::get('/get_projects', 'ItemController@getProjects')->name('fetch_projects');
+            Route::get('/item/{category}', 'ItemController@getItemBasedOnCategory')->name('get_item_based_on_category');
 
         # CUSTOMERS
         Route::get('customers', 'CustomerController@adminCustomerIndex')->name('admin_customer_index');
