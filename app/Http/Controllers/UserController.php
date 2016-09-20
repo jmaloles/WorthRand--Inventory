@@ -120,7 +120,7 @@ class UserController extends Controller
             ->addRow(array('Target Sale', 5000000))
             ->addNumberColumn('Percent');
         foreach($groups as $group) {
-            $data->addRow(array($group->name, $group->id));
+            $data->addRow(array($group->name, '1000000'));
         }
 
         $pie_chart = $group_chart->ColumnChart('GROUPS')
@@ -128,9 +128,7 @@ class UserController extends Controller
                 'datatable' => $data,
                 'title' => 'Grouped Project',
                 'height' => 400,
-                'width' => 500,
-                'hAxis' => \Lava::HorizontalAxis(['gridlines' => ['count' => -1, 'color' => '#CCC']]),
-                'vAxis' => \Lava::VerticalAxis(['gridlines' => ['count' => -1, 'color' => '#CCC']])
+                'width' => 500
             )
         );
 
