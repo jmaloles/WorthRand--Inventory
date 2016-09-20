@@ -15,14 +15,9 @@
                             CUSTOMERS
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="col-lg-5">
-                                <a href="{{ route('admin_customer_create') }}" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;Add Customer</a>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>
+    </div>
 @endsection

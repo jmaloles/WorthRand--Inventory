@@ -441,9 +441,6 @@ ul.sidebar-menu , ul.sidebar-menu li ul.sub{
     padding: 0;
 }
 
-ul.sidebar-menu {
-    margin-top: 75px;
-}
 
 #sidebar > ul > li > ul.sub {
     display: none;
