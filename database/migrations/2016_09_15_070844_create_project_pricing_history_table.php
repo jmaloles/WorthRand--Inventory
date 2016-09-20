@@ -17,6 +17,10 @@ class CreateProjectPricingHistoryTable extends Migration
             $table->integer('project_id');
             $table->date('pricing_date');
             $table->string('price');
+            $table->string('terms');
+            $table->string('delivery');
+            $table->string('fpd_reference');
+            $table->string('wpc_reference');
             $table->timestamps();
         });
     }

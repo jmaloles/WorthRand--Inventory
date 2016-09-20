@@ -23,10 +23,21 @@
                     <div class="row">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <i class="fa fa-plus-circle"></i> ADD PRICING HISTORY
+                                <span class="glyphicon glyphicon-list-alt"></span>&nbsp;PRICING HISTORY
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="btn-group" role="group" aria-label="...">
+                                <a href="{{ route('admin_create_group') }}" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Pricing History</a>
+                                <a href="{{ route('create_project') }}" class="btn btn-success"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Proceed to Proposal</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br>
 
                     <div class="row">
                         <div class="col-lg-6">
