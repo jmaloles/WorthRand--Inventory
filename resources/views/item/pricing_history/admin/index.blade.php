@@ -23,10 +23,20 @@
                     <div class="row">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <i class="fa fa-plus-circle"></i> ADD PRICING HISTORY
+                                <span class="glyphicon glyphicon-list-alt"></span>&nbsp;PRICING HISTORY
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <a href="{{ route('create_project') }}" class="btn btn-default"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Add Item</a>
+                            <a href="{{ route('create_project') }}" class="btn btn-default"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;&nbsp;Proceed to Indented Proposal</a>
+                            <a href="{{ route('create_project') }}" class="btn btn-default"><i class="fa fa-money" aria-hidden="true"></i>&nbsp;&nbsp;Proceed to Buy & Sell Proposal</a>
+                        </div>
+                    </div>
+
+                    <br>
 
                     <div class="row">
                         <div class="col-lg-6">

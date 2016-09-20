@@ -120,7 +120,7 @@ class UserController extends Controller
             ->addRow(array('Target Sale', 5000000))
             ->addNumberColumn('Percent');
         foreach($groups as $group) {
-            $data->addRow(array($group->name, $group->id));
+            $data->addRow(array($group->name, '1000000'));
         }
 
         $pie_chart = $group_chart->ColumnChart('GROUPS')
