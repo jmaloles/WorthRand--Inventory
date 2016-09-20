@@ -32,5 +32,11 @@
             jQuery('#accordion').dcAccordion();
         });
         </script>
+
+        <style>
+            body {
+                background-color: white;
+            }
+        </style>
     </body>
 </html>

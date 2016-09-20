@@ -18,14 +18,6 @@
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="col-lg-5">
-                            <a href="{{ route('admin_create_user') }}" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;Add User</a>
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-lg-12">
                             <div class="col-lg-12">
                                 <div class="table-responsive">
                                     <table class="table">
