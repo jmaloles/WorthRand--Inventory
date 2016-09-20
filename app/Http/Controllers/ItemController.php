@@ -132,4 +132,11 @@ class ItemController extends Controller
 
         return json_encode($itemArray);
     }
+
+    public function indexAftermarket()
+    {
+        $aftermarkets = AfterMarket::all();
+
+        return view('item.after_market.admin.index', compact('aftermarkets'));
+    }
 }
