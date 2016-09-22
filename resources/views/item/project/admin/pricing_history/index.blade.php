@@ -8,12 +8,31 @@
     <div class="container-fluid">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="row">
-                <nav class="col-lg-2 col-md-3 col-sm-3 col-xs-12 sidebar" {{--style="background-color: #565656;"--}}>
-                    <ul class="nav nav-pills nav-stacked col-lg-12 col-md-12 col-sm-12 col-xs-12" style="font-size: 14px;">
-                        <li class="nav-item"><a class="nav-link"  href="{{ route('admin_project_pricing_history_create', $project->id) }}"><i class="fa fa-plus-circle"></i>&nbsp; Add Pricing History</a></li>
-                        <li class="nav-item"><a class="nav-link"  href="{{ route('admin_project_show', $project->id) }}"><i class="fa fa-arrow-left"></i>&nbsp; Back</a></li>
+                <div class="sidebar col-lg-2 col-md-3 col-sm-3 col-xs-12 ">
+                    <ul id="accordion" class="nav nav-pills nav-stacked sidebar-menu">
+                        <li>
+                            <li class="nav-item"><a class="nav-link" href="#"><i class="fa fa-cog"></i>&nbsp; {{ $project->name }}</a>
+                                <ul class="sub">
+                                    <li><a href="{{ route('admin_project_show', $project->id) }}"><i class="fa fa-cog"></i>&nbsp;Profile</a></li>
+                                    <li><a href="{{ route('admin_project_information', $project->id) }}"><i class="fa fa-pencil"></i>&nbsp;Update Information</a></li>
+                                    <li class="nav-item"><a class="nav-link"  href="{{ route('admin_project_pricing_history_create', $project->id) }}"><i class="fa fa-plus"></i>&nbsp; Add AfterMarket</a></li>
+                                </ul>
+                            </li>
+                        </li>
+
+                        <li>
+                            <li class="nav-item"><a class="nav-link"  href="#"><i class="fa fa-th-list"></i>&nbsp; Pricing History</a>
+                                <ul class="sub">
+                                    <li><a href="{{ route('admin_project_pricing_history_index', $project->id) }}"><i class="fa fa-th-list"></i>&nbsp;Pricing History List</a></li>
+                                    <li class="nav-item"><a class="nav-link"  href="{{ route('admin_project_pricing_history_create', $project->id) }}"><i class="fa fa-plus"></i>&nbsp; Add Pricing History</a></li>
+                                </ul>
+                            </li>
+                        </li>
+
+
+                        <li class="nav-item"><a class="nav-link"  href="{{ route('admin_project_index') }}"><i class="fa fa-arrow-left"></i>&nbsp; back</a></li>
                     </ul>
-                </nav>
+                </div>
 
                 <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
                     <div class="panel panel-default">
@@ -29,7 +48,7 @@
                                     <table class="table">
                                         <thead>
                                             <th>#</th>
-                                            <th>Purchase Order Number</th>
+                                            <th>P.O Number</th>
                                             <th>Year</th>
                                             <th>Price</th>
                                             <th>Terms</th>
@@ -39,15 +58,18 @@
                                         </thead>
 
                                         <tbody>
+                                        @foreach($project->project_pricing_history as $pricing_history)
                                             <tr>
                                                 <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                                <td>{{ $pricing_history->po_number }}</td>
+                                                <td>{{ $pricing_history->pricing_date }}</td>
+                                                <td>{{ $pricing_history->price }}</td>
+                                                <td>{{ $pricing_history->terms }}</td>
+                                                <td>{{ $pricing_history->delivery }}</td>
+                                                <td>{{ $pricing_history->fpd_reference }}</td>
+                                                <td>{{ $pricing_history->wpc_reference }}</td>
                                             </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>
