@@ -30,10 +30,10 @@
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <a class="nav-link" href="#" onclick='document.getElementById("createAfterMarketForm").submit();'><i class="fa fa-check"></i>&nbsp; Create After Market</a>
+                            <a class="btn btn-success" href="#" onclick='document.getElementById("createAfterMarketForm").submit();'><i class="fa fa-check"></i>&nbsp; Create After Market</a>
                         </div>
                     </div>
-
+                    <br>
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
