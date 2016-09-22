@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\ProjectPricingHistory;
 
 class Project extends Model
 {
@@ -13,6 +14,11 @@ class Project extends Model
     public function after_markets()
     {
         return $this->hasMany(AfterMarket::class);
+    }
+
+    public function project_pricing_history()
+    {
+        return $this->hasMany(ProjectPricingHistory::class);
     }
 
     public static function createProject($createProjectRequest)
@@ -32,6 +38,28 @@ class Project extends Model
             return redirect()->back()->with('message', 'Project ['.$project->name.'] was successfully created');
         }
     }
+
+    public static function addProjectPricingHistory($addProjectPricingHistoryRequest, $project)
+    {
+        $project_pricing_history = new ProjectPricingHistory();
+        $project_pricing_history->project_id = $project->id;
+        $project_pricing_history->po_number = $addProjectPricingHistoryRequest->get('po_number');
+        $project_pricing_history->pricing_date = $addProjectPricingHistoryRequest->get('pricing_date');
+        $project_pricing_history->price = $addProjectPricingHistoryRequest->get('price');
+        $project_pricing_history->terms = $addProjectPricingHistoryRequest->get('terms');
+        $project_pricing_history->delivery = $addProjectPricingHistoryRequest->get('delivery');
+        $project_pricing_history->fpd_reference = strtoupper($addProjectPricingHistoryRequest->get('fpd_reference'));
+        $project_pricing_history->wpc_reference = strtoupper($addProjectPricingHistoryRequest->get('wpc_reference'));
+
+        if($project_pricing_history->save()) {
+            return redirect()->back()->with('message', 'Pricing History for Project ['.$project->name.'] was successfully saved');
+        }
+
+    }
+
+    /*
+     * JSON Section
+     * */
 
     public static function fetchProjects()
     {
