@@ -13,6 +13,7 @@ use App\Project;
 use App\AfterMarket;
 use App\Http\Requests\UpdateProjectInformationRequest;
 use DB;
+use App\Http\Requests\AddProjectPricingHistoryRequest;
 
 class ItemController extends Controller
 {
@@ -138,5 +139,12 @@ class ItemController extends Controller
         $aftermarkets = AfterMarket::all();
 
         return view('item.after_market.admin.index', compact('aftermarkets'));
+    }
+
+    public function adminAddProjectPricingHistory(AddProjectPricingHistoryRequest $addProjectPricingHistoryRequest, Project $project)
+    {
+        $add_project_pricing_history = Project::addProjectPricingHistory($addProjectPricingHistoryRequest, $project);
+
+        return $add_project_pricing_history;
     }
 }
