@@ -147,4 +147,11 @@ class ItemController extends Controller
 
         return $add_project_pricing_history;
     }
+
+    public function adminProjectDashboard()
+    {
+        $projects = Project::all();
+
+        return view('project.admin.dashboard', compact('projects'));
+    }
 }
