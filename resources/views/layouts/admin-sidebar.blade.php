@@ -35,7 +35,7 @@
                     <li><a href="{{ route('admin_project_dashboard') }}"><i class="fa fa-cog"></i>&nbsp;Project Dashboard</a></li>
                     <li><a href="{{ route('admin_project_index') }}"><i class="fa fa-cog"></i>&nbsp;Project List</a></li>
                     <li><a href="{{ route('create_project') }}"><i class="fa fa-plus"></i>&nbsp;Add Project</a></li>
-                    <li><a href="{{ route('admin_aftermarket_dashboard') }}"><i class="fa fa-cog"></i>&nbsp;AfterMarket Dashboard</a></li>
+                    <li><a href="{{ route('admin_project_dashboard') }}"><i class="fa fa-cog"></i>&nbsp;AM Dashboard</a></li>
                     <li><a href="{{ route('admin_after_market_index') }}"><i class="fa fa-cogs"></i>&nbsp;AfterMarket List</a></li>
                     <li><a href="{{ route('create_after_market') }}"><i class="fa fa-plus"></i>&nbsp;Add AfterMarket</a></li>
                     <li><a class="nav-link"  href="#"><i class="fa fa-file-text-o"></i>&nbsp; Seal</a></li>
