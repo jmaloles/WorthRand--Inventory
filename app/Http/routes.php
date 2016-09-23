@@ -58,6 +58,7 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
             Route::post('/project/{project}/pricing_history/create', 'ItemController@adminAddProjectPricingHistory')->name('admin_add_project_pricing_history');
             Route::patch('/project/{project}/update', 'ItemController@adminUpdateProjectInformation')->name('admin_project_information_update');
             Route::post('/create/project', 'ItemController@postProject')->name('post_project');
+            Route::get('/project/dashboard', 'ItemController@adminProjectDashboard')->name('admin_project_dashboard');
 
         # PRICING HISTORY
             Route::get('/pricing_history', 'ItemController@adminPricingHistoryIndex')->name('admin_pricing_history_index');
@@ -73,5 +74,8 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
             Route::get('customers', 'CustomerController@adminCustomerIndex')->name('admin_customer_index');
             Route::get('create/customer', 'CustomerController@adminCreateCustomer')->name('admin_customer_create');
             Route::post('create/customer', 'CustomerController@adminPostCustomer')->name('post_create_customer');
+
+        # PROPOSALS
+            Route::get('/proposal/create', 'ProposalController@adminCreateProposal')->name('admin_create_proposal');
     });
 });
