@@ -44,12 +44,12 @@ class Project extends Model
         $project_pricing_history = new ProjectPricingHistory();
         $project_pricing_history->project_id = $project->id;
         $project_pricing_history->po_number = $addProjectPricingHistoryRequest->get('po_number');
-        $project_pricing_history->pricing_date = $addProjectPricingHistoryRequest->get('pricing_date');
-        $project_pricing_history->price = $addProjectPricingHistoryRequest->get('price');
-        $project_pricing_history->terms = $addProjectPricingHistoryRequest->get('terms');
-        $project_pricing_history->delivery = $addProjectPricingHistoryRequest->get('delivery');
-        $project_pricing_history->fpd_reference = strtoupper($addProjectPricingHistoryRequest->get('fpd_reference'));
-        $project_pricing_history->wpc_reference = strtoupper($addProjectPricingHistoryRequest->get('wpc_reference'));
+        $project_pricing_history->pricing_date = trim($addProjectPricingHistoryRequest->get('pricing_date'));
+        $project_pricing_history->price = trim($addProjectPricingHistoryRequest->get('price'));
+        $project_pricing_history->terms = trim($addProjectPricingHistoryRequest->get('terms'));
+        $project_pricing_history->delivery = trim($addProjectPricingHistoryRequest->get('delivery'));
+        $project_pricing_history->fpd_reference = trim(strtoupper($addProjectPricingHistoryRequest->get('fpd_reference')));
+        $project_pricing_history->wpc_reference = trim(strtoupper($addProjectPricingHistoryRequest->get('wpc_reference')));
 
         if($project_pricing_history->save()) {
             return redirect()->back()->with('message', 'Pricing History for Project ['.$project->name.'] was successfully saved');
