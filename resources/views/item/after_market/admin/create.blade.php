@@ -8,12 +8,7 @@
     <div class="container-fluid">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="row">
-                <nav class="col-lg-2 col-md-3 col-sm-3 col-xs-12 sidebar" {{--style="background-color: #565656;"--}}>
-                    <ul class="nav nav-pills nav-stacked col-lg-12 col-md-12 col-sm-12 col-xs-12" style="font-size: 14px;">
-                        <li class="nav-item"><a class="nav-link" href="#" onclick='document.getElementById("createAfterMarketForm").submit();'><i class="fa fa-check"></i>&nbsp; Create After Market</a></li>
-                        <li class="nav-item"><a class="nav-link"  href="{{ route('items') }}"><i class="fa fa-arrow-left"></i>&nbsp; Back</a></li>
-                    </ul>
-                </nav>
+                @include('layouts.admin-sidebar')
                 
                 <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
                     @if(Session::has('message'))
@@ -33,6 +28,12 @@
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <a class="btn btn-success" href="#" onclick='document.getElementById("createAfterMarketForm").submit();'><i class="fa fa-check"></i>&nbsp; Create After Market</a>
+                        </div>
+                    </div>
+                    <br>
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
