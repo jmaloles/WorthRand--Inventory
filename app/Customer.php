@@ -10,6 +10,10 @@ class Customer extends Model
         'name', 'address', 'city', 'postal_code'
     ];
 
+    public function branches()
+    {
+        return $this->hasMany(Branch::class);
+    }
 
     public static function createCustomer($createCustomerRequest)
     {
