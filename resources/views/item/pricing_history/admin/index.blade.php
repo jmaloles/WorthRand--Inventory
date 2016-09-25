@@ -30,10 +30,9 @@
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="btn-group" role="group" aria-label="...">
-                                <a href="{{ route('admin_create_group') }}" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Pricing History</a>
-                                <a href="{{ route('create_project') }}" class="btn btn-success"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Proceed to Proposal</a>
-                            </div>
+                            <a href="{{ route('create_project') }}" class="btn btn-default"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Add Item</a>
+                            <a href="{{ route('create_project') }}" class="btn btn-default"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;&nbsp;Proceed to Indented Proposal</a>
+                            <a href="{{ route('create_project') }}" class="btn btn-default"><i class="fa fa-money" aria-hidden="true"></i>&nbsp;&nbsp;Proceed to Buy & Sell Proposal</a>
                         </div>
                     </div>
 
