@@ -24,7 +24,6 @@
                     <li><a href="{{ route('admin_customer_index') }}"><i class="fa fa-star"></i>&nbsp;Customer List</a></li>
                     <li><a href="{{ route('admin_sales_engineer_index') }}"><i class="fa fa-code-fork" aria-hidden="true"></i>&nbsp;Branch List</a></li>
                     <li><a href="{{ route('admin_customer_create') }}" ><i class="fa fa-plus"></i>&nbsp;Add Customer</a></li>
-                    <li><a href="{{ route('admin_customer_create') }}" ><i class="fa fa-plus"></i>&nbsp;Add Branch</a></li>
                 </ul>
             </li>
         </li>
@@ -44,5 +43,7 @@
         </li>
         
         <li class="nav-item {{ Request::route()->getName() == 'admin_pricing_history_index' ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin_pricing_history_index') }}"><i class="fa fa-list-alt"></i>&nbsp; Pricing History</a></li>
+
+        <li class="nav-item {{ Request::route()->getName() == 'search' ? 'active' : '' }}"><a class="nav-link" href="{{ route('search') }}"><i class="fa fa-search"></i>&nbsp; Search</a></li>
     </ul>
 </div>
