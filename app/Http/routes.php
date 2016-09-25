@@ -17,9 +17,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => 'check_if_user_is_super_admin'], function() {
     Route::group(['prefix' => 'super_admin'], function() {
-        Route::get('dashboard', 'UserController@superAdminDashboard')->name('super_admin_dashboard');
+        Route::get('/dashboard', 'UserController@superAdminDashboard')->name('super_admin_dashboard');
 
-        Route::get('users', 'UserController@superAdminUserIndex')->name('super_admin_user_index');
+        Route::get('/users', 'UserController@superAdminUserIndex')->name('super_admin_user_index');
     });
 });
 
@@ -27,12 +27,12 @@ Route::group(['middleware' => 'check_if_user_is_super_admin'], function() {
 Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
     Route::group(['prefix' => 'admin'], function() {
         # DASHBOARD
-            Route::get('dashboard', 'UserController@adminDashboard')->name('admin_dashboard');
+            Route::get('/dashboard', 'UserController@adminDashboard')->name('admin_dashboard');
 
         # USERS
-            Route::get('users', 'UserController@adminUserIndex')->name('admin_user_index');
-            Route::get('create/user/', 'UserController@adminCreateUser')->name('admin_create_user');
-            Route::post('create/user/', 'UserController@adminPostUser')->name('post_create_user');
+            Route::get('/users', 'UserController@adminUserIndex')->name('admin_user_index');
+            Route::get('/create/user/', 'UserController@adminCreateUser')->name('admin_create_user');
+            Route::post('/create/user/', 'UserController@adminPostUser')->name('post_create_user');
             Route::get('/sales_engineers', 'UserController@showSalesEngineers')->name('admin_sales_engineer_index');
 
         # ITEMS
@@ -63,19 +63,27 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
         # PRICING HISTORY
             Route::get('/pricing_history', 'ItemController@adminPricingHistoryIndex')->name('admin_pricing_history_index');
 
-
-        /*
-         * JSONS for Items
-         */
-            Route::get('/get_projects', 'ItemController@getProjects')->name('fetch_projects');
-            Route::get('/item/{category}', 'ItemController@getItemBasedOnCategory')->name('get_item_based_on_category');
+            /*
+             * JSONS for Items
+             */
+                Route::get('/get_projects', 'ItemController@getProjects')->name('fetch_projects');
+                Route::get('/item/{category}', 'ItemController@getItemBasedOnCategory')->name('get_item_based_on_category');
 
         # CUSTOMERS
-            Route::get('customers', 'CustomerController@adminCustomerIndex')->name('admin_customer_index');
-            Route::get('create/customer', 'CustomerController@adminCreateCustomer')->name('admin_customer_create');
-            Route::post('create/customer', 'CustomerController@adminPostCustomer')->name('post_create_customer');
+            Route::get('/customers', 'CustomerController@adminCustomerIndex')->name('admin_customer_index');
+            Route::get('/create/customer', 'CustomerController@adminCreateCustomer')->name('admin_customer_create');
+            Route::post('/create/customer', 'CustomerController@adminPostCustomer')->name('post_create_customer');
+            Route::get('/customer/{customer}', 'CustomerController@adminShowCustomerProfile')->name('admin_show_customer');
+            Route::get('/customer/{customer}/branch/create', 'BranchController@adminCreateBranch')->name('admin_create_branch');
+            Route::post('/customer/{customer}/branch/create', 'BranchController@adminPostCreateBranch')->name('admin_post_create_branch');
+            Route::get('/customer/{customer}/edit', 'CustomerController@adminEditCustomerInformation')->name('admin_edit_customer_information');
+            Route::get('/customer/{customer}/branches', 'CustomerController@adminCustomerBranchList')->name('admin_customer_branch_list');
+            Route::patch('/customer/{customer}/edit', 'CustomerController@adminPostEditCustomerInformation')->name('admin_post_edit_customer_information');
 
         # PROPOSALS
-            Route::get('/proposal/create', 'ProposalController@adminCreateProposal')->name('admin_create_proposal');
+            Route::post('/proposal/create', 'ProposalController@adminCreateProposal')->name('admin_create_proposal');
+
+        # SEARCH
+            Route::get('/search', function() { return view('search.admin.index'); })->name('search');
     });
 });
