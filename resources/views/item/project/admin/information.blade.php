@@ -8,12 +8,30 @@
     <div class="container-fluid">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="row">
-                <nav class="col-lg-2 col-md-3 col-sm-3 col-xs-12 sidebar" {{--style="background-color: #565656;"--}}>
-                    <ul class="nav nav-pills nav-stacked col-lg-12 col-md-12 col-sm-12 col-xs-12" style="font-size: 14px;">
-                        <li class="nav-item"><a class="nav-link" href="#" onclick='document.getElementById("createProjectForm").submit();'><i class="fa fa-check"></i>&nbsp; Update Information</a></li>
-                        <li class="nav-item"><a class="nav-link"  href="{{ route('admin_project_show', $project->id) }}"><i class="fa fa-arrow-left"></i>&nbsp; Back</a></li>
+                <div class="sidebar col-lg-2 col-md-3 col-sm-3 col-xs-12 ">
+                    <ul id="accordion" class="nav nav-pills nav-stacked sidebar-menu">
+                        <li>
+                            <li class="nav-item"><a class="nav-link" href="#"><i class="fa fa-cog"></i>&nbsp; {{ $project->name }}</a>
+                                <ul class="sub">
+                                    <li><a href="{{ route('admin_project_show', $project->id) }}"><i class="fa fa-cog"></i>&nbsp;Profile</a></li>
+                                    <li><a href="{{ route('admin_project_information', $project->id) }}"><i class="fa fa-pencil"></i>&nbsp;Update Information</a></li>
+                                    <li class="nav-item"><a class="nav-link"  href="{{ route('admin_project_pricing_history_create', $project->id) }}"><i class="fa fa-plus"></i>&nbsp; Add AfterMarket</a></li>
+                                </ul>
+                            </li>
+                        </li>
+
+                        <li>
+                            <li class="nav-item"><a class="nav-link"  href="#"><i class="fa fa-th-list"></i>&nbsp; Pricing History</a>
+                                <ul class="sub">
+                                    <li><a href="{{ route('admin_project_pricing_history_index', $project->id) }}"><i class="fa fa-th-list"></i>&nbsp;Pricing History List</a></li>
+                                    <li class="nav-item"><a class="nav-link"  href="{{ route('admin_project_pricing_history_create', $project->id) }}"><i class="fa fa-plus"></i>&nbsp; Add Pricing History</a></li>
+                                </ul>
+                            </li>
+                        </li>
+
+                        <li class="nav-item"><a class="nav-link"  href="{{ route('admin_project_index') }}"><i class="fa fa-arrow-left"></i>&nbsp; back</a></li>
                     </ul>
-                </nav>
+                </div>
 
                 <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
                     @if(Session::has('message'))
@@ -32,6 +50,14 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <button class="btn btn-success" onclick='document.getElementById("createProjectForm").submit();'>Update</button>
+                        </div>
+                    </div>
+
+                    <br>
 
                     <div class="row">
                         <div class="col-lg-12">
