@@ -21,6 +21,7 @@
         <script src="{{ URL::to('/') }}/accordion-menu/js/jquery.cookie.js"></script>
         <script type='text/javascript' src="{{ URL::to('/') }}/accordion-menu/js/jquery.hoverIntent.minified.js"></script>
         <script src="{{ URL::to('/') }}/accordion-menu/js/jquery.dcjqaccordion.2.7.min.js"></script>
+        <script src="{{ URL::to('/') }}/moment.js"></script>
         @include('layouts.header')
     </head>
 
