@@ -15,13 +15,14 @@
         <link rel="stylesheet" href="{{ URL::to('/') }}/accordion-menu/css/dcaccordion.css">
         <link rel="stylesheet" href="{{ URL::to('/') }}/accordion-menu/css/skins/black.css">
 
-        <script src="{{ URL::to('/') }}/bootstrap-3.3.7-dist/js/jquery.min.js"></script>
-        <script src="{{ URL::to('/') }}/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-        <script src="{{ URL::to('/') }}/searchable-dropdown/dist/jquery.autocomplete.js"></script>
-        <script src="{{ URL::to('/') }}/accordion-menu/js/jquery.cookie.js"></script>
+        <script type='text/javascript' src="{{ URL::to('/') }}/bootstrap-3.3.7-dist/js/jquery.min.js"></script>
+        <script type='text/javascript' src="{{ URL::to('/') }}/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+        <script type='text/javascript' src="{{ URL::to('/') }}/searchable-dropdown/dist/jquery.autocomplete.js"></script>
+        <script type='text/javascript' src="{{ URL::to('/') }}/accordion-menu/js/jquery.cookie.js"></script>
         <script type='text/javascript' src="{{ URL::to('/') }}/accordion-menu/js/jquery.hoverIntent.minified.js"></script>
-        <script src="{{ URL::to('/') }}/accordion-menu/js/jquery.dcjqaccordion.2.7.min.js"></script>
-        <script src="{{ URL::to('/') }}/moment.js"></script>
+        <script type='text/javascript' src="{{ URL::to('/') }}/accordion-menu/js/jquery.dcjqaccordion.2.7.min.js"></script>
+        <script type='text/javascript' src="{{ URL::to('/') }}/moment.js"></script>
+        <script type='text/javascript' src="{{ URL::to('/') }}/notify.min.js"></script>
         @include('layouts.header')
     </head>
 
