@@ -250,9 +250,7 @@
         var item_category = "";
         var wrapper       = $(".pricing_history_wrapper"); //Fields wrapper
 
-        $.notify.defaults({
-            globalPosition: 'bottom right',
-        })
+
 
         $('#item_category').change(function () {
             document.getElementById("project_dropdown").value = "";
@@ -354,9 +352,12 @@
                 items.push(document.getElementById("item_id").value + '-' + item_category);
                 document.getElementById("test_id").value = items;
 
-                $.notify("Item "  + document.getElementById("project_dropdown").value +  " was successfully added", "success");
+
+                alertify.notify("Item "  + document.getElementById("project_dropdown").value +  " was successfully added", 'success', 5);
+                /*$.notify("Item "  + document.getElementById("project_dropdown").value +  " was successfully added", "success");*/
             } else {
-                $.notify("Item " + document.getElementById("project_dropdown").value + " is already added", "error");
+                alertify.notify("Item " + document.getElementById("project_dropdown").value + " is already added", 'error', 5);
+                /*$.notify("Item " + document.getElementById("project_dropdown").value + " is already added", "error");*/
             }
         });
     </script>

@@ -14,6 +14,8 @@
         <link rel="stylesheet" href="{{ URL::to('/') }}/searchable-dropdown/content/styles.css">
         <link rel="stylesheet" href="{{ URL::to('/') }}/accordion-menu/css/dcaccordion.css">
         <link rel="stylesheet" href="{{ URL::to('/') }}/accordion-menu/css/skins/black.css">
+        <link rel="stylesheet" href="{{ URL::to('/') }}/alertifyjs/css/themes/default.css">
+        <link rel="stylesheet" href="{{ URL::to('/') }}/alertifyjs/css/alertify.css">
 
         <script type='text/javascript' src="{{ URL::to('/') }}/bootstrap-3.3.7-dist/js/jquery.min.js"></script>
         <script type='text/javascript' src="{{ URL::to('/') }}/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
@@ -22,7 +24,7 @@
         <script type='text/javascript' src="{{ URL::to('/') }}/accordion-menu/js/jquery.hoverIntent.minified.js"></script>
         <script type='text/javascript' src="{{ URL::to('/') }}/accordion-menu/js/jquery.dcjqaccordion.2.7.min.js"></script>
         <script type='text/javascript' src="{{ URL::to('/') }}/moment.js"></script>
-        <script type='text/javascript' src="{{ URL::to('/') }}/notify.min.js"></script>
+        <script type='text/javascript' src="{{ URL::to('/') }}/alertifyjs/alertify.min.js"></script>
         @include('layouts.header')
     </head>
 
@@ -33,11 +35,14 @@
         jQuery(document).ready(function($) {
             jQuery('#accordion').dcAccordion();
         });
+
+        alertify.set('notifier','position', 'top-right');
         </script>
 
         <style>
             body {
                 background-color: white;
+                font-family: "Droid Sans","Droid Arabic Kufi","Helvetica Neue","Helvetica","Arial",sans-serif !important;
             }
         </style>
     </body>
