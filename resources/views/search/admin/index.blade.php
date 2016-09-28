@@ -250,6 +250,10 @@
         var item_category = "";
         var wrapper       = $(".pricing_history_wrapper"); //Fields wrapper
 
+        $.notify.defaults({
+            globalPosition: 'bottom right',
+        })
+
         $('#item_category').change(function () {
             document.getElementById("project_dropdown").value = "";
             document.getElementById("ccn_number").value = "";
@@ -265,8 +269,6 @@
             $( "select option:selected" ).each(function() {
                 item_category += $( this ).val();
             });
-
-            console.log(item_category);
 
             $('#project_dropdown').autocomplete({
                 serviceUrl: "{{ URL::to('/') }}/{{ Auth::user()->role }}/item/" + item_category,
@@ -347,13 +349,15 @@
         });
 
         $("#addItemBtn").click(function() {
-            var existing_item = $.inArray(document.getElementById("item_id").value, items);
+            var existing_item = $.inArray(document.getElementById("item_id").value + '-' + item_category, items);
             if(existing_item == -1) {
                 items.push(document.getElementById("item_id").value + '-' + item_category);
                 document.getElementById("test_id").value = items;
 
-                console.log(items);
-            } else {}
+                $.notify("Item "  + document.getElementById("project_dropdown").value +  " was successfully added", "success");
+            } else {
+                $.notify("Item " + document.getElementById("project_dropdown").value + " is already added", "error");
+            }
         });
     </script>
 @endsection
