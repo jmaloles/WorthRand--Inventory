@@ -24,4 +24,12 @@ class BranchController extends Controller
         return redirect()->back()->with('message', 'Branch ['. $branch->name .'] was successfully created');
     }
 
+    public function adminBranchIndex()
+    {
+        $ctr = 0;
+        $branches = Branch::paginate(30);
+
+        return view('branch.admin.index', compact('branches', 'ctr'));
+    }
+
 }
