@@ -13,6 +13,7 @@ use App\Project;
 use App\AfterMarket;
 use App\Http\Requests\UpdateProjectInformationRequest;
 use DB;
+use App\Http\Requests\AddProjectPricingHistoryRequest;
 
 class ItemController extends Controller
 {
@@ -116,8 +117,11 @@ class ItemController extends Controller
         $items = DB::table($category)->get();
 
         foreach($items as $item) {
+            $pricing_history = DB::table(str_singular($category).'_pricing_histories')->where(str_singular($category).'_pricing_histories.project_id', '=', $item->id)->latest()->get();
+
             $itemArray['suggestions'][] = [
                 'data' => $item->id,
+                'item_id' => $item->id,
                 'value' => $item->name,
                 'material_number' => $item->material_number,
                 'ccn_number' => $item->ccn_number,
@@ -126,7 +130,9 @@ class ItemController extends Controller
                 'reference_number' => $item->reference_number,
                 'serial_number' => $item->serial_number,
                 'drawing_number' => $item->drawing_number,
-                'tag_number' => $item->tag_number
+                'tag_number' => $item->tag_number,
+                'table_name' => $category,
+                'pricinHistoryArray' => $pricing_history
             ];
         }
 
@@ -138,5 +144,19 @@ class ItemController extends Controller
         $aftermarkets = AfterMarket::all();
 
         return view('item.after_market.admin.index', compact('aftermarkets'));
+    }
+
+    public function adminAddProjectPricingHistory(AddProjectPricingHistoryRequest $addProjectPricingHistoryRequest, Project $project)
+    {
+        $add_project_pricing_history = Project::addProjectPricingHistory($addProjectPricingHistoryRequest, $project);
+
+        return $add_project_pricing_history;
+    }
+
+    public function adminProjectDashboard()
+    {
+        $projects = Project::all();
+
+        return view('project.admin.dashboard', compact('projects'));
     }
 }
