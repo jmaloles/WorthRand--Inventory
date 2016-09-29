@@ -14,6 +14,9 @@ use App\AfterMarket;
 use App\Http\Requests\UpdateProjectInformationRequest;
 use DB;
 use App\Http\Requests\AddProjectPricingHistoryRequest;
+use App\Http\Requests\CreateAfterMarketPricingHistoryRequest;
+use App\AfterMarketPricingHistory;
+use App\Http\Requests\UpdateAfterMarketInformationRequest;
 
 class ItemController extends Controller
 {
@@ -83,9 +86,9 @@ class ItemController extends Controller
         return view('item.project.admin.information', compact('project'));
     }
 
-    public function showAfterMarket()
+    public function showAfterMarket(AfterMarket $afterMarket)
     {
-        return view('item.after_market.admin.show');
+        return view('item.after_market.admin.show', compact('afterMarket'));
     }
 
     public function adminUpdateProjectInformation(Request $request, UpdateProjectInformationRequest $updateProjectInformationRequest)
@@ -117,7 +120,7 @@ class ItemController extends Controller
         $items = DB::table($category)->get();
 
         foreach($items as $item) {
-            $pricing_history = DB::table(str_singular($category).'_pricing_histories')->where(str_singular($category).'_pricing_histories.project_id', '=', $item->id)->latest()->get();
+            $pricing_history = DB::table(str_singular($category).'_pricing_histories')->where(str_singular($category).'_pricing_histories.' . str_singular($category) . '_id', '=', $item->id)->latest()->get();
 
             $itemArray['suggestions'][] = [
                 'data' => $item->id,
@@ -153,10 +156,40 @@ class ItemController extends Controller
         return $add_project_pricing_history;
     }
 
+    public function adminAddAfterMarketPricingHistory(CreateAfterMarketPricingHistoryRequest $createAfterMarketPricingHistoryRequest, AfterMarket $afterMarket)
+    {
+        $add_after_market_pricing_history = AfterMarket::addAfterMarketPricingHistory($createAfterMarketPricingHistoryRequest, $afterMarket);
+
+        return $add_after_market_pricing_history;
+    }
+
     public function adminProjectDashboard()
     {
         $projects = Project::all();
 
         return view('project.admin.dashboard', compact('projects'));
+    }
+
+    public function adminAfterMarketInformation(AfterMarket $afterMarket)
+    {
+        return view('item.after_market.admin.edit', compact('afterMarket'));
+    }
+
+    public function adminAfterMarketPricingHistoryIndex(AfterMarket $afterMarket)
+    {
+        return view('item.after_market.admin.pricing_history.index', compact('afterMarket'));
+    }
+
+    public function adminUpdateAfterMarketInformation(Request $request, UpdateAfterMarketInformationRequest $updateAfterMarketInformationRequest)
+    {
+        $afterMarket = AfterMarket::find($request->get('aftermarket_id'));
+        $afterMarket->update($updateAfterMarketInformationRequest->except(array('_token', '_method', 'aftermarket_id')));
+
+        return redirect()->back()->with('message', 'AfterMarket ['.$afterMarket->name.'] was successfully updated');
+    }
+
+    public function adminAfterMarketPricingHistoryCreate(AfterMarket $afterMarket)
+    {
+        return view('item.after_market.admin.pricing_history.create', compact('afterMarket'));
     }
 }

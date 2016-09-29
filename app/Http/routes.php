@@ -42,10 +42,15 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
 
         # AFTERMARKETS
             Route::get('/after_markets', 'ItemController@afterMarketIndex')->name('after_market_index');
-            Route::get('/after_market/create', 'ItemController@createAfterMarket')->name('create_after_market');
-            Route::get('/after_market/{after_market}', 'ItemController@showAfterMarket')->name('admin_after_market_show');
+            Route::get('/aftermarket/create', 'ItemController@createAfterMarket')->name('create_after_market');
+            Route::get('/aftermarket/{afterMarket}', 'ItemController@showAfterMarket')->name('admin_after_market_show');
             Route::get('/aftermarkets', 'ItemController@indexAftermarket')->name('admin_after_market_index');
-            Route::post('/after_market/create', 'ItemController@postAfterMarket')->name('post_after_market');
+            Route::post('/aftermarket/create', 'ItemController@postAfterMarket')->name('post_after_market');
+            Route::get('/aftermarket/{afterMarket}/information', 'ItemController@adminAfterMarketInformation')->name('admin_after_market_information');
+            Route::get('/aftermarket/{afterMarket}/pricing_history', 'ItemController@adminAfterMarketPricingHistoryIndex')->name('admin_after_market_pricing_history_index');
+            Route::get('/aftermarket/{afterMarket}/pricing_history/create', 'ItemController@adminAfterMarketPricingHistoryCreate')->name('admin_after_market_pricing_history_create');
+            Route::patch('/aftermarket/{afterMarket}/update', 'ItemController@adminUpdateAfterMarketInformation')->name('admin_after_market_information_update');
+            Route::post('/aftermarket/{afterMarket}/pricing_history/create', 'ItemController@adminAddAfterMarketPricingHistory')->name('admin_add_after_market_pricing_history');
 
         # PROJECT
             Route::get('/create/project', 'ItemController@createProject')->name('create_project');

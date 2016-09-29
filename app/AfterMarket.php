@@ -7,10 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 class AfterMarket extends Model
 {
     //
+    protected $fillable = [
+        'name', 'model', 'ccn_number', 'part_number', 'reference_number', 'drawing_number', 'material_number', 'serial_number', 'tag_number'
+    ];
 
     public function project()
     {
         return $this->belongsTo(Project::class);
+    }
+
+    public function after_market_pricing_history()
+    {
+        return $this->hasMany(AfterMarketPricingHistory::class);
     }
 
     public static function postAfterMarket($createAfterMarketRequest)
@@ -29,6 +37,23 @@ class AfterMarket extends Model
 
         if($after_market->save()) {
             return redirect()->back()->with('message', 'AfterMarket [' . $after_market->name . '] was successfully saved');
+        }
+    }
+
+    public static function addAfterMarketPricingHistory($createAfterMarketPricingHistoryRequest, $afterMarket)
+    {
+        $aftermarket_pricing_history = new AfterMarketPricingHistory();
+        $aftermarket_pricing_history->after_market_id = $afterMarket->id;
+        $aftermarket_pricing_history->po_number = $createAfterMarketPricingHistoryRequest->get('po_number');
+        $aftermarket_pricing_history->pricing_date = trim($createAfterMarketPricingHistoryRequest->get('pricing_date'));
+        $aftermarket_pricing_history->price = trim($createAfterMarketPricingHistoryRequest->get('price'));
+        $aftermarket_pricing_history->terms = trim($createAfterMarketPricingHistoryRequest->get('terms'));
+        $aftermarket_pricing_history->delivery = trim($createAfterMarketPricingHistoryRequest->get('delivery'));
+        $aftermarket_pricing_history->fpd_reference = trim(strtoupper($createAfterMarketPricingHistoryRequest->get('fpd_reference')));
+        $aftermarket_pricing_history->wpc_reference = trim(strtoupper($createAfterMarketPricingHistoryRequest->get('wpc_reference')));
+
+        if($aftermarket_pricing_history->save()) {
+            return redirect()->back()->with('message', 'Pricing History for AfterMarket ['.$afterMarket->name.'] was successfully saved');
         }
     }
     

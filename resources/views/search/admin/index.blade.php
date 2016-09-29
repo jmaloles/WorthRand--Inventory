@@ -263,8 +263,10 @@
             document.getElementById("serial_number").value = "";
             document.getElementById("tag_number").value = "";
             document.getElementById("item_id").value = "";
+            $(wrapper).html('');
 
             $( "select option:selected" ).each(function() {
+                item_category = "";
                 item_category += $( this ).val();
             });
 
