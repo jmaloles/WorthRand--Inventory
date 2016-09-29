@@ -18,7 +18,7 @@ class Project extends Model
 
     public function project_pricing_history()
     {
-        return $this->hasMany(ProjectPricingHistory::class);
+        return $this->hasMany(ProjectPricingHistory::class)->latest();
     }
 
     public static function createProject($createProjectRequest)

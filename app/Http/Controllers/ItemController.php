@@ -117,8 +117,11 @@ class ItemController extends Controller
         $items = DB::table($category)->get();
 
         foreach($items as $item) {
+            $pricing_history = DB::table(str_singular($category).'_pricing_histories')->where(str_singular($category).'_pricing_histories.project_id', '=', $item->id)->latest()->get();
+
             $itemArray['suggestions'][] = [
                 'data' => $item->id,
+                'item_id' => $item->id,
                 'value' => $item->name,
                 'material_number' => $item->material_number,
                 'ccn_number' => $item->ccn_number,
@@ -127,7 +130,9 @@ class ItemController extends Controller
                 'reference_number' => $item->reference_number,
                 'serial_number' => $item->serial_number,
                 'drawing_number' => $item->drawing_number,
-                'tag_number' => $item->tag_number
+                'tag_number' => $item->tag_number,
+                'table_name' => $category,
+                'pricinHistoryArray' => $pricing_history
             ];
         }
 

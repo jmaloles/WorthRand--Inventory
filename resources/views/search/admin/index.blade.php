@@ -30,6 +30,7 @@
 
                     <div class="row">
                         <div class="col-lg-12">
+                            <button class="btn btn-default" id="addItemBtn"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add Item</button>
                             <a href="{{ route('create_project') }}" class="btn btn-default"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;&nbsp;Proceed to Indented Proposal</a>
                             <a href="{{ route('create_project') }}" class="btn btn-default"><i class="fa fa-money" aria-hidden="true"></i>&nbsp;&nbsp;Proceed to Buy & Sell Proposal</a>
                         </div>
@@ -48,9 +49,11 @@
                                         <div class="panel-body">
                                             <form class="form-horizontal" id="createProjectForm" action="{{ route('post_project') }}" method="POST">
                                                 {{ csrf_field() }}
+                                                <input type="hidden" id="test_id" name="test_id">
 
                                                 <div class="form-group{{ $errors->has('item_category') ? ' has-error' : '' }}">
                                                     <label for="item_category" class="col-md-4 control-label">Item Category:</label>
+                                                    <input type="hidden" id="item_id" name="items">
 
                                                     <div class="col-md-6">
                                                         <select name="item_category" id="item_category" class="form-control" placeholder="Select Item Category">
@@ -86,7 +89,7 @@
                                                     <label for="ccn_number" class="col-md-4 control-label">CCN Number:</label>
 
                                                     <div class="col-md-6">
-                                                        <input id="ccn_number" type="text" class="form-control" name="ccn_number" value="{{ old('ccn_number') }}" required autofocus>
+                                                        <input id="ccn_number" type="text" class="form-control" name="ccn_number" value="{{ old('ccn_number') }}" disabled autofocus>
 
                                                         @if ($errors->has('ccn_number'))
                                                             <span class="help-block">
@@ -100,7 +103,7 @@
                                                     <label for="part_number" class="col-md-4 control-label">Part Number:</label>
 
                                                     <div class="col-md-6">
-                                                        <input id="part_number" type="text" class="form-control" name="part_number" value="{{ old('part_number') }}" required autofocus>
+                                                        <input id="part_number" type="text" class="form-control" name="part_number" value="{{ old('part_number') }}" disabled autofocus>
 
                                                         @if ($errors->has('part_number'))
                                                             <span class="help-block">
@@ -114,7 +117,7 @@
                                                     <label for="reference_number" class="col-md-4 control-label">Reference Number:</label>
 
                                                     <div class="col-md-6">
-                                                        <input id="reference_number" type="text" class="form-control" name="reference_number" value="{{ old('reference_number') }}" required autofocus>
+                                                        <input id="reference_number" type="text" class="form-control" name="reference_number" value="{{ old('reference_number') }}" disabled autofocus>
 
                                                         @if ($errors->has('reference_number'))
                                                             <span class="help-block">
@@ -128,7 +131,7 @@
                                                     <label for="material_number" class="col-md-4 control-label">Material Number:</label>
 
                                                     <div class="col-md-6">
-                                                        <input id="material_number" type="text" class="form-control" name="material_number" value="{{ old('material_number') }}" required autofocus>
+                                                        <input id="material_number" type="text" class="form-control" name="material_number" value="{{ old('material_number') }}" disabled autofocus>
 
                                                         @if ($errors->has('material_number'))
                                                             <span class="help-block">
@@ -142,7 +145,7 @@
                                                     <label for="drawing_number" class="col-md-4 control-label">Drawing Number:</label>
 
                                                     <div class="col-md-6">
-                                                        <input id="drawing_number" type="text" class="form-control" name="drawing_number" value="{{ old('drawing_number') }}" required autofocus>
+                                                        <input id="drawing_number" type="text" class="form-control" name="drawing_number" value="{{ old('drawing_number') }}" disabled autofocus>
 
                                                         @if ($errors->has('drawing_number'))
                                                             <span class="help-block">
@@ -172,7 +175,7 @@
                                                     <label for="model" class="col-md-4 control-label">Model:</label>
 
                                                     <div class="col-md-6">
-                                                        <input id="model" type="text" class="form-control" name="model" value="{{ old('model') }}" required autofocus>
+                                                        <input id="model" type="text" class="form-control" name="model" value="{{ old('model') }}" disabled autofocus>
 
                                                         @if ($errors->has('model'))
                                                             <span class="help-block">
@@ -186,7 +189,7 @@
                                                     <label for="serial_number" class="col-md-4 control-label">Serial Number:</label>
 
                                                     <div class="col-md-6">
-                                                        <input id="serial_number" type="text" class="form-control" name="serial_number" value="{{ old('serial_number') }}" required autofocus>
+                                                        <input id="serial_number" type="text" class="form-control" name="serial_number" value="{{ old('serial_number') }}" disabled autofocus>
 
                                                         @if ($errors->has('serial_number'))
                                                             <span class="help-block">
@@ -200,7 +203,7 @@
                                                     <label for="tag_number" class="col-md-4 control-label">Tag Number:</label>
 
                                                     <div class="col-md-6">
-                                                        <input id="tag_number" type="text" class="form-control" name="tag_number" value="{{ old('tag_number') }}" required autofocus>
+                                                        <input id="tag_number" type="text" class="form-control" name="tag_number" value="{{ old('tag_number') }}" disabled autofocus>
 
                                                         @if ($errors->has('tag_number'))
                                                             <span class="help-block">
@@ -222,110 +225,14 @@
                                 <div class="col-lg-12">
                                     <div class="panel panel-primary">
                                         <div class="panel-heading">
-                                            Item History
+                                            Latest Pricing History
                                         </div>
                                         <div class="panel-body">
                                             <form class="form-horizontal" id="createProjectForm" action="{{ route('post_project') }}" method="POST">
                                                 {{ csrf_field() }}
+                                                <div style="overflow-x: hidden; height: 584px; overflow-y: auto;" class="pricing_history_wrapper" id="pricing_history">
 
-                                                <div class="form-group{{ $errors->has('purchase_order_number') ? ' has-error' : '' }}">
-                                                    <label for="purchase_order_number" class="col-md-4 control-label">P.O Number:</label>
-
-                                                    <div class="col-md-6">
-                                                        <input id="purchase_order_number" type="text" class="form-control" name="purchase_order_number" value="{{ old('purchase_order_number') }}" required autofocus>
-
-                                                        @if ($errors->has('purchase_order_number'))
-                                                            <span class="help-block">
-                                                            <strong>{{ $errors->first('purchase_order_number') }}</strong>
-                                                        </span>
-                                                        @endif
-                                                    </div>
                                                 </div>
-
-                                                <div class="form-group{{ $errors->has('year') ? ' has-error' : '' }}">
-                                                    <label for="year" class="col-md-4 control-label">Year:</label>
-
-                                                    <div class="col-md-6">
-                                                        <input id="year" type="text" class="form-control" name="year" value="{{ old('year') }}" required autofocus>
-
-                                                        @if ($errors->has('year'))
-                                                            <span class="help-block">
-                                                            <strong>{{ $errors->first('year') }}</strong>
-                                                        </span>
-                                                        @endif
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group{{ $errors->has('price') ? ' has-error' : '' }}">
-                                                    <label for="price" class="col-md-4 control-label">Price:</label>
-
-                                                    <div class="col-md-6">
-                                                        <input id="price" type="text" class="form-control" name="price" value="{{ old('price') }}" required autofocus>
-
-                                                        @if ($errors->has('price'))
-                                                            <span class="help-block">
-                                                            <strong>{{ $errors->first('price') }}</strong>
-                                                        </span>
-                                                        @endif
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group{{ $errors->has('terms') ? ' has-error' : '' }}">
-                                                    <label for="terms" class="col-md-4 control-label">Terms:</label>
-
-                                                    <div class="col-md-6">
-                                                        <input id="terms" type="text" class="form-control" name="terms" value="{{ old('terms') }}" required autofocus>
-
-                                                        @if ($errors->has('terms'))
-                                                            <span class="help-block">
-                                                            <strong>{{ $errors->first('terms') }}</strong>
-                                                        </span>
-                                                        @endif
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group{{ $errors->has('delivery') ? ' has-error' : '' }}">
-                                                    <label for="delivery" class="col-md-4 control-label">Delivery:</label>
-
-                                                    <div class="col-md-6">
-                                                        <input id="delivery" type="text" class="form-control" name="delivery" value="{{ old('delivery') }}" required autofocus>
-
-                                                        @if ($errors->has('delivery'))
-                                                            <span class="help-block">
-                                                            <strong>{{ $errors->first('delivery') }}</strong>
-                                                        </span>
-                                                        @endif
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group{{ $errors->has('fpd_reference') ? ' has-error' : '' }}">
-                                                    <label for="fpd_reference" class="col-md-4 control-label">FPD Reference:</label>
-
-                                                    <div class="col-md-6">
-                                                        <input id="fpd_reference" type="text" class="form-control" name="fpd_reference" value="{{ old('fpd_reference') }}" required autofocus>
-
-                                                        @if ($errors->has('fpd_reference'))
-                                                            <span class="help-block">
-                                                            <strong>{{ $errors->first('fpd_reference') }}</strong>
-                                                        </span>
-                                                        @endif
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group{{ $errors->has('wpc_reference') ? ' has-error' : '' }}">
-                                                    <label for="wpc_reference" class="col-md-4 control-label">WPC Reference:</label>
-
-                                                    <div class="col-md-6">
-                                                        <input id="wpc_reference" type="text" class="form-control" name="wpc_reference" value="{{ old('wpc_reference') }}" required autofocus>
-
-                                                        @if ($errors->has('wpc_reference'))
-                                                            <span class="help-block">
-                                                            <strong>{{ $errors->first('wpc_reference') }}</strong>
-                                                        </span>
-                                                        @endif
-                                                    </div>
-                                                </div>
-
                                             </form>
                                         </div>
                                     </div>
@@ -339,9 +246,13 @@
     </div>
 
     <script>
-        $('#item_category').change(function () {
-            var item_category = "";
+        var items = [];
+        var item_category = "";
+        var wrapper       = $(".pricing_history_wrapper"); //Fields wrapper
 
+
+
+        $('#item_category').change(function () {
             document.getElementById("project_dropdown").value = "";
             document.getElementById("ccn_number").value = "";
             document.getElementById("part_number").value = "";
@@ -351,12 +262,11 @@
             document.getElementById("drawing_number").value = "";
             document.getElementById("serial_number").value = "";
             document.getElementById("tag_number").value = "";
+            document.getElementById("item_id").value = "";
 
             $( "select option:selected" ).each(function() {
                 item_category += $( this ).val();
             });
-
-            console.log(item_category);
 
             $('#project_dropdown').autocomplete({
                 serviceUrl: "{{ URL::to('/') }}/{{ Auth::user()->role }}/item/" + item_category,
@@ -371,8 +281,84 @@
                     document.getElementById("drawing_number").value = suggestions.drawing_number;
                     document.getElementById("serial_number").value = suggestions.serial_number;
                     document.getElementById("tag_number").value = suggestions.tag_number;
+                    document.getElementById("item_id").value = suggestions.item_id;
+                    $(wrapper).html('');
+
+                    if(Object.keys(suggestions.pricinHistoryArray).length != 0) {
+                        $(jQuery.parseJSON(JSON.stringify(suggestions.pricinHistoryArray))).each(function() {
+                            $(wrapper).append('' +
+                            '<div class="form-group">' +
+                                '<label for="purchase_order_number" class="col-md-4 control-label">P.O Number:</label>' +
+                                '<div class="col-md-6">' +
+                                    '<input id="purchase_order_number" type="text" class="form-control" name="purchase_order_number" value="' + this.po_number + '" disabled autofocus>' +
+                                '</div>' +
+                            '</div> ' +
+                            '<div class="form-group">' +
+                                '<label for="year" class="col-md-4 control-label">Year:</label>' +
+                                '<div class="col-md-6">' +
+                                '   <input id="year" type="text" class="form-control" value="' + this.pricing_date + '" name="year" disabled autofocus>' +
+                                '</div>' +
+                            '</div> '+
+                            '<div class="form-group">' +
+                                '<label for="price" class="col-md-4 control-label">Price:</label>' +
+                                '<div class="col-md-6">' +
+                                    '<input id="price" type="text" class="form-control" value="' + this.price + '" name="price" disabled autofocus>' +
+                                '</div>' +
+                            '</div> '+
+                            '<div class="form-group">' +
+                                '<label for="terms" class="col-md-4 control-label">Terms:</label>' +
+                                '<div class="col-md-6">' +
+                                    '<input id="terms" type="text" class="form-control" value="' + this.terms + '" name="terms" disabled autofocus>' +
+                                '</div>' +
+                            '</div> '+
+                            '<div class="form-group">' +
+                                '<label for="delivery" class="col-md-4 control-label">Delivery:</label>' +
+                                '<div class="col-md-6">' +
+                                    '<input id="delivery" type="text" class="form-control" value="' + this.delivery + '" name="delivery" disabled autofocus>' +
+                                '</div>' +
+                            '</div> '+
+                            '<div class="form-group">' +
+                                '<label for="fpd_reference" class="col-md-4 control-label">FPD Reference:</label>' +
+                                '<div class="col-md-6">' +
+                                    '<input id="fpd_reference" type="text" class="form-control" value="' + this.fpd_reference + '" name="fpd_reference" disabled autofocus>' +
+                                '</div>' +
+                            '</div> '+
+                            '<div class="form-group">' +
+                                '<label for="wpc_reference" class="col-md-4 control-label">WPC Reference:</label>' +
+                                '<div class="col-md-6">' +
+                                    '<input id="wpc_reference" type="text" class="form-control" value="' + this.wpc_reference + '" name="wpc_reference" disabled autofocus>' +
+                                '</div>' +
+                            '</div> '+
+                            '<div class="form-group"' +
+                                '<div class="row">'+
+                                    '<hr>' +
+                                '</div>'+
+                            '</div>'
+                            );
+                        });
+                    } if(Object.keys(suggestions.pricinHistoryArray).length == 0) {
+                        var url = "{{ route('admin_project_pricing_history_create', ':project_id') }}";
+                            url = url.replace(':project_id', suggestions.data);
+
+                        $(wrapper).append('<div class="alert alert-danger" role="alert" style="background-color: #d9534f; color: white; border-color: #b52b27;">Pricing history data not found.... ' + '<a class="btn btn-default btn-sm" href="' + url + '">Add Pricing History</a></div>');
+                    }
                 }
             });
-        })
+        });
+
+        $("#addItemBtn").click(function() {
+            var existing_item = $.inArray(document.getElementById("item_id").value + '-' + item_category, items);
+            if(existing_item == -1) {
+                items.push(document.getElementById("item_id").value + '-' + item_category);
+                document.getElementById("test_id").value = items;
+
+
+                alertify.notify("Item "  + document.getElementById("project_dropdown").value +  " was successfully added", 'success', 5);
+                /*$.notify("Item "  + document.getElementById("project_dropdown").value +  " was successfully added", "success");*/
+            } else {
+                alertify.notify("Item " + document.getElementById("project_dropdown").value + " is already added", 'error', 5);
+                /*$.notify("Item " + document.getElementById("project_dropdown").value + " is already added", "error");*/
+            }
+        });
     </script>
 @endsection
