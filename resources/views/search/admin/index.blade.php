@@ -31,7 +31,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <button class="btn btn-default" id="addItemBtn"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add Item</button>
-                            <a href="{{ route('create_project') }}" class="btn btn-default"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;&nbsp;Proceed to Indented Proposal</a>
+                            <button class="btn btn-default" onclick='document.getElementById("createProposal").submit();'><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;&nbsp;Proceed to Indented Proposal</button>
                             <a href="{{ route('create_project') }}" class="btn btn-default"><i class="fa fa-money" aria-hidden="true"></i>&nbsp;&nbsp;Proceed to Buy & Sell Proposal</a>
                         </div>
                     </div>
@@ -47,9 +47,9 @@
                                             Spare Parts Description
                                         </div>
                                         <div class="panel-body">
-                                            <form class="form-horizontal" id="createProjectForm" action="{{ route('post_project') }}" method="POST">
+                                            <form class="form-horizontal" id="createProposal" action="{{ route('admin_post_indented_proposal') }}" method="POST">
                                                 {{ csrf_field() }}
-                                                <input type="hidden" id="test_id" name="test_id">
+                                                <input type="hidden" id="array_id" name="array_id">
 
                                                 <div class="form-group{{ $errors->has('item_category') ? ' has-error' : '' }}">
                                                     <label for="item_category" class="col-md-4 control-label">Item Category:</label>
@@ -352,7 +352,7 @@
             var existing_item = $.inArray(document.getElementById("item_id").value + '-' + item_category, items);
             if(existing_item == -1) {
                 items.push(document.getElementById("item_id").value + '-' + item_category);
-                document.getElementById("test_id").value = items;
+                document.getElementById("array_id").value = items;
 
 
                 alertify.notify("Item "  + document.getElementById("project_dropdown").value +  " was successfully added", 'success', 5);
