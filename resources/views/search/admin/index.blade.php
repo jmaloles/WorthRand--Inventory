@@ -31,7 +31,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <button class="btn btn-default" id="addItemBtn"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add Item</button>
-                            <button class="btn btn-default" onclick='document.getElementById("createProposal").submit();'><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;&nbsp;Proceed to Indented Proposal</button>
+                            <button class="btn btn-default" data-toggle="modal" data-target="#IndentedProposalForm"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;&nbsp;Proceed to Indented Proposal</button>
                             <a href="{{ route('create_project') }}" class="btn btn-default"><i class="fa fa-money" aria-hidden="true"></i>&nbsp;&nbsp;Proceed to Buy & Sell Proposal</a>
                         </div>
                     </div>
@@ -245,10 +245,40 @@
         </div>
     </div>
 
+    <div class="modal fade" tabindex="-1" role="dialog" id="IndentedProposalForm" style="padding-right: 210px !important;">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Indented Proposal</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <thead>
+                            <th>Item No.</th>
+                            <th>Description</th>
+                            <th>Qty</th>
+                            <th>Price</th>
+                            <th>Delivery</th>
+                        </thead>
+                        <tbody class="item_list">
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
     <script>
         var items = [];
         var item_category = "";
         var wrapper       = $(".pricing_history_wrapper"); //Fields wrapper
+        var table_wrapper = $(".item_list");
 
 
 
@@ -349,17 +379,33 @@
         });
 
         $("#addItemBtn").click(function() {
-            var existing_item = $.inArray(document.getElementById("item_id").value + '-' + item_category, items);
+            var existing_item = $.inArray(document.getElementById("item_id").value + '-' + item_category + '-' + document.getElementById("project_dropdown").value, items);
+
+            // We used -1 because array starts with 0
             if(existing_item == -1) {
-                items.push(document.getElementById("item_id").value + '-' + item_category);
+                // Clear the table
+                $(table_wrapper).html('');
+
+                //
+                items.push(document.getElementById("item_id").value + '-' + item_category + '-' + document.getElementById("project_dropdown").value);
                 document.getElementById("array_id").value = items;
 
-
                 alertify.notify("Item "  + document.getElementById("project_dropdown").value +  " was successfully added", 'success', 5);
-                /*$.notify("Item "  + document.getElementById("project_dropdown").value +  " was successfully added", "success");*/
+                $.each(items, function(i) {
+                    var res = items[i].split("-");
+
+                    $(table_wrapper).append(''+
+                        '<tr>' +
+                            '<td>' + res[0] + '</td>' +
+                            '<td>' + res[2] + '</td>' +
+                            '<td><input class="form-control" name="quantity" placeholder="Quantity"></td>' +
+                            '<td><input class="form-control" name="price" placeholder="Price"></td>' +
+                            '<td><input class="form-control" name="delivery" placeholder="Delivery"></td>' +
+                        '</tr>'
+                    );
+                })
             } else {
                 alertify.notify("Item " + document.getElementById("project_dropdown").value + " is already added", 'error', 5);
-                /*$.notify("Item " + document.getElementById("project_dropdown").value + " is already added", "error");*/
             }
         });
     </script>
