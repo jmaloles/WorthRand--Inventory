@@ -245,11 +245,40 @@
         </div>
     </div>
 
+    <div class="modal fade" tabindex="-1" role="dialog" id="IndentedProposalForm" style="padding-right: 210px !important;">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Indented Proposal</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <thead>
+                            <th>Item No.</th>
+                            <th>Description</th>
+                            <th>Qty</th>
+                            <th>Price</th>
+                            <th>Delivery</th>
+                        </thead>
+                        <tbody class="item_list">
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
     <script>
         var items = [];
         var item_category = "";
         var wrapper       = $(".pricing_history_wrapper"); //Fields wrapper
-
+        var table_wrapper = $(".item_list");
 
 
         $('#item_category').change(function () {
@@ -342,7 +371,7 @@
                         var url = "{{ route('admin_project_pricing_history_create', ':project_id') }}";
                             url = url.replace(':project_id', suggestions.data);
 
-                        $(wrapper).append('<div class="alert alert-danger" role="alert" style="background-color: #d9534f; color: white; border-color: #b52b27;">Pricing history data not found.... ' + '<a class="btn btn-default btn-sm" href="' + url + '">Add Pricing History</a></div>');
+                        $(wrapper).append('<div class="alert alert-danger" role="alert" style="background-color: #d9534f; color: white; border-color: #b52b27; font-size: 15px;">Pricing History Data Not Found.... ' + '<a class="btn btn-default btn-sm" style="" href="' + url + '">Add Pricing History</a></div>');
                     }
                 }
             });
@@ -350,16 +379,15 @@
 
         $("#addItemBtn").click(function() {
             var existing_item = $.inArray(document.getElementById("item_id").value + '-' + item_category, items);
+
+            // We used -1 because array starts with 0
             if(existing_item == -1) {
                 items.push(document.getElementById("item_id").value + '-' + item_category);
                 document.getElementById("array_id").value = items;
 
-
                 alertify.notify("Item "  + document.getElementById("project_dropdown").value +  " was successfully added", 'success', 5);
-                /*$.notify("Item "  + document.getElementById("project_dropdown").value +  " was successfully added", "success");*/
             } else {
                 alertify.notify("Item " + document.getElementById("project_dropdown").value + " is already added", 'error', 5);
-                /*$.notify("Item " + document.getElementById("project_dropdown").value + " is already added", "error");*/
             }
         });
     </script>
