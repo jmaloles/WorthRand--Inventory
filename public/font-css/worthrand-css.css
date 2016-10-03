@@ -1,3 +1,8 @@
+.form-group:last-child hr
+{
+    display: none;
+}
+
 .form-title {
     font-size: 18px;
 }
@@ -238,7 +243,6 @@ Website: http://thevectorlab.net/
 */
 
 /* Import fonts */
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic);
 
 body {
     color: #000;
@@ -415,7 +419,6 @@ a, a:hover, a:focus {
     height:17px;
     width:17px;
     display:inline-block;
-    background: url(../img/nav-expand.png) no-repeat top;
     border-radius:3px;
     -moz-border-radius:3px;
     -webkit-border-radius:3px;
@@ -424,8 +427,6 @@ a, a:hover, a:focus {
     top:15px;
 }
 .active .dcjq-icon {
-    background: url(../img/nav-expand.png) no-repeat bottom;
-
     border-radius:3px;
     -moz-border-radius:3px;
     -webkit-border-radius:3px;
