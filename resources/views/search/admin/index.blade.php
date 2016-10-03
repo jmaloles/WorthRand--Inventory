@@ -31,7 +31,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <button class="btn btn-default" id="addItemBtn"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add Item</button>
-                            <button class="btn btn-default" data-toggle="modal" data-target="#IndentedProposalForm"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;&nbsp;Proceed to Indented Proposal</button>
+                            <button class="btn btn-default" onclick='document.getElementById("createProposal").submit();'><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;&nbsp;Proceed to Indented Proposal</button>
                             <a href="{{ route('create_project') }}" class="btn btn-default"><i class="fa fa-money" aria-hidden="true"></i>&nbsp;&nbsp;Proceed to Buy & Sell Proposal</a>
                         </div>
                     </div>
@@ -281,7 +281,6 @@
         var table_wrapper = $(".item_list");
 
 
-
         $('#item_category').change(function () {
             document.getElementById("project_dropdown").value = "";
             document.getElementById("ccn_number").value = "";
@@ -372,38 +371,21 @@
                         var url = "{{ route('admin_project_pricing_history_create', ':project_id') }}";
                             url = url.replace(':project_id', suggestions.data);
 
-                        $(wrapper).append('<div class="alert alert-danger" role="alert" style="background-color: #d9534f; color: white; border-color: #b52b27;">Pricing history data not found.... ' + '<a class="btn btn-default btn-sm" href="' + url + '">Add Pricing History</a></div>');
+                        $(wrapper).append('<div class="alert alert-danger" role="alert" style="background-color: #d9534f; color: white; border-color: #b52b27; font-size: 15px;">Pricing History Data Not Found.... ' + '<a class="btn btn-default btn-sm" style="" href="' + url + '">Add Pricing History</a></div>');
                     }
                 }
             });
         });
 
         $("#addItemBtn").click(function() {
-            var existing_item = $.inArray(document.getElementById("item_id").value + '-' + item_category + '-' + document.getElementById("project_dropdown").value, items);
+            var existing_item = $.inArray(document.getElementById("item_id").value + '-' + item_category, items);
 
             // We used -1 because array starts with 0
             if(existing_item == -1) {
-                // Clear the table
-                $(table_wrapper).html('');
-
-                //
-                items.push(document.getElementById("item_id").value + '-' + item_category + '-' + document.getElementById("project_dropdown").value);
+                items.push(document.getElementById("item_id").value + '-' + item_category);
                 document.getElementById("array_id").value = items;
 
                 alertify.notify("Item "  + document.getElementById("project_dropdown").value +  " was successfully added", 'success', 5);
-                $.each(items, function(i) {
-                    var res = items[i].split("-");
-
-                    $(table_wrapper).append(''+
-                        '<tr>' +
-                            '<td>' + res[0] + '</td>' +
-                            '<td>' + res[2] + '</td>' +
-                            '<td><input class="form-control" name="quantity" placeholder="Quantity"></td>' +
-                            '<td><input class="form-control" name="price" placeholder="Price"></td>' +
-                            '<td><input class="form-control" name="delivery" placeholder="Delivery"></td>' +
-                        '</tr>'
-                    );
-                })
             } else {
                 alertify.notify("Item " + document.getElementById("project_dropdown").value + " is already added", 'error', 5);
             }

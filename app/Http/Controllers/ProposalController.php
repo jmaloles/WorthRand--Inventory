@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\IndentedProposal;
+use App\IndentedProposalItem;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -13,28 +15,15 @@ class ProposalController extends Controller
     //
     public function adminPostCreateIndentedProposal(Request $request)
     {
-        $itemArray = [];
-        $array_project_id = explode(',', $request->get('array_id'));
+        $create_indented_proposal = IndentedProposal::adminPostCreateIndentedProposal($request);
 
-        foreach($array_project_id as $items) {
-            $itemArray[] = $items;
-        }
-
-        return redirect()->to(route('admin_indented_proposal'))->with('itemArray', $itemArray);
+        return $create_indented_proposal;
     }
 
-    public function adminIndentProposalView()
+    public function adminIndentProposalView(IndentedProposal $indentedProposal)
     {
-        $collectedItems = [];
-        $collection_items = (array) Session::get('itemArray');
+        $view_selected_items = IndentedProposal::viewIndentedProposal($indentedProposal);
 
-        foreach($collection_items as $collection_item) {
-            $get_items = explode('-', $collection_item);
-            $storeItem = DB::table($get_items[1])->where('id', '=', $get_items[0])->first();
-
-            $collectedItems[] = $storeItem;
-        }
-
-        return view('proposal.admin.indented.create', compact('collectedItems'));
+        return $view_selected_items;
     }
 }

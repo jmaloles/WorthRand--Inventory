@@ -21,6 +21,11 @@ class Project extends Model
         return $this->hasMany(ProjectPricingHistory::class)->latest();
     }
 
+    public function indented_proposal_items()
+    {
+        return $this->morphMany(IndentedProposalItem::class, 'indented_proposal_itemable');
+    }
+
     public static function createProject($createProjectRequest)
     {
         $project = new Project();
