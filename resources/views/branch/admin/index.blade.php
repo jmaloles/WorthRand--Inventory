@@ -14,7 +14,7 @@
                     <div class="row">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                CUSTOMERS
+                                BRANCHES
                             </div>
                         </div>
                     </div>
@@ -32,22 +32,22 @@
                             <div class="table-reponsive">
                                 <table class="table table-striped">
                                     <thead>
-                                        <th>#</th>
-                                        <th>Name</th>
-                                        <th>Address</th>
-                                        <th>City</th>
-                                        <th>Postal Code</th>
-                                        <th>Actions</th>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Address</th>
+                                    <th>City</th>
+                                    <th>Postal Code</th>
+                                    <th>Actions</th>
                                     </thead>
                                     <tbody>
-                                    @foreach($customers as $customer)
+                                    @foreach($branches as $branch)
                                         <tr>
-                                            <td>{{ ((($customers->currentPage() - 1) * $customers->perPage()) + ($ctr++) + 1) }}</td>
-                                            <td>{{ $customer->name }}</td>
-                                            <td>{{ $customer->address }}</td>
-                                            <td>{{ $customer->city }}</td>
-                                            <td>{{ $customer->postal_code }}</td>
-                                            <td><a href="{{ route('admin_show_customer', $customer->id) }}" class="btn btn-primary btn-sm">View</a></td>
+                                            <td>{{ ((($branches->currentPage() - 1) * $branches->perPage()) + ($ctr++) + 1) }}</td>
+                                            <td>{{ $branch->name }}</td>
+                                            <td>{{ $branch->address }}</td>
+                                            <td>{{ $branch->city }}</td>
+                                            <td>{{ $branch->postal_code }}</td>
+                                            <td><a href="{{ route('admin_show_customer', $branch->id) }}" class="btn btn-primary btn-sm">View</a></td>
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -55,7 +55,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
