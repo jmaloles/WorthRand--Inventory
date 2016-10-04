@@ -31,8 +31,8 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <button class="btn btn-default" id="addItemBtn"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add Item</button>
-                            <button class="btn btn-default" onclick='document.getElementById("createProposal").submit();'><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;&nbsp;Proceed to Indented Proposal</button>
-                            <a href="{{ route('create_project') }}" class="btn btn-default"><i class="fa fa-money" aria-hidden="true"></i>&nbsp;&nbsp;Proceed to Buy & Sell Proposal</a>
+                            <button class="btn btn-default" id="IndentedProposalBtn"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;&nbsp;Proceed to Indented Proposal</button>
+                            <button class="btn btn-default" id="BuyAndSellBtn"><i class="fa fa-money" aria-hidden="true"></i>&nbsp;&nbsp;Proceed to Buy & Sell Proposal</button>
                         </div>
                     </div>
 
@@ -47,7 +47,7 @@
                                             Spare Parts Description
                                         </div>
                                         <div class="panel-body">
-                                            <form class="form-horizontal" id="createProposal" action="{{ route('admin_post_indented_proposal') }}" method="POST">
+                                            <form class="form-horizontal" id="createProposal" method="POST">
                                                 {{ csrf_field() }}
                                                 <input type="hidden" id="array_id" name="array_id">
 
@@ -275,6 +275,16 @@
     </div><!-- /.modal -->
 
     <script>
+        $("#BuyAndSellBtn").on('click', function() {
+            $("#createProposal").attr('action', '/admin/buy_and_sell_proposal/create').submit();
+        });
+
+        $("#IndentedProposalBtn").on('click', function() {
+            $("#createProposal").attr('action', '/admin/indented_proposal/create').submit();
+        });
+
+
+
         var items = [];
         var item_category = "";
         var wrapper       = $(".pricing_history_wrapper"); //Fields wrapper
@@ -368,8 +378,9 @@
                             );
                         });
                     } if(Object.keys(suggestions.pricinHistoryArray).length == 0) {
-                        var url = "{{ route('admin_project_pricing_history_create', ':project_id') }}";
-                            url = url.replace(':project_id', suggestions.data);
+                        var url = "{{ url('admin/:item_category/:item_id/pricing_history/create') }}";
+                            url = url.replace(':item_id', suggestions.data);
+                        url = url.replace(':item_category', item_category);
 
                         $(wrapper).append('<div class="alert alert-danger" role="alert" style="background-color: #d9534f; color: white; border-color: #b52b27; font-size: 15px;">Pricing History Data Not Found.... ' + '<a class="btn btn-default btn-sm" style="" href="' + url + '">Add Pricing History</a></div>');
                     }
