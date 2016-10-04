@@ -283,13 +283,10 @@
             $("#createProposal").attr('action', '/admin/indented_proposal/create').submit();
         });
 
-
-
         var items = [];
         var item_category = "";
         var wrapper       = $(".pricing_history_wrapper"); //Fields wrapper
         var table_wrapper = $(".item_list");
-
 
         $('#item_category').change(function () {
             document.getElementById("project_dropdown").value = "";

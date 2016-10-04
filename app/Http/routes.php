@@ -91,6 +91,8 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
         # PROPOSALS
             Route::post('/proposal/create', 'ProposalController@adminCreateProposal')->name('admin_create_proposal');
             Route::post('/indented_proposal/create', 'ProposalController@adminPostCreateIndentedProposal');
+            Route::get('/indented_proposal/{indentedProposal}', 'ProposalController@adminIndentProposalView');
+            Route::post('/indented_proposal/submit', 'ProposalController@adminSubmitIndentedProposal')->name('admin_submit_indented_proposal');
             Route::post('/buy_and_sell_proposal/create', 'ProposalController@adminPostCreateBuyAndSellProposal');
             Route::get('/buy_and_sell_proposal/{buy_and_sell_proposal}', 'ProposalController@adminBuyAndSellProposalView');
             Route::post('/buy_sell/create', 'BuyAndSellProposalsController@adminPostCreateBuySellProposal')->name('admin_post_buy_sell_proposal');
