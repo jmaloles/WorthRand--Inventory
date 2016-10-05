@@ -16,15 +16,16 @@
                 <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
                     <form class="form-horizontal" action="{{ route('admin_submit_indented_proposal') }}" method="POST" id="SubmitIndentedProposal">
                         {{ csrf_field() }}
+                        <input type="hidden" name="indent_proposal_id" value="{{ $indentedProposal->id }}">
 
                         <div class="row">
                             <div class="col-lg-12 col-lg-pull-1">
                                 <div class="form-group">
                                     <label for="main_company" class="col-sm-2 control-label">To: </label>
                                     <div class="col-sm-5">
-                                        <input class="form-control" id="main_company" name="main_office" placeholder="To">
+                                        <input class="form-control" id="main_company" name="to" placeholder="To">
                                         <br>
-                                        <textarea name="main_address" id="" class="form-control" placeholder="Address"></textarea>
+                                        <textarea name="to_address" id="" class="form-control" placeholder="Address"></textarea>
                                     </div>
                                 </div>
 

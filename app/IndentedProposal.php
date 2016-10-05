@@ -72,4 +72,14 @@ class IndentedProposal extends Model
 
         return view('proposal.admin.indented.create', compact('selectedItems', 'ctr', 'indentedProposal'));
     }
+
+    public static function saveIndentedProposal($request)
+    {
+        $indented_proposal = IndentedProposal::find($request->get('indent_proposal_id'));
+        $indented_proposal->to = $request->get('to');
+        $indented_proposal->to_address = $request->get('to_address');
+        $indented_proposal->sold_to = $request->get('sold_to');
+        $indented_proposal->invoice_to = $request->get('invoice');
+        $indented_proposal->
+    }
 }
