@@ -75,11 +75,70 @@ class IndentedProposal extends Model
 
     public static function saveIndentedProposal($request)
     {
+        // dd($request->all());
         $indented_proposal = IndentedProposal::find($request->get('indent_proposal_id'));
         $indented_proposal->to = $request->get('to');
         $indented_proposal->to_address = $request->get('to_address');
         $indented_proposal->sold_to = $request->get('sold_to');
         $indented_proposal->invoice_to = $request->get('invoice');
-        $indented_proposal->
+        $indented_proposal->invoice_to_address = $request->get('invoice_address');
+        $indented_proposal->ship_to = $request->get('ship_to');
+        $indented_proposal->ship_to_address = $request->get('ship_to_address');
+        $indented_proposal->special_instructions = $request->get('special_instruction');
+        $indented_proposal->insurance = $request->get('insurance');
+        $indented_proposal->ship_via = $request->get('ship_via');
+        $indented_proposal->packing = $request->get('packing');
+        $indented_proposal->amount = $request->get('amount');
+        $indented_proposal->documents = $request->get('documents');
+        $indented_proposal->wpcoc = "indented";
+        $indented_proposal->order_entry_no = $request->get('purchase_order');
+        $indented_proposal->terms_of_payment_1 = $request->get('terms_of_payment_1');
+        $indented_proposal->terms_of_payment_address = $request->get('terms_of_payment_address');
+        $indented_proposal->bank_detail_name = $request->get('bank_detail_name');
+        $indented_proposal->bank_detail_account_no = $request->get('bank_detail_account_number');
+        $indented_proposal->bank_detail_swift_code = $request->get('bank_detail_swift_code');
+        $indented_proposal->bank_detail_account_name = $request->get('bank_detail_account_name');
+        $indented_proposal->bank_detail_address = $request->get('bank_detail_address');
+        $indented_proposal->commission_note = $request->get('bank_detail_name');
+        $indented_proposal->commission_address = $request->get('bank_detail_account_number');
+        $indented_proposal->commission_account_number = $request->get('bank_detail_swift_code');
+        $indented_proposal->commission_swift_code = $request->get('bank_detail_account_name');
+
+        if($indented_proposal->save()) {
+            foreach($request->all() as $key => $value) {
+                if(strpos($key, 'delivery') !== FALSE) {
+                    $delivery = explode('-', $key);
+                    $indented_proposal_item_id = $delivery[1];
+
+                    $indented_proposal_item = IndentedProposalItem::find($indented_proposal_item_id);
+                    $indented_proposal_item->delivery = $value;
+                    $indented_proposal_item->save();
+                }
+            }
+
+            foreach($request->all() as $key => $value) {
+                if(strpos($key, 'quantity') !== FALSE) {
+                    $delivery = explode('-', $key);
+                    $indented_proposal_item_id = $delivery[1];
+
+                    $indented_proposal_item = IndentedProposalItem::find($indented_proposal_item_id);
+                    $indented_proposal_item->quantity = $value;
+                    $indented_proposal_item->save();
+                }
+            }
+
+            foreach($request->all() as $key => $value) {
+                if(strpos($key, 'price') !== FALSE) {
+                    $delivery = explode('-', $key);
+                    $indented_proposal_item_id = $delivery[1];
+
+                    $indented_proposal_item = IndentedProposalItem::find($indented_proposal_item_id);
+                    $indented_proposal_item->price = $value;
+                    $indented_proposal_item->save();
+                }
+            }
+
+            return redirect()->to('indented_proposals');
+        }
     }
 }
