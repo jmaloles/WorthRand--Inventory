@@ -9,7 +9,7 @@
                     <ul id="accordion" class="nav nav-pills nav-stacked sidebar-menu">
                         <li class="nav-item"><a class="nav-link" href="#send_proposal" onclick='document.getElementById("SubmitIndentedProposal").submit();'><i class="fa fa-paper-plane"></i>&nbsp; Submit Proposal</a></li>
 
-                        <li class="nav-item"><a class="nav-link"  href="{{ route('admin_create_proposal') }}"><i class="fa fa-arrow-left"></i>&nbsp; back</a></li>
+                        <li class="nav-item"><a class="nav-link"  href="{{ route('search') }}"><i class="fa fa-arrow-left"></i>&nbsp; Back</a></li>
                     </ul>
                 </div>
 
@@ -20,6 +20,13 @@
 
                         <div class="row">
                             <div class="col-lg-12 col-lg-pull-1">
+                                <div class="form-group">
+                                    <label for="purchase_order" class="col-sm-2 control-label">P.O: </label>
+                                    <div class="col-sm-5">
+                                        <input class="form-control" id="purchase_order" name="purchase_order" placeholder="Purchase Order Number">
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     <label for="main_company" class="col-sm-2 control-label">To: </label>
                                     <div class="col-sm-5">
@@ -144,7 +151,7 @@
                                 <div class="form-group">
                                     <label for="InputInsurance" class="col-sm-2 control-label">INSURANCE:</label>
                                     <div class="col-sm-5">
-                                        <input class="form-control" id="InputInsurance" name="amount" placeholder="Amount">
+                                        <input class="form-control" id="InputInsurance" name="insurance" placeholder="Amount">
                                     </div>
                                 </div>
 
@@ -162,7 +169,7 @@
                                     <div class="col-sm-5">
                                         <input class="form-control" id="InputBankDetailName" name="bank_detail_name" placeholder="Bank Details">
                                         <br>
-                                        <textarea name="terms_of_payment_address" id="" class="form-control" placeholder="Bank Details Address"></textarea>
+                                        <textarea name="bank_detail_address" id="" class="form-control" placeholder="Bank Details Address"></textarea>
                                         <br>
                                         <input class="form-control" id="InputBankDetailName" name="bank_detail_account_number" placeholder="Account Number">
                                         <br>
@@ -171,6 +178,20 @@
                                         <input class="form-control" id="InputBankDetailName" name="bank_detail_account_name" placeholder="Account Name">
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <label for="InputBankDetailName" class="col-sm-2 control-label">COMMISSION: </label>
+                                    <div class="col-sm-5">
+                                        <input class="form-control" id="InputBankDetailName" name="commission_note" placeholder="Commission Details">
+                                        <br>
+                                        <textarea name="commission_address" id="" class="form-control" placeholder="Commission Address"></textarea>
+                                        <br>
+                                        <input class="form-control" id="InputBankDetailName" name="commission_account_number" placeholder="Commission Account Number">
+                                        <br>
+                                        <input class="form-control" id="InputBankDetailName" name="commission_swift_code" placeholder="Commission Swift Code">
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </form>
