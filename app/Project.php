@@ -8,7 +8,7 @@ use App\ProjectPricingHistory;
 class Project extends Model
 {
     protected $fillable = [
-        'name', 'model', 'ccn_number', 'part_number', 'reference_number', 'drawing_number', 'material_number', 'serial_number', 'tag_number'
+        'name', 'model', 'ccn_number', 'part_number', 'reference_number', 'drawing_number', 'material_number', 'serial_number', 'tag_number', 'price'
     ];
 
     public function after_markets()
@@ -19,11 +19,6 @@ class Project extends Model
     public function project_pricing_history()
     {
         return $this->hasMany(ProjectPricingHistory::class)->latest();
-    }
-
-    public function indented_proposal_items()
-    {
-        return $this->morphMany(IndentedProposalItem::class, 'indented_proposal_itemable');
     }
 
     public static function createProject($createProjectRequest)
@@ -57,6 +52,9 @@ class Project extends Model
         $project_pricing_history->wpc_reference = trim(strtoupper($addProjectPricingHistoryRequest->get('wpc_reference')));
 
         if($project_pricing_history->save()) {
+            $project = Project::find($project_pricing_history->project_id);
+            $project->update(['price' => $project_pricing_history->price]);
+
             return redirect()->back()->with('message', 'Pricing History for Project ['.$project->name.'] was successfully saved');
         }
 
