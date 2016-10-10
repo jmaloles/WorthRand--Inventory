@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class BuyAndSellProposal extends Model
 {
@@ -20,8 +21,8 @@ class BuyAndSellProposal extends Model
                 $id = $explodedValue[0];
                 $table = $explodedValue[1];
 
-                $buy_and_sell_proposal_item = new BuyAndSellProposalitem();
-                $buy_and_sell_proposal_item->$buy_and_sell_proposal = $buy_and_sell_proposal->id;
+                $buy_and_sell_proposal_item = new BuyAndSellProposalItem();
+                $buy_and_sell_proposal_item->buy_and_sell_proposal_id = $buy_and_sell_proposal->id;
                 $buy_and_sell_proposal_item->item_id = $id;
                 $buy_and_sell_proposal_item->type = $table;
                 $buy_and_sell_proposal_item->save();
@@ -58,8 +59,8 @@ class BuyAndSellProposal extends Model
                 $join->on('buy_and_sell_proposal_item.item_id', '=', 'after_markets.id')
                     ->where('buy_and_sell_proposal_item.type', '=', 'after_markets');
             })
-            ->where('buy_and_sell_proposal_item.indented_proposal_id', '=', $buyAndSellProposal->id)->get();
+            ->where('buy_and_sell_proposal_item.buy_and_sell_proposal_id', '=', $buyAndSellProposal->id)->get();
 
-        return view('proposal.admin.buy_and_sell.create', compact('selectedItems'));
+        return view('proposal.admin.buy_and_sell.create', compact('selectedItems', 'buyAndSellProposal'));
     }
 }
