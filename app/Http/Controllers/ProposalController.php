@@ -28,11 +28,18 @@ class ProposalController extends Controller
         return $view_selected_items;
     }
 
-    public function adminPostCreateBuyAndSellProposal(Request $request)
+    public function adminSubmitIndentedProposal(Request $request)
     {
-        $create_buy_and_sell_proposal = BuyAndSellProposal::adminPostCreateBuyAndSellProposal($request);
+        $save_indented_proposal = IndentedProposal::saveIndentedProposal($request);
 
-        return $create_buy_and_sell_proposal;
+        return $save_indented_proposal;
+    }
+
+    public function adminSubmitBuyAndSellProposal(Request $request)
+    {
+        $save_buy_and_sell_proposal = BuyAndSellProposal::saveBuyAndSellProposal($request);
+
+        return $save_buy_and_sell_proposal;
     }
 
     public function adminBuyAndSellProposalView(BuyAndSellProposal $buyAndSellProposal)
@@ -42,10 +49,10 @@ class ProposalController extends Controller
         return $view_selected_items;
     }
 
-    public function adminSubmitIndentedProposal(Request $request)
+    public function adminPostCreateBuyAndSellProposal(Request $request)
     {
-        $save_indented_proposal = IndentedProposal::saveIndentedProposal($request);
+        $create_buy_and_sell_proposal = BuyAndSellProposal::adminPostCreateBuyAndSellProposal($request);
 
-        return $save_indented_proposal;
+        return $create_buy_and_sell_proposal;
     }
 }

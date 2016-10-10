@@ -69,4 +69,58 @@ class BuyAndSellProposal extends Model
 
         return view('proposal.admin.buy_and_sell.create', compact('selectedItems', 'ctr','buyAndSellProposal'));
     }
+
+    public static function saveBuyAndSellProposal($request)
+    {
+        // dd($request->all());
+        $buy_and_sell_proposal = BuyAndSellProposal::find($request->get('buy_and_sell_proposal_id'));
+        $buy_and_sell_proposal->purchase_order = $request->get('purchase_order');
+        $buy_and_sell_proposal->wpc_reference = $request->get('wpc_ref');
+        $buy_and_sell_proposal->date = $request->get('date');
+        $buy_and_sell_proposal->sold_to = $request->get('sold');
+        $buy_and_sell_proposal->sold_to_address = $request->get('sold_to_address');
+        $buy_and_sell_proposal->invoice_to = $request->get('invoice_to');
+        $buy_and_sell_proposal->invoice_address = $request->get('invoice_address');
+        $buy_and_sell_proposal->qrc_ref = $request->get('qrc_ref');
+        $buy_and_sell_proposal->validity = $request->get('validity');
+        $buy_and_sell_proposal->payment_terms = $request->get('terms');
+
+
+        if($buy_and_sell_proposal->save()) {
+            foreach($request->all() as $key => $value) {
+                if(strpos($key, 'delivery') !== FALSE) {
+                    $delivery = explode('-', $key);
+                    $buy_and_sell_proposal_item_id = $delivery[1];
+
+                    $buy_and_sell_proposal_item = BuyAndSellProposalItem::find($buy_and_sell_proposal_item_id);
+                    $buy_and_sell_proposal_item->delivery = $value;
+                    $buy_and_sell_proposal_item->save();
+                }
+            }
+
+            foreach($request->all() as $key => $value) {
+                if(strpos($key, 'quantity') !== FALSE) {
+                    $delivery = explode('-', $key);
+                    $buy_and_sell_proposal_item_id = $delivery[1];
+
+                    $buy_and_sell_proposal_item_id = BuyAndSellProposalItem::find($buy_and_sell_proposal_item_id);
+                    $buy_and_sell_proposal_item_id->quantity = $value;
+                    $buy_and_sell_proposal_item_id->save();
+                }
+            }
+
+            foreach($request->all() as $key => $value) {
+                if(strpos($key, 'price') !== FALSE) {
+                    $delivery = explode('-', $key);
+                    $buy_and_sell_proposal_item_id = $delivery[1];
+
+                    $buy_and_sell_proposal_item = BuyAndSellProposalItem::find($buy_and_sell_proposal_item_id);
+                    $buy_and_sell_proposal_item->price = $value;
+                    $buy_and_sell_proposal_item->save();
+                }
+            }
+
+            return redirect()->to('buy_and_sell_proposal');
+        }
+    }
 }
