@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class BuyAndSellProposalItem extends Model
 {
-    protected $table = 'buy_and_sell_item';
+    protected $table = 'buy_and_sell_proposal_item';
 
     public function project()
     {
