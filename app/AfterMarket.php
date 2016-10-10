@@ -21,11 +21,6 @@ class AfterMarket extends Model
         return $this->hasMany(AfterMarketPricingHistory::class);
     }
 
-    public function indented_proposal_items()
-    {
-        return $this->morphMany(IndentedProposalItem::class, 'indented_proposal_itemable');
-    }
-
     public static function postAfterMarket($createAfterMarketRequest)
     {
         $after_market = new AfterMarket();

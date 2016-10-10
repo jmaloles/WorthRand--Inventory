@@ -48,11 +48,4 @@ class ProposalController extends Controller
 
         return $save_indented_proposal;
     }
-
-    public function adminSubmitBuyAndSellProposal(Request $request)
-    {
-        $save_buy_and_sell_proposal = BuyAndSellProposal::saveBuyAndSellProposal($request);
-
-        return $save_buy_and_sell_proposal;
-    }
 }
