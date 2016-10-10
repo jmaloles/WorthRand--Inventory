@@ -19,7 +19,7 @@ class BranchController extends Controller
 
     public function adminPostCreateBranch(CreateCustomerBranchRequest $createCustomerBranchRequest, Customer $customer)
     {
-        $branch = Branch::create($createCustomerBranchRequest->all());
+        $branch = Branch::create(ucwords($createCustomerBranchRequest->all(), " "));
 
         return redirect()->back()->with('message', 'Branch ['. $branch->name .'] was successfully created');
     }
@@ -30,6 +30,16 @@ class BranchController extends Controller
         $branches = Branch::paginate(30);
 
         return view('branch.admin.index', compact('branches', 'ctr'));
+    }
+
+    public function adminBranchEdit(Branch $branch)
+    {
+        return view('branch.admin.edit', compact('branch'));
+    }
+
+    public function adminBranchShow(Branch $branch)
+    {
+        return view('branch.admin.show', compact('branch'));
     }
 
 }

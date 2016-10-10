@@ -12,27 +12,31 @@ class IndentedProposal extends Model
 
     public static function adminPostCreateIndentedProposal($request)
     {
-        $array_id = [];
-        $item_ids = explode(',', $request->get('array_id'));
+        if(trim($request->get('array_id')) == "") {
+            return redirect()->back()->with('message', 'You didn\'t select any item');
+        } else {
+            $array_id = [];
+            $item_ids = explode(',', $request->get('array_id'));
 
-        $indented_proposal = new IndentedProposal();
-        $indented_proposal->status = "DRAFT";
+            $indented_proposal = new IndentedProposal();
+            $indented_proposal->status = "DRAFT";
 
-        if($indented_proposal->save()) {
-            foreach($item_ids as $item_id) {
-                $explodedValue = explode('-', $item_id);
-                $id = $explodedValue[0];
-                $table = $explodedValue[1];
+            if($indented_proposal->save()) {
+                foreach($item_ids as $item_id) {
+                    $explodedValue = explode('-', $item_id);
+                    $id = $explodedValue[0];
+                    $table = $explodedValue[1];
 
-                $indented_proposal_item = new IndentedProposalItem();
-                $indented_proposal_item->indented_proposal_id = $indented_proposal->id;
-                $indented_proposal_item->item_id = $id;
-                $indented_proposal_item->type = $table;
-                $indented_proposal_item->save();
+                    $indented_proposal_item = new IndentedProposalItem();
+                    $indented_proposal_item->indented_proposal_id = $indented_proposal->id;
+                    $indented_proposal_item->item_id = $id;
+                    $indented_proposal_item->type = $table;
+                    $indented_proposal_item->save();
+                }
             }
-        }
 
-        return redirect()->to('/admin/indented_proposal/'.$indented_proposal->id);
+            return redirect()->to('/admin/indented_proposal/'.$indented_proposal->id);
+        }
     }
 
     public static function viewIndentedProposal($indentedProposal)

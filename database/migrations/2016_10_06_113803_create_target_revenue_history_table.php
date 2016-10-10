@@ -12,8 +12,11 @@ class CreateTargetRevenueHistoryTable extends Migration
      */
     public function up()
     {
-        Schema::create('target_revenue_history', function (Blueprint $table) {
-            //
+        Schema::create('target_revenue_histories', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('target_revenue_id');
+            $table->string('date');
+            $table->timestamps();
         });
     }
 
@@ -24,8 +27,6 @@ class CreateTargetRevenueHistoryTable extends Migration
      */
     public function down()
     {
-        Schema::table('target_revenue_history', function (Blueprint $table) {
-            //
-        });
+        Schema::drop('target_revenue_histories');
     }
 }

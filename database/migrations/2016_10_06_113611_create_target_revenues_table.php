@@ -27,8 +27,6 @@ class CreateTargetRevenuesTable extends Migration
      */
     public function down()
     {
-        Schema::table('target_revenues', function (Blueprint $table) {
-            //
-        });
+        Schema::drop('target_revenues');
     }
 }

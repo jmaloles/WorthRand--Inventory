@@ -61,7 +61,7 @@
                                                 <td>{{ $branch->city }}</td>
                                                 <td>{{ $branch->postal_code }}</td>
                                                 <td>
-                                                    <a href="" class="btn btn-sm btn-success">View Branch</a>
+                                                    <a href="{{ route('admin_branch_show', $branch->id) }}" class="btn btn-sm btn-success">View Branch</a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -72,6 +72,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
