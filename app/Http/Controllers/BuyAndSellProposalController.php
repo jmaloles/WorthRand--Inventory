@@ -9,7 +9,12 @@ use App\BuyAndSellProposal;
 
 class BuyAndSellProposalController extends Controller
 {
+    public function adminPostCreateBuyAndSellProposal(Request $request)
+    {
+        $create_buy_and_sell_proposal = BuyAndSellProposal::adminPostCreateBuyAndSellProposal($request);
 
+        return $create_buy_and_sell_proposal;
+    }
 
     public function adminBuyAndSellProposalView(BuyAndSellProposal $buyAndSellProposal)
     {
