@@ -41,4 +41,11 @@ class ProposalController extends Controller
 
         return $view_selected_items;
     }
+
+    public function adminSubmitIndentedProposal(Request $request)
+    {
+        $save_indented_proposal = IndentedProposal::saveIndentedProposal($request);
+
+        return $save_indented_proposal;
+    }
 }
