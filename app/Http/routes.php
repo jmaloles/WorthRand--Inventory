@@ -22,9 +22,9 @@ Route::group(['middleware' => 'check_if_user_is_super_admin'], function() {
         Route::get('/users', 'UserController@superAdminUserIndex')->name('super_admin_user_index');
     });
 });
-
+/*
 // ADMIN ACCOUNT
-/*Route::group(['middleware' => ['verify_if_user_is_sales_engineer']], function() {
+Route::group(['middleware' => ['verify_if_user_is_sales_engineer']], function() {
     Route::group(['prefix' => 'sales_engineer'], function() {
         # DASHBOARD
             Route::get('/dashboard', 'UserController@adminDashboard')->name('admin_dashboard');
@@ -68,7 +68,6 @@ Route::group(['middleware' => 'check_if_user_is_super_admin'], function() {
         # PRICING HISTORY
             Route::get('/pricing_history', 'ItemController@adminPricingHistoryIndex')->name('admin_pricing_history_index');
 
-
                 Route::get('/get_projects', 'ItemController@getProjects')->name('fetch_projects');
                 Route::get('/item/{category}', 'ItemController@getItemBasedOnCategory')->name('get_item_based_on_category');
 
@@ -93,8 +92,9 @@ Route::group(['middleware' => 'check_if_user_is_super_admin'], function() {
             Route::post('/indented_proposal/create', 'ProposalController@adminPostCreateIndentedProposal');
             Route::get('/indented_proposal/{indentedProposal}', 'ProposalController@adminIndentProposalView');
             Route::post('/indented_proposal/submit', 'ProposalController@adminSubmitIndentedProposal')->name('admin_submit_indented_proposal');
-            Route::post('/buy_and_sell_proposal/create', 'ProposalController@adminPostCreateBuyAndSellProposal')->name('admin_post_buy_sell_proposal');
-            Route::get('/buy_and_sell_proposal/{buyAndSellProposal}', 'ProposalController@adminBuyAndSellProposalView');
+            Route::post('/buy_and_sell_proposal/create', 'ProposalController@adminPostCreateBuyAndSellProposal');
+            Route::get('/buy_and_sell_proposal/{buy_and_sell_proposal}', 'ProposalController@adminBuyAndSellProposalView');
+            Route::post('/buy_and_sell/create', 'BuyAndSellProposalsController@adminPostCreateBuySellProposal')->name('admin_post_buy_sell_proposal');
             Route::get('/indented_proposals', 'ProposalController@adminIndexIndentedProposal')->name('admin_index_indented_proposal');
 
         # SEARCH
@@ -175,10 +175,11 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
         Route::post('/indented_proposal/create', 'ProposalController@adminPostCreateIndentedProposal');
         Route::get('/indented_proposal/{indentedProposal}', 'ProposalController@adminIndentProposalView');
         Route::post('/indented_proposal/submit', 'ProposalController@adminSubmitIndentedProposal')->name('admin_submit_indented_proposal');
+        Route::get('/indented_proposals', 'ProposalController@adminIndexIndentedProposal')->name('admin_index_indented_proposal');
         Route::post('/buy_and_sell_proposal/create', 'ProposalController@adminPostCreateBuyAndSellProposal');
         Route::get('/buy_and_sell_proposal/{buyAndSellProposal}', 'ProposalController@adminBuyAndSellProposalView');
-        Route::post('/buy_and_sell/create', 'ProposalController@adminPostCreateBuyAndSellProposal')->name('admin_submit_buy_and_sell_proposal');
-        Route::get('/indented_proposals', 'ProposalController@adminIndexIndentedProposal')->name('admin_index_indented_proposal');
+        Route::post('/buy_and_sell/create', 'BuyAndSellProposalController@adminPostCreateBuySellProposal');
+        Route::post('/buy_and_sell_proposal/submit', 'ProposalController@adminSubmitBuyAndSellProposal')->name('admin_submit_buy_and_sell_proposal');
 
         # SEARCH
         Route::get('/search', function() { return view('search.admin.index'); })->name('search');

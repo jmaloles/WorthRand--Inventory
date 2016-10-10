@@ -16,7 +16,7 @@
                 <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
                     <form class="form-horizontal" action="{{ route('admin_submit_buy_and_sell_proposal') }}" method="POST" id="SubmitBuyAndSellProposal">
                         {{ csrf_field() }}
-                        <input type="hidden" name="indent_proposal_id" value="{{ $buyAndSellProposal->id }}">
+                        <input type="hidden" name="buy_and_sell_proposal_id" value="{{ $buyAndSellProposal->id }}">
 
                         <div class="row">
                             <div class="col-lg-12 col-lg-pull-1">
@@ -30,7 +30,7 @@
                                 <div class="form-group">
                                     <label for="main_company" class="col-sm-2 control-label">WPC REF </label>
                                     <div class="col-sm-5">
-                                        <input class="form-control" id="wpc ref" name="WPC REF" placeholder="WPC Ref">
+                                        <input class="form-control" id="wpc ref" name="wpc_ref" placeholder="WPC Ref">
                                         <br>
                                     </div>
                                 </div>
@@ -38,7 +38,7 @@
                                 <div class="form-group">
                                     <label for="OfficeSold" class="col-sm-2 control-label">Date</label>
                                     <div class="col-sm-5">
-                                        <input name="office_sold" class="form-control" id="Date" placeholder="Date">
+                                        <input name="date" class="form-control" id="Date" placeholder="Date">
                                         <br>
                                     </div>
                                 </div>
@@ -55,7 +55,7 @@
                                 <div class="form-group">
                                     <label for="ShitpTo" class="col-sm-2 control-label">Invoice To:</label>
                                     <div class="col-sm-5">
-                                        <input name="ship_to" class="form-control" id="InvoiceTo" placeholder="Invoice To">
+                                        <input name="invoice_to" class="form-control" id="InvoiceTo" placeholder="Invoice To">
                                         <br>
                                         <textarea name="invoice_address" id="" class="form-control" placeholder="Invoice Address"></textarea>
                                     </div>
@@ -64,7 +64,7 @@
                                 <div class="form-group">
                                     <label for="main_company" class="col-sm-2 control-label">QRC REF </label>
                                     <div class="col-sm-5">
-                                        <input class="form-control" id="wpc ref" name="WPC REF" placeholder="WPC Ref">
+                                        <input class="form-control" id="qrc ref" name="qrc_ref" placeholder="WPC Ref">
                                         <br>
                                     </div>
                                 </div>
@@ -127,12 +127,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="InputShipVia" class="col-sm-2 control-label">Delivery:</label>
-                                    <div class="col-sm-5">
-                                        <input name="Delivery" class="form-control" id="InputDelivery" placeholder="Delivery">
-                                    </div>
-                                </div>
+
 
                                 <div class="form-group">
                                     <label for="InputAmount" class="col-sm-2 control-label">Payment Terms:</label>
