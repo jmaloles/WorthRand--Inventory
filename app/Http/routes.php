@@ -167,6 +167,8 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
         Route::get('/customer/{customer}/edit', 'CustomerController@adminEditCustomerInformation')->name('admin_edit_customer_information');
         Route::get('/customer/{customer}/branches', 'CustomerController@adminCustomerBranchList')->name('admin_customer_branch_list');
         Route::patch('/customer/{customer}/edit', 'CustomerController@adminPostEditCustomerInformation')->name('admin_post_edit_customer_information');
+        Route::get('fetch_customers', 'CustomerController@adminFetchCustomers');
+        Route::post('save_customer', 'CustomerController@adminSaveCustomer')->name('admin_save_customer');
 
         # BRANCHES
         Route::get('/branches', 'BranchController@adminBranchIndex')->name('admin_branch_index');
