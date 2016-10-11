@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => 'local',
+    'default' => 'ftp',
 
     /*
     |--------------------------------------------------------------------------
@@ -60,6 +60,14 @@ return [
             'secret' => 'your-secret',
             'region' => 'your-region',
             'bucket' => 'your-bucket',
+        ],
+
+        'ftp' => [
+            'driver' => 'ftp',
+            'host' => '192.168.0.3',
+            'username' => 'worthrand',
+            'root' => '/home/worthrand/www',
+            'password' => 'testing123'
         ],
 
     ],

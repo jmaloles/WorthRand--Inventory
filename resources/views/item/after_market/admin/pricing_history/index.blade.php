@@ -11,22 +11,22 @@
                 <div class="sidebar col-lg-2 col-md-3 col-sm-3 col-xs-12 ">
                     <ul id="accordion" class="nav nav-pills nav-stacked sidebar-menu">
                         <li>
-                            <li class="nav-item"><a class="nav-link" href="#"><i class="fa fa-cog"></i>&nbsp; {{ $project->name }}</a>
-                                <ul class="sub">
-                                    <li><a href="{{ route('admin_project_show', $project->id) }}"><i class="fa fa-cog"></i>&nbsp;Profile</a></li>
-                                    <li><a href="{{ route('admin_project_information', $project->id) }}"><i class="fa fa-pencil"></i>&nbsp;Update Information</a></li>
-                                    <li class="nav-item"><a class="nav-link"  href="{{ route('admin_create_aftermarket_on_project', $project->id) }}"><i class="fa fa-plus"></i>&nbsp; Add AfterMarket</a></li>
-                                </ul>
-                            </li>
+                        <li class="nav-item"><a class="nav-link" href="#"><i class="fa fa-cog"></i>&nbsp; {{ $afterMarket->name }}</a>
+                            <ul class="sub">
+                                <li><a href="{{ route('admin_after_market_show', $afterMarket->id) }}"><i class="fa fa-cog"></i>&nbsp;Profile</a></li>
+                                <li><a href="{{ route('admin_after_market_information', $afterMarket->id) }}"><i class="fa fa-pencil"></i>&nbsp;Update Information</a></li>
+                                <li class="nav-item"><a class="nav-link"  href="{{ route('admin_after_market_pricing_history_create', $afterMarket->id) }}"><i class="fa fa-plus"></i>&nbsp; Add AfterMarket</a></li>
+                            </ul>
+                        </li>
                         </li>
 
                         <li>
-                            <li class="nav-item"><a class="nav-link"  href="#"><i class="fa fa-th-list"></i>&nbsp; Pricing History</a>
-                                <ul class="sub">
-                                    <li><a href="{{ route('admin_project_pricing_history_index', $project->id) }}"><i class="fa fa-th-list"></i>&nbsp;Pricing History List</a></li>
-                                    <li class="nav-item"><a class="nav-link"  href="{{ route('admin_project_pricing_history_create', $project->id) }}"><i class="fa fa-plus"></i>&nbsp; Add Pricing History</a></li>
-                                </ul>
-                            </li>
+                        <li class="nav-item"><a class="nav-link"  href="#"><i class="fa fa-th-list"></i>&nbsp; Pricing History</a>
+                            <ul class="sub">
+                                <li><a href="{{ route('admin_after_market_pricing_history_index', $afterMarket->id) }}"><i class="fa fa-th-list"></i>&nbsp;Pricing History List</a></li>
+                                <li class="nav-item"><a class="nav-link"  href="{{ route('admin_after_market_pricing_history_create', $afterMarket->id) }}"><i class="fa fa-plus"></i>&nbsp; Add Pricing History</a></li>
+                            </ul>
+                        </li>
                         </li>
 
 
@@ -37,7 +37,7 @@
                 <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            {{ strtoupper($project->name) }} PRICING HISTORY
+                            {{ strtoupper($afterMarket->name) }} PRICING HISTORY
                         </div>
                     </div>
 
@@ -47,18 +47,18 @@
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>
-                                            <th>#</th>
-                                            <th>P.O Number</th>
-                                            <th>Year</th>
-                                            <th>Price</th>
-                                            <th>Terms</th>
-                                            <th>Delivery</th>
-                                            <th>FPD Reference</th>
-                                            <th>WPC Reference</th>
+                                        <th>#</th>
+                                        <th>P.O Number</th>
+                                        <th>Year</th>
+                                        <th>Price</th>
+                                        <th>Terms</th>
+                                        <th>Delivery</th>
+                                        <th>FPD Reference</th>
+                                        <th>WPC Reference</th>
                                         </thead>
 
                                         <tbody>
-                                        @foreach($project->project_pricing_history as $pricing_history)
+                                        @foreach($afterMarket->after_market_pricing_history as $pricing_history)
                                             <tr>
                                                 <td></td>
                                                 <td>{{ $pricing_history->po_number }}</td>

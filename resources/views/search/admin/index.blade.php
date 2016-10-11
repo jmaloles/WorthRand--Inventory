@@ -13,8 +13,9 @@
                 <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
                     @if(Session::has('message'))
                         <div class="row">
-                            <div class="alert alert-success alert-dismissible" role="alert" style="margin-top: -1.3rem; border-radius: 0px 0px 0px 0px;">
-                                <div class="container"><i class="fa fa-check"></i>&nbsp;&nbsp;{{ Session::get('message') }}
+                            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-top: -1.05rem; border-radius: 0px 0px 0px 0px;
+                            background-color: #d9534f; color: white; border-color: #b52b27; font-size: 15px; margin-bottom: 1rem;">
+                                <div class="container">&nbsp;&nbsp;{{ Session::get('message') }}
                                     <button type="button" class="close" style="margin-right: 4rem;" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
                             </div>
                         </div>
@@ -31,8 +32,8 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <button class="btn btn-default" id="addItemBtn"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add Item</button>
-                            <a href="{{ route('create_project') }}" class="btn btn-default"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;&nbsp;Proceed to Indented Proposal</a>
-                            <a href="{{ route('create_project') }}" class="btn btn-default"><i class="fa fa-money" aria-hidden="true"></i>&nbsp;&nbsp;Proceed to Buy & Sell Proposal</a>
+                            <button class="btn btn-default" id="IndentedProposalBtn"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;&nbsp;Proceed to Indented Proposal</button>
+                            <button class="btn btn-default" id="BuyAndSellBtn"><i class="fa fa-money" aria-hidden="true"></i>&nbsp;&nbsp;Proceed to Buy & Sell Proposal</button>
                         </div>
                     </div>
 
@@ -47,9 +48,9 @@
                                             Spare Parts Description
                                         </div>
                                         <div class="panel-body">
-                                            <form class="form-horizontal" id="createProjectForm" action="{{ route('post_project') }}" method="POST">
+                                            <form class="form-horizontal" id="createProposal" method="POST">
                                                 {{ csrf_field() }}
-                                                <input type="hidden" id="test_id" name="test_id">
+                                                <input type="hidden" id="array_id" name="array_id">
 
                                                 <div class="form-group{{ $errors->has('item_category') ? ' has-error' : '' }}">
                                                     <label for="item_category" class="col-md-4 control-label">Item Category:</label>
@@ -245,12 +246,48 @@
         </div>
     </div>
 
+    <div class="modal fade" tabindex="-1" role="dialog" id="IndentedProposalForm" style="padding-right: 210px !important;">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Indented Proposal</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <thead>
+                            <th>Item No.</th>
+                            <th>Description</th>
+                            <th>Qty</th>
+                            <th>Price</th>
+                            <th>Delivery</th>
+                        </thead>
+                        <tbody class="item_list">
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
     <script>
+        $("#BuyAndSellBtn").on('click', function() {
+            $("#createProposal").attr('action', '/admin/buy_and_sell_proposal/create').submit();
+        });
+
+        $("#IndentedProposalBtn").on('click', function() {
+            $("#createProposal").attr('action', '/admin/indented_proposal/create').submit();
+        });
+
         var items = [];
         var item_category = "";
         var wrapper       = $(".pricing_history_wrapper"); //Fields wrapper
-
-
+        var table_wrapper = $(".item_list");
 
         $('#item_category').change(function () {
             document.getElementById("project_dropdown").value = "";
@@ -263,8 +300,10 @@
             document.getElementById("serial_number").value = "";
             document.getElementById("tag_number").value = "";
             document.getElementById("item_id").value = "";
+            $(wrapper).html('');
 
             $( "select option:selected" ).each(function() {
+                item_category = "";
                 item_category += $( this ).val();
             });
 
@@ -281,7 +320,7 @@
                     document.getElementById("drawing_number").value = suggestions.drawing_number;
                     document.getElementById("serial_number").value = suggestions.serial_number;
                     document.getElementById("tag_number").value = suggestions.tag_number;
-                    document.getElementById("item_id").value = suggestions.item_id;
+                    document.getElementById("item_id").value = suggestions.item_id + "-" + item_category;
                     $(wrapper).html('');
 
                     if(Object.keys(suggestions.pricinHistoryArray).length != 0) {
@@ -337,27 +376,32 @@
                             );
                         });
                     } if(Object.keys(suggestions.pricinHistoryArray).length == 0) {
-                        var url = "{{ route('admin_project_pricing_history_create', ':project_id') }}";
-                            url = url.replace(':project_id', suggestions.data);
+                        var url = "{{ url('admin/:item_category/:item_id/pricing_history/create') }}";
+                            url = url.replace(':item_id', suggestions.data);
+                        url = url.replace(':item_category', item_category);
 
-                        $(wrapper).append('<div class="alert alert-danger" role="alert" style="background-color: #d9534f; color: white; border-color: #b52b27;">Pricing history data not found.... ' + '<a class="btn btn-default btn-sm" href="' + url + '">Add Pricing History</a></div>');
+                        $(wrapper).append('<div class="alert alert-danger" role="alert" style="background-color: #d9534f; color: white; border-color: #b52b27; font-size: 15px;">Pricing History Data Not Found.... ' + '<a class="btn btn-default btn-sm" style="" href="' + url + '">Add Pricing History</a></div>');
                     }
                 }
             });
         });
 
         $("#addItemBtn").click(function() {
-            var existing_item = $.inArray(document.getElementById("item_id").value + '-' + item_category, items);
-            if(existing_item == -1) {
-                items.push(document.getElementById("item_id").value + '-' + item_category);
-                document.getElementById("test_id").value = items;
+            var item = document.getElementById("item_id").value;
+            var existing_item = $.inArray(item.trim(), items);
 
-
-                alertify.notify("Item "  + document.getElementById("project_dropdown").value +  " was successfully added", 'success', 5);
-                /*$.notify("Item "  + document.getElementById("project_dropdown").value +  " was successfully added", "success");*/
+            if(item.trim() == "") {
+                alertify.notify("Error: No items were selected", 'error', 5);
             } else {
-                alertify.notify("Item " + document.getElementById("project_dropdown").value + " is already added", 'error', 5);
-                /*$.notify("Item " + document.getElementById("project_dropdown").value + " is already added", "error");*/
+                // We used -1 because array starts with 0
+                if(existing_item == -1) {
+                    items.push(item.trim());
+                    document.getElementById("array_id").value = items;
+
+                    alertify.notify("Item "  + document.getElementById("project_dropdown").value +  " was successfully added", 'success', 5);
+                } else {
+                    alertify.notify("Item " + document.getElementById("project_dropdown").value + " is already added", 'error', 5);
+                }
             }
         });
     </script>
