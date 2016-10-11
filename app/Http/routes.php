@@ -114,6 +114,8 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
         Route::get('/create/user/', 'UserController@adminCreateUser')->name('admin_create_user');
         Route::post('/create/user/', 'UserController@adminPostUser')->name('post_create_user');
         Route::get('/sales_engineers', 'UserController@showSalesEngineers')->name('admin_sales_engineer_index');
+        Route::get('/sales_engineer/{sales_engineer}', 'UserController@showSalesEngineer')->name('admin_show_sales_engineer');
+        Route::get('/sales_engineer/{sales_engineer}/edit', 'UserController@adminEditSalesEngineer')->name('admin_edit_sales_engineer_information');
 
         # ITEMS
         Route::get('/items', 'ItemController@index')->name('items');

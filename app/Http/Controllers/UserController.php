@@ -185,4 +185,14 @@ class UserController extends Controller
 
         return view('sales_engineer.admin.index', compact('users'));
     }
+
+    public function showSalesEngineer(User $sales_engineer)
+    {
+        return view('sales_engineer.admin.show', compact('sales_engineer'));
+    }
+
+    public function adminEditSalesEngineer(User $sales_engineer)
+    {
+        return view('sales_engineer.admin.edit', compact('sales_engineer'));
+    }
 }
