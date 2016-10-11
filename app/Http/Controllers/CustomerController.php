@@ -10,6 +10,7 @@ use App\Customer;
 
 use App\Http\Requests;
 use App\Http\Requests\UpdateCustomerInformationRequest;
+use App\CustomerUser;
 
 class CustomerController extends Controller
 {
@@ -59,6 +60,33 @@ class CustomerController extends Controller
         $branches->setPath('customer/' . $customer->id . '/branches');
 
         return view('customer.admin.branches', compact('customer', 'branches', 'ctr'));
+    }
+
+    public function adminFetchCustomers()
+    {
+        $array_customer = [];
+        $customers = Customer::all();
+
+        foreach($customers as $customer) {
+            $array_customer['suggestions'][] = [
+                'data' => $customer->id,
+                'value' => $customer->name
+            ];
+        }
+
+        return json_encode($array_customer);
+    }
+
+    public function adminSaveCustomer(Request $request)
+    {
+        $customer_save = new CustomerUser();
+        $customer_save->user_id = $request->get('user_id');
+        $customer_save->customer_id = $request->get('customer_id');
+
+        if($customer_save->save()) {
+            return redirect()->back()->with('message', 'Customer Successfully Assigned');
+        }
+        return redirect()->back()->with('message', 'Customer Not Assigned');
     }
 
 }

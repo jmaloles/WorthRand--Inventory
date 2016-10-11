@@ -114,6 +114,8 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
         Route::get('/create/user/', 'UserController@adminCreateUser')->name('admin_create_user');
         Route::post('/create/user/', 'UserController@adminPostUser')->name('post_create_user');
         Route::get('/sales_engineers', 'UserController@showSalesEngineers')->name('admin_sales_engineer_index');
+        Route::get('/sales_engineer/{sales_engineer}', 'UserController@showSalesEngineer')->name('admin_show_sales_engineer');
+        Route::get('/sales_engineer/{sales_engineer}/edit', 'UserController@adminEditSalesEngineer')->name('admin_edit_sales_engineer_information');
 
         # ITEMS
         Route::get('/items', 'ItemController@index')->name('items');
@@ -144,6 +146,7 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
         Route::patch('/project/{project}/update', 'ItemController@adminUpdateProjectInformation')->name('admin_project_information_update');
         Route::post('/create/project', 'ItemController@postProject')->name('post_project');
         Route::get('/project/dashboard', 'ItemController@adminProjectDashboard')->name('admin_project_dashboard');
+        Route::get('/project/{project}/aftermarket/create', 'ItemController@adminCreateAfterMarketOnProject')->name('admin_create_aftermarket_on_project');
 
         # PRICING HISTORY
         Route::get('/pricing_history', 'ItemController@adminPricingHistoryIndex')->name('admin_pricing_history_index');
@@ -164,6 +167,8 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
         Route::get('/customer/{customer}/edit', 'CustomerController@adminEditCustomerInformation')->name('admin_edit_customer_information');
         Route::get('/customer/{customer}/branches', 'CustomerController@adminCustomerBranchList')->name('admin_customer_branch_list');
         Route::patch('/customer/{customer}/edit', 'CustomerController@adminPostEditCustomerInformation')->name('admin_post_edit_customer_information');
+        Route::get('fetch_customers', 'CustomerController@adminFetchCustomers');
+        Route::post('save_customer', 'CustomerController@adminSaveCustomer')->name('admin_save_customer');
 
         # BRANCHES
         Route::get('/branches', 'BranchController@adminBranchIndex')->name('admin_branch_index');
@@ -177,6 +182,8 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
         Route::get('/indented_proposal/{indentedProposal}', 'ProposalController@adminIndentProposalView');
         Route::post('/indented_proposal/submit', 'ProposalController@adminSubmitIndentedProposal')->name('admin_submit_indented_proposal');
         Route::get('/indented_proposals', 'ProposalController@adminIndexIndentedProposal')->name('admin_index_indented_proposal');
+        Route::get('/indented_proposal/{indented_proposal}/sent', 'ProposalController@adminShowSentIndentedProposal')->name('admin_show_sent_indented_proposal');
+
         Route::post('/buy_and_sell_proposal/create', 'ProposalController@adminPostCreateBuyAndSellProposal');
         Route::get('/buy_and_sell_proposal/{buyAndSellProposal}', 'ProposalController@adminBuyAndSellProposalView');
         Route::post('/buy_and_sell/create', 'BuyAndSellProposalController@adminPostCreateBuySellProposal');

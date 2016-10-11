@@ -8,7 +8,7 @@ class AfterMarket extends Model
 {
     //
     protected $fillable = [
-        'name', 'model', 'ccn_number', 'part_number', 'reference_number', 'drawing_number', 'material_number', 'serial_number', 'tag_number'
+        'name', 'model', 'ccn_number', 'part_number', 'reference_number', 'drawing_number', 'material_number', 'serial_number', 'tag_number', 'project_id'
     ];
 
     public function project()
