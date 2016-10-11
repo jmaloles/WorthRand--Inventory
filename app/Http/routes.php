@@ -144,6 +144,7 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
         Route::patch('/project/{project}/update', 'ItemController@adminUpdateProjectInformation')->name('admin_project_information_update');
         Route::post('/create/project', 'ItemController@postProject')->name('post_project');
         Route::get('/project/dashboard', 'ItemController@adminProjectDashboard')->name('admin_project_dashboard');
+        Route::get('/project/{project}/aftermarket/create', 'ItemController@adminCreateAfterMarketOnProject')->name('admin_create_aftermarket_on_project');
 
         # PRICING HISTORY
         Route::get('/pricing_history', 'ItemController@adminPricingHistoryIndex')->name('admin_pricing_history_index');
@@ -176,6 +177,8 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
         Route::get('/indented_proposal/{indentedProposal}', 'ProposalController@adminIndentProposalView');
         Route::post('/indented_proposal/submit', 'ProposalController@adminSubmitIndentedProposal')->name('admin_submit_indented_proposal');
         Route::get('/indented_proposals', 'ProposalController@adminIndexIndentedProposal')->name('admin_index_indented_proposal');
+        Route::get('/indented_proposal/{indented_proposal}/sent', 'ProposalController@adminShowSentIndentedProposal')->name('admin_show_sent_indented_proposal');
+
         Route::post('/buy_and_sell_proposal/create', 'ProposalController@adminPostCreateBuyAndSellProposal');
         Route::get('/buy_and_sell_proposal/{buyAndSellProposal}', 'ProposalController@adminBuyAndSellProposalView');
         Route::post('/buy_and_sell/create', 'BuyAndSellProposalController@adminPostCreateBuySellProposal');

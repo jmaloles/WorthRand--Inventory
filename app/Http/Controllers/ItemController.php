@@ -192,4 +192,9 @@ class ItemController extends Controller
     {
         return view('item.after_market.admin.pricing_history.create', compact('afterMarket'));
     }
+
+    public function adminCreateAfterMarketOnProject(Project $project)
+    {
+        return view('item.project.admin.create_aftermarket', compact('project'));
+    }
 }
