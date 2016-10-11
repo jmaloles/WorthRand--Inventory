@@ -21,7 +21,6 @@
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <a href="{{ route('admin_customer_create') }}" class="btn btn-success"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp;Add Customer</a>
                             <a href="{{ route('admin_customer_index') }}" class="bt btn-default"></a>
                         </div>
                     </div>

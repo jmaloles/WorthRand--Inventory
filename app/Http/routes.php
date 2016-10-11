@@ -23,7 +23,7 @@ Route::group(['middleware' => 'check_if_user_is_super_admin'], function() {
     });
 });
 /*
-// ADMIN ACCOUNT
+// SALES ENGINEER
 Route::group(['middleware' => ['verify_if_user_is_sales_engineer']], function() {
     Route::group(['prefix' => 'sales_engineer'], function() {
         # DASHBOARD
@@ -103,7 +103,7 @@ Route::group(['middleware' => ['verify_if_user_is_sales_engineer']], function() 
 });*/
 
 
-// SALES ENGINEER ACCOUNT
+// ADMIN
 Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
     Route::group(['prefix' => 'admin'], function() {
         # DASHBOARD
@@ -169,6 +169,7 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
         Route::get('/branches', 'BranchController@adminBranchIndex')->name('admin_branch_index');
         Route::get('/branch/{branch}/edit', 'BranchController@adminBranchEdit')->name('admin_branch_edit');
         Route::get('/branch/{branch}', 'BranchController@adminBranchShow')->name('admin_branch_show');
+        Route::get('/create/branch', 'BranchController@adminCreateBranch')->name('admin_branches_create');
 
         # PROPOSALS
         Route::post('/proposal/create', 'ProposalController@adminCreateProposal')->name('admin_create_proposal');

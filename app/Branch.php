@@ -13,4 +13,21 @@ class Branch extends Model
     {
         return $this->belongsTo(Customer::class);
     }
+
+    public static function saveBranch($request, $customer)  {
+        $branch = new Branch();
+        $branch->customer_id = $customer->id;
+        $branch->name = $request->get('name');
+        $branch->address = $request->get('address');
+        $branch->city = $request->get('city');
+        $branch->postal_code = $request->get('postal_code');
+
+        if($branch->save()) {
+
+                return redirect()->back();
+            }
+
+        }
+
+
 }

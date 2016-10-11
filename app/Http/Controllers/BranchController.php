@@ -19,9 +19,9 @@ class BranchController extends Controller
 
     public function adminPostCreateBranch(CreateCustomerBranchRequest $createCustomerBranchRequest, Customer $customer)
     {
-        $branch = Branch::create(ucwords($createCustomerBranchRequest->all(), " "));
+        $branch = Branch::saveBranch($createCustomerBranchRequest, $customer);
 
-        return redirect()->back()->with('message', 'Branch ['. $branch->name .'] was successfully created');
+        return $branch;
     }
 
     public function adminBranchIndex()
