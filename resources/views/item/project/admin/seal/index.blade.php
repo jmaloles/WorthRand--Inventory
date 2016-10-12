@@ -13,17 +13,10 @@
                     <div class="row">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                PROJECT
+                                SEAL LIST
                             </div>
                         </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <a href="{{ route('create_project') }}" class="btn btn-success"><i class="fa fa-plus-circle"></i>&nbsp;Add Project</a>
-                        </div>
-                    </div>
-                    <br>
 
                     <div class="row">
                         <div class="col-lg-12">
@@ -32,27 +25,23 @@
                                     <thead>
                                         <th>#</th>
                                         <th>Name</th>
-                                        <th>No. of Aftermarkets</th>
-                                        <th>No. of Seals</th>
                                         <th>Model</th>
-                                        <th>Serial Number</th>
-                                        <th>Tag Number</th>
-                                        <th>Drawing Number</th>
+                                        <th>Seal Type</th>
+                                        <th>Model</th>
+                                        <th>Material Code</th>
                                         <th>Actions</th>
                                     </thead>
                                     <tbody>
-                                    @foreach($projects as $project)
+                                    @foreach($seals as $seal)
                                         <tr>
-                                            <td>{{ $project->id }}</td>
-                                            <td>{{ $project->name }}</td>
-                                            <td>{{ count($project->after_markets) }}</td>
-                                            <td>{{ count($project->seals) }}</td>
-                                            <td>{{ $project->model }}</td>
-                                            <td>{{ $project->serial_number }}</td>
-                                            <td>{{ $project->tag_number }}</td>
-                                            <td>{{ $project->drawing_number }}</td>
+                                            <td>{{ $seal->id }}</td>
+                                            <td>{{ $seal->name }}</td>
+                                            <td>{{ $seal->model }}</td>
+                                            <td>{{ $seal->seal_type }}</td>
+                                            <td>{{ $seal->model }}</td>
+                                            <td>{{ $seal->material_code }}</td>
                                             <td>
-                                                <a href="{{ route('admin_project_show', $project->id) }}" class="btn btn-sm btn-success">View Project</a>
+                                                <a href="{{ route('admin_seal_show', $seal->id) }}" class="btn btn-sm btn-success">View Seal</a>
                                             </td>
                                         </tr>
                                     @endforeach

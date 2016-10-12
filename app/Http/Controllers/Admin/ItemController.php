@@ -212,11 +212,11 @@ class ItemController extends Controller
         return view('item.project.admin.create_aftermarket', compact('project'));
     }
 
-    public function indexSeal(Project $project)
+    public function indexSeal()
     {
-        $seals = Seal::whereProjectId($project->id)->get();
+        $seals = Seal::all();
 
-        return view('item.project.admin.seal.create', compact('seals', 'project'));
+        return view('item.project.admin.seal.index', compact('seals'));
     }
 
     public function adminSealCreate(Project $project)
@@ -246,5 +246,10 @@ class ItemController extends Controller
             return redirect()->back()->with('message', 'Seal Successfully Added');
         }
         return redirect()->back()->with('message', 'Seal Not Added');
+    }
+
+    public function showSeal(Seal $seal)
+    {
+        return view('item.project.admin.seal.show', compact('seal'));
     }
 }

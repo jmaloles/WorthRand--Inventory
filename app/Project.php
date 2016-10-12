@@ -21,6 +21,11 @@ class Project extends Model
         return $this->hasMany(ProjectPricingHistory::class)->latest();
     }
 
+    public function seals()
+    {
+        return $this->hasMany(Seal::class);
+    }
+
     public static function createProject($createProjectRequest)
     {
         $project = new Project();
