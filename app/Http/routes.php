@@ -67,6 +67,12 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
         Route::get('/project/dashboard', 'Admin\ItemController@adminProjectDashboard')->name('admin_project_dashboard');
         Route::get('/project/{project}/aftermarket/create', 'Admin\ItemController@adminCreateAfterMarketOnProject')->name('admin_create_aftermarket_on_project');
 
+        # SEAL
+        Route::get('/seal/create/{project}', 'Admin\ItemController@adminSealCreate')->name('admin_seal_create');
+        Route::get('/seals/{project}', 'Admin\ItemController@indexSeal')->name('admin_seal_index');
+        Route::post('/seal/create', 'Admin\ItemController@adminPostSealCreate')->name('admin_post_seal_create');
+
+
         # PRICING HISTORY
         Route::get('/pricing_history', 'Admin\ItemController@adminPricingHistoryIndex')->name('admin_pricing_history_index');
 
@@ -130,6 +136,7 @@ Route::group(['middleware' => ['verify_if_user_is_sales_engineer']], function() 
             Route::get('/project/{project}/information', 'SalesEngineer\ItemController@adminProjectInformation')->name('se_project_information');
             Route::get('/project/{project}/pricing_history', 'SalesEngineer\ItemController@adminProjectPricingHistoryIndex')->name('se_project_pricing_history_index');
             Route::get('/project/dashboard', 'SalesEngineer\ItemController@adminProjectDashboard')->name('se_project_dashboard');
+
 
         # PRICING HISTORY
             Route::get('/pricing_history', 'SalesEngineer\ItemController@adminPricingHistoryIndex')->name('admin_pricing_history_index');
