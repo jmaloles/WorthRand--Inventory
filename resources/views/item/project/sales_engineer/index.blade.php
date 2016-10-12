@@ -10,11 +10,10 @@
             <div class="row">
                 @include('layouts.admin-sidebar')
                 <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
-
                     <div class="row">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                MY CUSTOMER LIST
+                                PROJECT
                             </div>
                         </div>
                     </div>
@@ -23,25 +22,31 @@
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="table-reponsive">
-                                <table class="table table-striped">
+                            <div class="table-responsive">
+                                <table class="table">
                                     <thead>
                                         <th>#</th>
                                         <th>Name</th>
-                                        <th>Address</th>
-                                        <th>City</th>
-                                        <th>Postal Code</th>
+                                        <th>No. of After Markets</th>
+                                        <th>Model</th>
+                                        <th>Serial Number</th>
+                                        <th>Tag Number</th>
+                                        <th>Drawing Number</th>
                                         <th>Actions</th>
                                     </thead>
                                     <tbody>
-                                    @foreach($customers as $customer)
+                                    @foreach($projects as $project)
                                         <tr>
-                                            <td>{{ ((($customers->currentPage() - 1) * $customers->perPage()) + ($ctr++) + 1) }}</td>
-                                            <td>{{ $customer->name }}</td>
-                                            <td>{{ $customer->address }}</td>
-                                            <td>{{ $customer->city }}</td>
-                                            <td>{{ $customer->postal_code }}</td>
-                                            <td><a href="{{ route('admin_show_customer', $customer->id) }}" class="btn btn-primary btn-sm">View</a></td>
+                                            <td>{{ $project->id }}</td>
+                                            <td>{{ $project->name }}</td>
+                                            <td>{{ count($project->after_markets) }}</td>
+                                            <td>{{ $project->model }}</td>
+                                            <td>{{ $project->serial_number }}</td>
+                                            <td>{{ $project->tag_number }}</td>
+                                            <td>{{ $project->drawing_number }}</td>
+                                            <td>
+                                                <a href="{{ route('se_project_show', $project->id) }}" class="btn btn-sm btn-success">View Project</a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -49,7 +54,6 @@
                             </div>
                         </div>
                     </div>
-                    
                 </div>
             </div>
         </div>

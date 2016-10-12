@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 
@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Branch;
 use App\Customer;
 use App\Http\Requests\CreateCustomerBranchRequest;
+use App\Http\Controllers\Controller;
 
 class BranchController extends Controller
 {

@@ -15,6 +15,11 @@ class Customer extends Model
         return $this->hasMany(Branch::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public static function createCustomer($createCustomerRequest)
     {
         $customer = new Customer();

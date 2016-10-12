@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 
@@ -17,9 +17,19 @@ use App\Http\Requests\AddProjectPricingHistoryRequest;
 use App\Http\Requests\CreateAfterMarketPricingHistoryRequest;
 use App\AfterMarketPricingHistory;
 use App\Http\Requests\UpdateAfterMarketInformationRequest;
+use App\Http\Controllers\Controller;
 
 class ItemController extends Controller
 {
+
+
+    /**
+     * ItemController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware('verify_if_user_is_admin');
+    }
 
     public function index()
     {
