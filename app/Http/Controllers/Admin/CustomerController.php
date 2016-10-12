@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Branch;
 use Illuminate\Http\Request;
@@ -11,6 +11,7 @@ use App\Customer;
 use App\Http\Requests;
 use App\Http\Requests\UpdateCustomerInformationRequest;
 use App\CustomerUser;
+use App\Http\Controllers\Controller;
 
 class CustomerController extends Controller
 {
@@ -79,9 +80,8 @@ class CustomerController extends Controller
 
     public function adminSaveCustomer(Request $request)
     {
-        $customer_save = new CustomerUser();
+        $customer_save = Customer::findOrFail($request->get('customer_id'));
         $customer_save->user_id = $request->get('user_id');
-        $customer_save->customer_id = $request->get('customer_id');
 
         if($customer_save->save()) {
             return redirect()->back()->with('message', 'Customer Successfully Assigned');

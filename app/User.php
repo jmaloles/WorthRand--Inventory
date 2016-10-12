@@ -24,6 +24,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function customers()
+    {
+        return $this->hasMany(Customer::class);
+    }
+
     public static function createUser($createUserRequest)
     {
         $user = new User();

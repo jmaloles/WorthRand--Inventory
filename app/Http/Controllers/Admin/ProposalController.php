@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\IndentedProposal;
 use App\IndentedProposalItem;
@@ -10,6 +10,7 @@ use App\Http\Requests;
 use DB;
 use Session;
 use App\BuyAndSellProposal;
+use App\Http\Controllers\Controller;
 
 class ProposalController extends Controller
 {
