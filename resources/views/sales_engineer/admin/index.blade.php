@@ -35,7 +35,7 @@
                                                 <td>{{ $user->email }}</td>
                                                 <td class="text-right">
                                                     <a href="#" class="btn btn-sm btn-danger">Deactivate</a>
-                                                    <a href="#" class="btn btn-sm btn-primary">View Profile</a>
+                                                    <a href="{{ route('admin_show_sales_engineer', $user->id) }}" class="btn btn-sm btn-primary">View Profile</a>
                                                 </td>
                                             </tr>
                                         @endforeach

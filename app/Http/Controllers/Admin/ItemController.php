@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 
@@ -17,9 +17,23 @@ use App\Http\Requests\AddProjectPricingHistoryRequest;
 use App\Http\Requests\CreateAfterMarketPricingHistoryRequest;
 use App\AfterMarketPricingHistory;
 use App\Http\Requests\UpdateAfterMarketInformationRequest;
+use App\Http\Requests\CreateSealRequest;
+use App\Http\Controllers\Controller;
+use App\Seal;
+
+
 
 class ItemController extends Controller
 {
+
+
+    /**
+     * ItemController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware('verify_if_user_is_admin');
+    }
 
     public function index()
     {
@@ -191,5 +205,51 @@ class ItemController extends Controller
     public function adminAfterMarketPricingHistoryCreate(AfterMarket $afterMarket)
     {
         return view('item.after_market.admin.pricing_history.create', compact('afterMarket'));
+    }
+
+    public function adminCreateAfterMarketOnProject(Project $project)
+    {
+        return view('item.project.admin.create_aftermarket', compact('project'));
+    }
+
+    public function indexSeal()
+    {
+        $seals = Seal::all();
+
+        return view('item.project.admin.seal.index', compact('seals'));
+    }
+
+    public function adminSealCreate(Project $project)
+    {
+        //dd($project);
+        return view('item.project.admin.seal.create', compact('project'));
+    }
+
+    public function adminPostSealCreate(CreateSealRequest $createSealRequest)
+    {
+        $seal = new Seal();
+        $seal->name = trim(ucwords($createSealRequest->get('name'), " "));
+        $seal->project_id = trim(strtoupper($createSealRequest->get('project_id')));
+        $seal->drawing_number = trim(strtoupper($createSealRequest->get('drawing_number')));
+        $seal->bom_number = trim(strtoupper($createSealRequest->get('bom_number')));
+        $seal->end_user = trim(strtoupper($createSealRequest->get('end_user')));
+        $seal->seal_type = trim(strtoupper($createSealRequest->get('seal_type')));
+        $seal->size = trim(strtoupper($createSealRequest->get('size')));
+        $seal->material_code = trim(strtoupper($createSealRequest->get('material_code')));
+        $seal->code = trim(strtoupper($createSealRequest->get('code')));
+        $seal->model = trim(strtoupper($createSealRequest->get('model')));
+        $seal->serial_number = trim(strtoupper($createSealRequest->get('serial_number')));
+        $seal->tag = trim(strtoupper($createSealRequest->get('tag')));
+
+        if($seal->save())
+        {
+            return redirect()->back()->with('message', 'Seal Successfully Added');
+        }
+        return redirect()->back()->with('message', 'Seal Not Added');
+    }
+
+    public function showSeal(Seal $seal)
+    {
+        return view('item.project.admin.seal.show', compact('seal'));
     }
 }

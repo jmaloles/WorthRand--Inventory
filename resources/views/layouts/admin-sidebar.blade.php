@@ -31,7 +31,7 @@
                 <ul class="sub">
                     <li><a href="{{ route('admin_project_index') }}"><i class="fa fa-cog"></i>&nbsp;Project List</a></li>
                     <li><a href="{{ route('admin_after_market_index') }}"><i class="fa fa-cogs"></i>&nbsp;AfterMarket List</a></li>
-                    <li><a class="nav-link"  href="#"><i class="fa fa-file-text-o"></i>&nbsp; Seal</a></li>
+                    <li><a class="nav-link"  href="{{ route('admin_seal_index') }}"><i class="fa fa-file-text-o"></i>&nbsp; Seal List</a></li>
                     <li><a href="{{ route('admin_project_dashboard') }}"><i class="fa fa-bar-chart"></i>&nbsp;Project Report</a></li>
                     <li><a href="{{ route('admin_project_dashboard') }}"><i class="fa fa-bar-chart"></i>&nbsp;AM Dashboard</a></li>
                 </ul>
@@ -40,6 +40,6 @@
         
         {{--<li class="nav-item {{ Request::route()->getName() == 'admin_pricing_history_index' ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin_pricing_history_index') }}"><i class="fa fa-list-alt"></i>&nbsp; Pricing History</a></li>--}}
 
-        <li class="nav-item {{ Request::route()->getName() == 'search' ? 'active' : '' }}"><a class="nav-link" href="{{ route('search') }}"><i class="fa fa-search"></i>&nbsp; Search</a></li>
+        {{--<li class="nav-item {{ Request::route()->getName() == 'search' ? 'active' : '' }}"><a class="nav-link" href="{{ route('search') }}"><i class="fa fa-search"></i>&nbsp; Search</a></li>--}}
     </ul>
 </div>

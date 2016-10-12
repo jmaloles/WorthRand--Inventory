@@ -15,10 +15,15 @@ class Customer extends Model
         return $this->hasMany(Branch::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public static function createCustomer($createCustomerRequest)
     {
         $customer = new Customer();
-        $customer->name = trim(ucfirst($createCustomerRequest->get('name')));
+        $customer->name = trim(ucwords($createCustomerRequest->get('name'), " "));
         $customer->address = trim(ucwords($createCustomerRequest->get('address'), " "));
         $customer->city = trim(ucfirst($createCustomerRequest->get('city')));
         $customer->postal_code = trim($createCustomerRequest->get('postal_code'));

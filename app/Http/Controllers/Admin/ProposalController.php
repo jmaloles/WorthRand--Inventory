@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\IndentedProposal;
 use App\IndentedProposalItem;
@@ -10,6 +10,7 @@ use App\Http\Requests;
 use DB;
 use Session;
 use App\BuyAndSellProposal;
+use App\Http\Controllers\Controller;
 
 class ProposalController extends Controller
 {
@@ -35,6 +36,13 @@ class ProposalController extends Controller
         return $save_indented_proposal;
     }
 
+    public function adminShowSentIndentedProposal(IndentedProposal $indented_proposal)
+    {
+        $showSentIndentedProposal = IndentedProposal::showSentIndentedProposal($indented_proposal);
+
+        return $showSentIndentedProposal;
+    }
+
     public function adminSubmitBuyAndSellProposal(Request $request)
     {
         $save_buy_and_sell_proposal = BuyAndSellProposal::saveBuyAndSellProposal($request);
@@ -55,4 +63,6 @@ class ProposalController extends Controller
 
         return $create_buy_and_sell_proposal;
     }
+
+
 }

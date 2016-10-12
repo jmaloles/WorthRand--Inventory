@@ -13,9 +13,10 @@
                         <li>
                             <li class="nav-item"><a class="nav-link" href="#"><i class="fa fa-cog"></i>&nbsp; {{ $project->name }}</a>
                                 <ul class="sub">
-                                    <li><a href="{{ route('admin_project_show', $project->id) }}"><i class="fa fa-cog"></i>&nbsp;Profile</a></li>
-                                    <li><a href="{{ route('admin_project_information', $project->id) }}"><i class="fa fa-pencil"></i>&nbsp;Update Information</a></li>
-                                    <li class="nav-item"><a class="nav-link"  href="{{ route('admin_project_pricing_history_create', $project->id) }}"><i class="fa fa-plus"></i>&nbsp; Add AfterMarket</a></li>
+                                    <li class="nav-item"><a href="{{ route('admin_project_show', $project->id) }}"><i class="fa fa-cog"></i>&nbsp;Profile</a></li>
+                                    <li class="nav-item"><a href="{{ route('admin_project_information', $project->id) }}"><i class="fa fa-pencil"></i>&nbsp;Update Information</a></li>
+                                    <li class="nav-item"><a class="nav-link"  href="{{ route('admin_create_aftermarket_on_project', $project->id) }}"><i class="fa fa-plus"></i>&nbsp; Add AfterMarket</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="{{ route('admin_seal_create', $project->id) }}"><i class="fa fa-plus"></i>&nbsp; Add Seal</a></li>
                                 </ul>
                             </li>
                         </li>
@@ -35,9 +36,11 @@
                 </div>
 
                 <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            {{ strtoupper($project->name) }} PRICING HISTORY
+                    <div class="row">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                {{ strtoupper($project->name) }} PRICING HISTORY
+                            </div>
                         </div>
                     </div>
 
