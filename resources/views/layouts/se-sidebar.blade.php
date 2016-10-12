@@ -8,7 +8,7 @@
             <li class="nav-item {{ Request::route()->getName() == 'items' ? 'active' : '' }}"><a class="nav-link" href="{{ route('items') }}"><i class="fa fa-diamond" aria-hidden="true"></i>&nbsp; Items</a>
                 <ul class="sub">
                     <li><a href="{{ route('se_project_index') }}"><i class="fa fa-cog"></i>&nbsp;Project List</a></li>
-                    <li><a href="{{ route('se_after_market_index') }}"><i class="fa fa-cogs"></i>&nbsp;AfterMarket List</a></li>
+                    <li><a href="{{ route('aftermarket_index') }}"><i class="fa fa-cogs"></i>&nbsp;AfterMarket List</a></li>
                     <li><a class="nav-link"  href="#"><i class="fa fa-file-text-o"></i>&nbsp; Seal</a></li>
                 </ul>
             </li>

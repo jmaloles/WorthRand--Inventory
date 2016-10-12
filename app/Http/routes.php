@@ -124,17 +124,17 @@ Route::group(['middleware' => ['verify_if_user_is_sales_engineer']], function() 
             Route::get('/dashboard', 'SalesEngineer\UserController@dashboard')->name('se_dashboard');
 
         # AFTERMARKETS
-            Route::get('/after_markets', 'SalesEngineer\ItemController@salesEngineerAfterMarketIndex')->name('after_market_index');
-            Route::get('/aftermarket/{afterMarket}', 'SalesEngineer\ItemController@salesEngineerShowAfterMarket')->name('se_after_market_show');
+            Route::get('/after_markets', 'SalesEngineer\ItemController@indexAftermarket')->name('aftermarket_index');
+            Route::get('/aftermarket/{afterMarket}', 'SalesEngineer\ItemController@showAftermarket')->name('se_aftermarket_show');
             Route::get('/aftermarkets', 'SalesEngineer\ItemController@indexAftermarket')->name('se_after_market_index');
             Route::get('/aftermarket/{afterMarket}/information', 'SalesEngineer\ItemController@adminAfterMarketInformation')->name('se_after_market_information');
-            Route::get('/aftermarket/{afterMarket}/pricing_history', 'SalesEngineer\ItemController@adminAfterMarketPricingHistoryIndex')->name('se_after_market_pricing_history_index');
+            Route::get('/aftermarket/{afterMarket}/pricing_history', 'SalesEngineer\ItemController@afterMarketPricingHistoryIndex')->name('se_aftermarket_pricing_history_index');
 
         # PROJECT
             Route::get('/projects', 'SalesEngineer\ItemController@salesEngineerProjectIndex')->name('se_project_index');
             Route::get('/project/{project}', 'SalesEngineer\ItemController@salesEngineerProjectShow')->name('se_project_show');
             Route::get('/project/{project}/information', 'SalesEngineer\ItemController@adminProjectInformation')->name('se_project_information');
-            Route::get('/project/{project}/pricing_history', 'SalesEngineer\ItemController@adminProjectPricingHistoryIndex')->name('se_project_pricing_history_index');
+            Route::get('/project/{project}/pricing_history', 'SalesEngineer\ItemController@salesEngineerProjectPricingHistoryIndex')->name('se_project_pricing_history_index');
             Route::get('/project/dashboard', 'SalesEngineer\ItemController@adminProjectDashboard')->name('se_project_dashboard');
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\SalesEngineer;
 
+use App\AfterMarket;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -29,5 +30,27 @@ class ItemController extends Controller
     public function salesEngineerProjectShow(Project $project)
     {
         return view('item.project.sales_engineer.show', compact('project'));
+    }
+
+    public function salesEngineerProjectPricingHistoryIndex(Project $project)
+    {
+        return view('item.project.sales_engineer.pricing_history.index', compact('project'));
+    }
+
+    public function indexAftermarket()
+    {
+        $aftermarkets = AfterMarket::all();
+
+        return view('item.after_market.sales_engineer.index', compact('aftermarkets'));
+    }
+
+    public function showAftermarket(AfterMarket $afterMarket)
+    {
+        return view('item.after_market.sales_engineer.show', compact('afterMarket'));
+    }
+
+    public function afterMarketPricingHistoryIndex(AfterMarket $afterMarket)
+    {
+        return view('item.after_market.sales_engineer.pricing_history.index', compact('afterMarket'));
     }
 }
