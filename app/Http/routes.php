@@ -72,6 +72,10 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
         Route::post('/seal/create', 'Admin\ItemController@adminPostSealCreate')->name('admin_post_seal_create');
         Route::get('/seals', 'Admin\ItemController@indexSeal')->name('admin_seal_index');
         Route::get('/seal/{seal}', 'Admin\ItemController@showSeal')->name('admin_seal_show');
+        Route::get('/seal/{seal}/information', 'Admin\ItemController@adminSealInformation')->name('admin_seal_information');
+        Route::patch('/seal/update', 'Admin\ItemController@adminUpdateSealInformation')->name('admin_seal_information_update');
+
+
 
         # PRICING HISTORY
         Route::get('/pricing_history', 'Admin\ItemController@adminPricingHistoryIndex')->name('admin_pricing_history_index');
