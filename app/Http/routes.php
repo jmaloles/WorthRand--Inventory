@@ -69,9 +69,9 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
 
         # SEAL
         Route::get('/seal/create/{project}', 'Admin\ItemController@adminSealCreate')->name('admin_seal_create');
-        Route::get('/seals/{project}', 'Admin\ItemController@indexSeal')->name('admin_seal_index');
         Route::post('/seal/create', 'Admin\ItemController@adminPostSealCreate')->name('admin_post_seal_create');
-
+        Route::get('/seals', 'Admin\ItemController@indexSeal')->name('admin_seal_index');
+        Route::get('/seal/{seal}', 'Admin\ItemController@showSeal')->name('admin_seal_show');
 
         # PRICING HISTORY
         Route::get('/pricing_history', 'Admin\ItemController@adminPricingHistoryIndex')->name('admin_pricing_history_index');
@@ -124,17 +124,17 @@ Route::group(['middleware' => ['verify_if_user_is_sales_engineer']], function() 
             Route::get('/dashboard', 'SalesEngineer\UserController@dashboard')->name('se_dashboard');
 
         # AFTERMARKETS
-            Route::get('/after_markets', 'SalesEngineer\ItemController@salesEngineerAfterMarketIndex')->name('after_market_index');
-            Route::get('/aftermarket/{afterMarket}', 'SalesEngineer\ItemController@salesEngineerShowAfterMarket')->name('se_after_market_show');
+            Route::get('/after_markets', 'SalesEngineer\ItemController@indexAftermarket')->name('aftermarket_index');
+            Route::get('/aftermarket/{afterMarket}', 'SalesEngineer\ItemController@showAftermarket')->name('se_aftermarket_show');
             Route::get('/aftermarkets', 'SalesEngineer\ItemController@indexAftermarket')->name('se_after_market_index');
             Route::get('/aftermarket/{afterMarket}/information', 'SalesEngineer\ItemController@adminAfterMarketInformation')->name('se_after_market_information');
-            Route::get('/aftermarket/{afterMarket}/pricing_history', 'SalesEngineer\ItemController@adminAfterMarketPricingHistoryIndex')->name('se_after_market_pricing_history_index');
+            Route::get('/aftermarket/{afterMarket}/pricing_history', 'SalesEngineer\ItemController@afterMarketPricingHistoryIndex')->name('se_aftermarket_pricing_history_index');
 
         # PROJECT
             Route::get('/projects', 'SalesEngineer\ItemController@salesEngineerProjectIndex')->name('se_project_index');
             Route::get('/project/{project}', 'SalesEngineer\ItemController@salesEngineerProjectShow')->name('se_project_show');
             Route::get('/project/{project}/information', 'SalesEngineer\ItemController@adminProjectInformation')->name('se_project_information');
-            Route::get('/project/{project}/pricing_history', 'SalesEngineer\ItemController@adminProjectPricingHistoryIndex')->name('se_project_pricing_history_index');
+            Route::get('/project/{project}/pricing_history', 'SalesEngineer\ItemController@salesEngineerProjectPricingHistoryIndex')->name('se_project_pricing_history_index');
             Route::get('/project/dashboard', 'SalesEngineer\ItemController@adminProjectDashboard')->name('se_project_dashboard');
 
 
@@ -154,16 +154,16 @@ Route::group(['middleware' => ['verify_if_user_is_sales_engineer']], function() 
             Route::get('/branch/{branch}', 'SalesEngineer\BranchController@adminBranchShow')->name('se_branch_show');
 
         # PROPOSALS
-            Route::post('/proposal/create', 'ProposalController@adminCreateProposal')->name('se_create_proposal');
-            Route::post('/indented_proposal/create', 'ProposalController@adminPostCreateIndentedProposal');
-            Route::get('/indented_proposal/{indentedProposal}', 'ProposalController@adminIndentProposalView');
-            Route::post('/indented_proposal/submit', 'ProposalController@adminSubmitIndentedProposal')->name('admin_submit_indented_proposal');
+            Route::post('/proposal/create', 'SalesEngineer\ProposalController@adminCreateProposal')->name('se_create_proposal');
+            Route::post('/indented_proposal/create', 'SalesEngineer\ProposalController@salesEngineerPostCreateIndentedProposal');
+            Route::get('/indented_proposal/{indentedProposal}', 'SalesEngineer\ProposalController@salesEngineerIndentProposalView');
+            Route::post('/indented_proposal/submit', 'SalesEngineer\ProposalController@adminSubmitIndentedProposal')->name('admin_submit_indented_proposal');
             Route::post('/buy_and_sell_proposal/create', 'ProposalController@adminPostCreateBuyAndSellProposal');
             Route::get('/buy_and_sell_proposal/{buy_and_sell_proposal}', 'ProposalController@adminBuyAndSellProposalView');
             Route::post('/buy_and_sell/create', 'BuyAndSellProposalsController@adminPostCreateBuySellProposal')->name('admin_post_buy_sell_proposal');
             Route::get('/indented_proposals', 'ProposalController@adminIndexIndentedProposal')->name('admin_index_indented_proposal');
 
         # SEARCH
-            Route::get('/search', function() { return view('search.admin.index'); })->name('search');
+            Route::get('/search', function() { return view('search.sales_engineer.index'); })->name('search');
     });
 });

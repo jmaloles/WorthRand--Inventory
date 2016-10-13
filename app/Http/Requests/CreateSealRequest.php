@@ -35,8 +35,7 @@ class CreateSealRequest extends Request
             'code' => 'required',
             'model' => 'required',
             'serial_number' => 'required',
-            'tag' => 'required',
-            'price' => 'required'
+            'tag' => 'required'
         ];
     }
 }

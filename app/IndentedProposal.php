@@ -7,14 +7,13 @@ use DB;
 use Illuminate\Support\Facades\Input;
 use Storage;
 use File;
-
-
+use Auth;
 
 class IndentedProposal extends Model
 {
     //
 
-    public static function adminPostCreateIndentedProposal($request)
+    public static function salesEngineerPostCreateIndentedProposal($request)
     {
         if(trim($request->get('array_id')) == "") {
             return redirect()->back()->with('message', 'You didn\'t select any item');
@@ -24,6 +23,7 @@ class IndentedProposal extends Model
 
             $indented_proposal = new IndentedProposal();
             $indented_proposal->status = "DRAFT";
+            $indented_proposal->user_id = Auth::user()->id;
 
             if($indented_proposal->save()) {
                 foreach($item_ids as $item_id) {
@@ -39,7 +39,7 @@ class IndentedProposal extends Model
                 }
             }
 
-            return redirect()->to('/admin/indented_proposal/'.$indented_proposal->id);
+            return redirect()->to('/sales_engineer/indented_proposal/'.$indented_proposal->id);
         }
     }
 
@@ -81,7 +81,7 @@ class IndentedProposal extends Model
             })
             ->where('indented_proposal_item.indented_proposal_id', '=', $indentedProposal->id)->get();
 
-        return view('proposal.admin.indented.create', compact('selectedItems', 'ctr', 'indentedProposal'));
+        return view('proposal.sales_engineer.indented.create', compact('selectedItems', 'ctr', 'indentedProposal'));
     }
 
     public static function saveIndentedProposal($request)
