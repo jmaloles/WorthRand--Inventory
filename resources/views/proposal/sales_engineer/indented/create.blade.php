@@ -31,7 +31,11 @@
                                 <div class="form-group">
                                     <label for="main_company" class="col-sm-2 control-label">To: </label>
                                     <div class="col-sm-5">
-                                        <input class="form-control" id="main_company" name="to" placeholder="To" value="{{ $indentedProposal->to != '' ? $indentedProposal->to : '' }}">
+                                        <select name="to" id="" class="form-control">
+                                            @foreach(Auth::user()->customers as $customer)
+                                                <option value="{{ $customer->id }}">{{ $customer->name }}</option>
+                                            @endforeach
+                                        </select>
                                         <br>
                                         <textarea name="to_address" id="" class="form-control" placeholder="Address">{{ $indentedProposal->to_address != '' ? $indentedProposal->to_address : '' }}</textarea>
                                     </div>
@@ -40,7 +44,13 @@
                                 <div class="form-group">
                                     <label for="OfficeSold" class="col-sm-2 control-label">Sold To:</label>
                                     <div class="col-sm-5">
-                                        <input name="sold_to" class="form-control" id="OfficeSold" placeholder="Sold To" value="{{ $indentedProposal->sold_to != '' ? $indentedProposal->sold_to : '' }}">
+                                        <select name="sold_to" id="" class="form-control">
+                                            @foreach(Auth::user()->customers as $customer)
+                                                @foreach($customer->branches as $branch)
+                                                    <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                                                @endforeach
+                                            @endforeach
+                                        </select>
                                         <br>
                                         <textarea name="sold_to_address" class="form-control" placeholder="Address">{{ $indentedProposal->sold_to_address != '' ? $indentedProposal->sold_to_address : '' }}</textarea>
                                     </div>

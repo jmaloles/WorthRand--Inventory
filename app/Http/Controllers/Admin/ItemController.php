@@ -128,34 +128,6 @@ class ItemController extends Controller
         return view('item.pricing_history.admin.index');
     }
 
-    public function getItemBasedOnCategory($category)
-    {
-        $itemArray = array();
-        $items = DB::table($category)->get();
-
-        foreach($items as $item) {
-            $pricing_history = DB::table(str_singular($category).'_pricing_histories')->where(str_singular($category).'_pricing_histories.' . str_singular($category) . '_id', '=', $item->id)->latest()->get();
-
-            $itemArray['suggestions'][] = [
-                'data' => $item->id,
-                'item_id' => $item->id,
-                'value' => $item->name,
-                'material_number' => $item->material_number,
-                'ccn_number' => $item->ccn_number,
-                'part_number' => $item->part_number,
-                'model' => $item->model,
-                'reference_number' => $item->reference_number,
-                'serial_number' => $item->serial_number,
-                'drawing_number' => $item->drawing_number,
-                'tag_number' => $item->tag_number,
-                'table_name' => $category,
-                'pricinHistoryArray' => $pricing_history
-            ];
-        }
-
-        return json_encode($itemArray);
-    }
-
     public function indexAftermarket()
     {
         $aftermarkets = AfterMarket::all();

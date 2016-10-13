@@ -154,16 +154,16 @@ Route::group(['middleware' => ['verify_if_user_is_sales_engineer']], function() 
             Route::get('/branch/{branch}', 'SalesEngineer\BranchController@adminBranchShow')->name('se_branch_show');
 
         # PROPOSALS
-            Route::post('/proposal/create', 'ProposalController@adminCreateProposal')->name('se_create_proposal');
-            Route::post('/indented_proposal/create', 'ProposalController@adminPostCreateIndentedProposal');
-            Route::get('/indented_proposal/{indentedProposal}', 'ProposalController@adminIndentProposalView');
-            Route::post('/indented_proposal/submit', 'ProposalController@adminSubmitIndentedProposal')->name('admin_submit_indented_proposal');
+            Route::post('/proposal/create', 'SalesEngineer\ProposalController@adminCreateProposal')->name('se_create_proposal');
+            Route::post('/indented_proposal/create', 'SalesEngineer\ProposalController@salesEngineerPostCreateIndentedProposal');
+            Route::get('/indented_proposal/{indentedProposal}', 'SalesEngineer\ProposalController@salesEngineerIndentProposalView');
+            Route::post('/indented_proposal/submit', 'SalesEngineer\ProposalController@adminSubmitIndentedProposal')->name('admin_submit_indented_proposal');
             Route::post('/buy_and_sell_proposal/create', 'ProposalController@adminPostCreateBuyAndSellProposal');
             Route::get('/buy_and_sell_proposal/{buy_and_sell_proposal}', 'ProposalController@adminBuyAndSellProposalView');
             Route::post('/buy_and_sell/create', 'BuyAndSellProposalsController@adminPostCreateBuySellProposal')->name('admin_post_buy_sell_proposal');
             Route::get('/indented_proposals', 'ProposalController@adminIndexIndentedProposal')->name('admin_index_indented_proposal');
 
         # SEARCH
-            Route::get('/search', function() { return view('search.admin.index'); })->name('search');
+            Route::get('/search', function() { return view('search.sales_engineer.index'); })->name('search');
     });
 });
