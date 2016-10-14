@@ -277,6 +277,7 @@
     </div><!-- /.modal -->
 
     <script>
+
         $("#BuyAndSellBtn").on('click', function() {
             $("#createProposal").attr('action', '/sales_engineer/buy_and_sell_proposal/create').submit();
         });
@@ -381,7 +382,7 @@
                             url = url.replace(':item_id', suggestions.data);
                         url = url.replace(':item_category', item_category);
 
-                        $(wrapper).append('<div class="alert alert-danger" role="alert" style="background-color: #d9534f; color: white; border-color: #b52b27; font-size: 15px;">Pricing History Data Not Found.... ' + '<a class="btn btn-default btn-sm" style="" href="' + url + '">Add Pricing History</a></div>');
+                        $(wrapper).append('<div class="alert alert-danger" role="alert" style="background-color: #d9534f; color: white; border-color: #b52b27; font-size: 15px;">Pricing History Data Not Found....</div>');
                     }
                 }
             });

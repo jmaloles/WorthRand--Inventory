@@ -14,9 +14,19 @@
                 </div>
 
                 <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
-                    <form class="form-horizontal" action="{{ route('admin_submit_indented_proposal') }}" method="POST" id="SubmitIndentedProposal" enctype="multipart/form-data">
+                    <form class="form-horizontal" action="{{ route('se_submit_indented_proposal') }}" method="POST" id="SubmitIndentedProposal" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <input type="hidden" name="indent_proposal_id" value="{{ $indentedProposal->id }}">
+
+                        @if (count($errors) > 0)
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ str_replace(['quantity.', 'delivery.', 'price.', '.name'], '', $error) }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
 
                         <div class="row">
                             <div class="col-lg-12 col-lg-pull-1">
@@ -31,12 +41,8 @@
                                 <div class="form-group">
                                     <label for="main_company" class="col-sm-2 control-label">To: </label>
                                     <div class="col-sm-5">
-                                        <select name="to" id="" class="form-control">
-                                            @foreach(Auth::user()->customers as $customer)
-                                                <option value="{{ $customer->id }}">{{ $customer->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        <br>
+                                        <select name="to" id="customer_field" class="form-control"></select>
+                                        <br><br>
                                         <textarea name="to_address" id="" class="form-control" placeholder="Address">{{ $indentedProposal->to_address != '' ? $indentedProposal->to_address : '' }}</textarea>
                                     </div>
                                 </div>
@@ -96,7 +102,8 @@
                                         <tr>
                                             <td>{{ ++$ctr }}</td>
                                             <td>
-                                                <b>NAME:&nbsp;</b> {{ $selectedItem->project_name != "" ? $selectedItem->project_name : $selectedItem->after_market_name }}
+                                                <b>NAME:&nbsp;</b>
+                                                {{ $selectedItem->project_name != "" ? $selectedItem->project_name : $selectedItem->after_market_name }}
                                                 <br>
                                                 <b>PN:&nbsp;</b> {{ $selectedItem->project_pn != "" ? $selectedItem->project_pn : $selectedItem->after_market_pn }}
                                                 <br>
@@ -106,10 +113,13 @@
                                                 <br>
                                                 <b>TAG NO.:&nbsp;</b> {{ $selectedItem->project_tn != "" ? $selectedItem->project_tn : $selectedItem->after_market_tn }}
                                             </td>
-                                            <td><input type="text" class="form-control" name="quantity-{{ $selectedItem->indented_proposal_item_id }}" placeholder="Enter item Quantity" value="{{ $selectedItem->quantity != "" ? $selectedItem->quantity : $selectedItem->after_market_price }}"></td>
-                                            <td><input type="text" placeholder="Enter item price" class="form-control" name="price-{{ $selectedItem->indented_proposal_item_id }}" value="{{ $selectedItem->project_price != "" ? $selectedItem->project_price : $selectedItem->after_market_price }}"></td>
+                                            <td><input type="text" class="form-control" name="quantity[{{ $selectedItem->project_name != "" ? $selectedItem->project_name : $selectedItem->after_market_name }}][{{ $selectedItem->indented_proposal_item_id }}]" placeholder="Enter item Quantity" value="{{ $selectedItem->quantity != "" ? $selectedItem->quantity : $selectedItem->after_market_price }}"></td>
+                                            <td><input type="text" placeholder="Enter item price" class="form-control" name="price[{{ $selectedItem->project_name != "" ? $selectedItem->project_name : $selectedItem->after_market_name }}]" value="{{ $selectedItem->project_price != "" ? $selectedItem->project_price : $selectedItem->after_market_price }}"></td>
                                             <td>
-                                                <input type="text" class="form-control" name="delivery-{{ $selectedItem->indented_proposal_item_id }}" placeholder="Enter number of Weeks" value="{{ $selectedItem->delivery != "" ? $selectedItem->delivery : $selectedItem->delivery }}">
+                                                <div class="input-group">
+                                                <input type="text" class="form-control" name="delivery[{{ $selectedItem->project_name != "" ? $selectedItem->project_name : $selectedItem->after_market_name }}]" placeholder="Enter number of Weeks" value="{{ $selectedItem->delivery != "" ? $selectedItem->delivery : $selectedItem->delivery }}">
+                                                <div class="input-group-addon">Weeks</div>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -223,4 +233,23 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            var data = [];
+
+            $.getJSON("{{ route('fetch_customers') }}", {data}, getCustomers);
+
+            function getCustomers(data) {
+                $("#customer_field").select2({
+                    placeholder: {
+                        id: '-1', // the value of the option
+                        text: '-- Select a Customer --'
+                    },
+                    data: data
+                });
+            }
+
+        });
+    </script>
 @stop

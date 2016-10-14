@@ -64,5 +64,4 @@ class ProposalController extends Controller
         return $create_buy_and_sell_proposal;
     }
 
-
 }
