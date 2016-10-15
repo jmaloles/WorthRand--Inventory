@@ -34,7 +34,7 @@
                                         </thead>
                                         <tbody>
                                         @foreach($indented_proposals as $indented_proposal)
-                                            <tr>
+                                            <tr class="{{ $indented_proposal->collection_status == "PENDING" ? "bg-warning" : "bg-success" }}">
                                                 <td>{{ $indented_proposal->id }}</td>
                                                 <td>{{ $indented_proposal->purchase_order }}</td>
                                                 <td>{{ $indented_proposal->customer->name }}</td>
