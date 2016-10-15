@@ -10,12 +10,17 @@ use Khill\Lavacharts\Lavacharts;
 use App\Http\Requests\CreateUserRequest;
 use App\Group;
 use App\Http\Controllers\Controller;
+use App\IndentedProposal;
 
 class UserController extends Controller
 {
     //
     public function adminDashboard()
     {
+        $ctr = 0;
+        $indented_proposals = IndentedProposal::where('status', 'SENT')->paginate(30);
+        $indented_proposals->setPath('dashboard');
+
         $users = User::all();
         // Test if date was submitted
         /*if($request->date) {
@@ -72,7 +77,7 @@ class UserController extends Controller
             )
         );
 
-        return view('auth.admin.dashboard', compact('group_chart', 'lava'));
+        return view('auth.admin.dashboard', compact('group_chart', 'lava', 'indented_proposals', 'ctr'));
     }
 
     public function adminUserIndex()

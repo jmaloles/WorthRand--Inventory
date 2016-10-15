@@ -27,7 +27,7 @@ class IndentedProposal extends Model
     public static function salesEngineerPostCreateIndentedProposal($request)
     {
         if(trim($request->get('array_id')) == "") {
-            return redirect()->back()->with('message', 'You didn\'t select any item');
+            return redirect()->back()->with('message', 'You didn\'t select any item')->with('alert', "alert-danger");
         } else {
             $array_id = [];
             $item_ids = explode(',', $request->get('array_id'));
@@ -136,7 +136,7 @@ class IndentedProposal extends Model
                     $indented_proposal_item_id = $delivery[1];
 
                     $indented_proposal_item = IndentedProposalItem::find($indented_proposal_item_id);
-                    $indented_proposal_item->delivery = $value;
+                    $indented_proposal_item->delivery = $value * 7;
                     $indented_proposal_item->status = "PROCESSING";
                     $indented_proposal_item->save();
                 }
@@ -156,6 +156,15 @@ class IndentedProposal extends Model
 
                     $indented_proposal_item = IndentedProposalItem::find($indented_proposal_item_id);
                     $indented_proposal_item->price = $value;
+                    $indented_proposal_item->save();
+                }
+
+                if(strpos($key, 'notify_me_after') !== FALSE) {
+                    $delivery = explode('-', $key);
+                    $indented_proposal_item_id = $delivery[1];
+
+                    $indented_proposal_item = IndentedProposalItem::find($indented_proposal_item_id);
+                    $indented_proposal_item->notify_me_after = $value * 7;
                     $indented_proposal_item->save();
                 }
             }
@@ -199,7 +208,8 @@ class IndentedProposal extends Model
             /*$file = Input::file('fileField');
             $extension = $file->getClientOriginalExtension();
             Storage::disk('ftp')->put($file->getFilename().'.'.$extension,  File::get($file));*/
-            return redirect()->to('/sales_engineer/indented_proposal/'.$indented_proposal->id.'/sent');
+            return redirect()->to('/sales_engineer/search')->with('message', 'Indented Proposal [ Purchase Order Number: #'.$indented_proposal->purchase_order.' ] was successfully sent.')
+                ->with('alert', "alert-success");
         }
     }
 
@@ -242,7 +252,7 @@ class IndentedProposal extends Model
                 })
                 ->where('indented_proposal_item.indented_proposal_id', '=', $indented_proposal->id)->get();
 
-            return view('proposal.sales_engineer.indented.sent', compact('indented_proposal', 'selectedItems', 'ctr'));
+            return view('proposal.sales_engineer.indented.create', compact('indented_proposal', 'selectedItems', 'ctr'));
         /*}
 
         \View::composer('errors.400', function($view) use ($indented_proposal)

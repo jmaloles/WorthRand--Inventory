@@ -29,6 +29,48 @@
                             {!! $group_chart->render('ColumnChart', 'GROUPS', 'group-chart-div') !!}
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="col-lg-12">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <th>ID</th>
+                                            <th>Purchase Order</th>
+                                            <th>To</th>
+                                            <th>Sold To</th>
+                                            <th>Status</th>
+                                            <th class="text-right">Actions</th>
+                                        </thead>
+
+                                        <tbody>
+                                        @foreach($indented_proposals as $indented_proposal)
+                                            <tr class="
+                                                @if($indented_proposal->collection_status == "PENDING")
+                                                    bg-warning
+                                                @elseif($indented_proposal->collection_status == "DECLINED" || $indented_proposal->collection_status == "DELAYED")
+                                                    bg-danger
+                                                @else
+                                                    bg-success
+                                                @endif
+                                            ">
+                                                <td>{{ ((($indented_proposals->currentPage() - 1) * $indented_proposals->perPage()) + ($ctr++) + 1) }}</td>
+                                                <td>{{ $indented_proposal->purchase_order }}</td>
+                                                <td>{{ $indented_proposal->customer->name }}</td>
+                                                <td>{{ $indented_proposal->branch->name }}</td>
+                                                <td>{{ $indented_proposal->collection_status }}</td>
+                                                <td class="text-right">
+                                                    <a href="{{ route('admin_show_pending_proposal', $indented_proposal->id) }}" class="btn btn-sm btn-primary">View Proposal</a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
