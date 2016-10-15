@@ -80,8 +80,9 @@ class IndentedProposal extends Model
             'indented_proposal_item.*',
                 DB::raw('wr_crm_indented_proposal_item.id as "indented_proposal_item_id"'),
                 DB::raw('wr_crm_indented_proposal_item.quantity as "indented_proposal_item_quantity"'),
-            DB::raw('wr_crm_indented_proposal_item.delivery as "indented_proposal_item_delivery"'),
-                DB::raw('wr_crm_indented_proposal_item.price as "indented_proposal_item_price"'))
+                DB::raw('wr_crm_indented_proposal_item.delivery as "indented_proposal_item_delivery"'),
+                DB::raw('wr_crm_indented_proposal_item.price as "indented_proposal_item_price"'),
+                DB::raw('wr_crm_indented_proposal_item.notify_me_after as "indented_proposal_item_notify_me_after"'))
             ->leftJoin('projects', function($join) {
                 $join->on('indented_proposal_item.item_id', '=', 'projects.id')
                     ->where('indented_proposal_item.type', '=', 'projects');
@@ -136,6 +137,7 @@ class IndentedProposal extends Model
 
                     $indented_proposal_item = IndentedProposalItem::find($indented_proposal_item_id);
                     $indented_proposal_item->delivery = $value;
+                    $indented_proposal_item->status = "PROCESSING";
                     $indented_proposal_item->save();
                 }
 
@@ -161,6 +163,9 @@ class IndentedProposal extends Model
             $indented_proposal_items = IndentedProposalItem::whereIndentedProposalId($indented_proposal->id)->get();
 
             foreach($indented_proposal_items as $indented_proposal_item) {
+                $indented_proposal_item->status = "PROCESSING";
+                $indented_proposal_item->save();
+
                 if($indented_proposal_item->type == "projects") {
                     $project_pricing_history = new ProjectPricingHistory();
                     $project_pricing_history->project_id = $indented_proposal_item->item_id;
@@ -225,7 +230,8 @@ class IndentedProposal extends Model
                     DB::raw('wr_crm_indented_proposal_item.id as "indented_proposal_item_id"'),
                     DB::raw('wr_crm_indented_proposal_item.quantity as "indented_proposal_item_quantity"'),
                     DB::raw('wr_crm_indented_proposal_item.delivery as "indented_proposal_item_delivery"'),
-                    DB::raw('wr_crm_indented_proposal_item.price as "indented_proposal_item_price"'))
+                    DB::raw('wr_crm_indented_proposal_item.price as "indented_proposal_item_price"'),
+                    DB::raw('wr_crm_indented_proposal_item.notify_me_after as "indented_proposal_item_notify_me_after"'))
                 ->leftJoin('projects', function($join) {
                     $join->on('indented_proposal_item.item_id', '=', 'projects.id')
                         ->where('indented_proposal_item.type', '=', 'projects');
@@ -273,7 +279,8 @@ class IndentedProposal extends Model
                 DB::raw('wr_crm_indented_proposal_item.id as "indented_proposal_item_id"'),
                 DB::raw('wr_crm_indented_proposal_item.quantity as "indented_proposal_item_quantity"'),
                 DB::raw('wr_crm_indented_proposal_item.delivery as "indented_proposal_item_delivery"'),
-                DB::raw('wr_crm_indented_proposal_item.price as "indented_proposal_item_price"'))
+                DB::raw('wr_crm_indented_proposal_item.price as "indented_proposal_item_price"'),
+                DB::raw('wr_crm_indented_proposal_item.notify_me_after as "indented_proposal_item_notify_me_after"'))
             ->leftJoin('projects', function($join) {
                 $join->on('indented_proposal_item.item_id', '=', 'projects.id')
                     ->where('indented_proposal_item.type', '=', 'projects');

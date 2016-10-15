@@ -91,6 +91,7 @@
                                     <th>QUANTITY</th>
                                     <th>PRICE</th>
                                     <th>DELIVERY</th>
+                                    <th>Notify me After</th>
                                     </thead>
 
                                     <tbody>
@@ -115,6 +116,12 @@
                                                 <div class="input-group">
                                                 <input type="text" class="form-control" name="delivery-{{ $selectedItem->indented_proposal_item_id }}" placeholder="Enter number of Weeks" value="{{ $selectedItem->delivery != "" ? $selectedItem->delivery : $selectedItem->delivery }}">
                                                 <div class="input-group-addon">Weeks</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" name="notify_me_after-{{ $selectedItem->indented_proposal_item_id }}" placeholder="Enter number of Weeks" value="{{ $selectedItem->indented_proposal_item_notify_me_after != "" ? $selectedItem->indented_proposal_item_notify_me_after : $selectedItem->indented_proposal_item_notify_me_after }}">
+                                                    <div class="input-group-addon">Weeks</div>
                                                 </div>
                                             </td>
                                         </tr>
