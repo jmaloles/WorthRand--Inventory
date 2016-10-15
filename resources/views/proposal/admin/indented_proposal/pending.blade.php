@@ -7,13 +7,17 @@
 
                 <div class="sidebar col-lg-2 col-md-3 col-sm-3 col-xs-12 ">
                     <ul id="accordion" class="nav nav-pills nav-stacked sidebar-menu">
-                        <li class="nav-item"><a class="nav-link"  href="{{ route('search') }}"><i class="fa fa-arrow-left"></i>&nbsp; Back</a></li>
+                        <li class="nav-item"><a class="nav-link" style="cursor: pointer;" data-toggle="modal" data-target="#indentedProposalFormConfirmation"><i class="fa fa-check"></i>&nbsp; Accept Proposal</a></li>
+                        <li class="nav-item"><a class="nav-link" ><i class="fa fa-close"></i>&nbsp; Decline Proposal</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('admin_indented_proposal_index') }}"><i class="fa fa-arrow-left"></i>&nbsp; Back</a></li>
                     </ul>
                 </div>
 
                 <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
-                    <form class="form-horizontal" action="{{ route('admin_submit_indented_proposal') }}" method="POST" id="SubmitIndentedProposal" enctype="multipart/form-data">
+                    <form class="form-horizontal" action="{{ route('admin_accept_indented_proposal', $indented_proposal->id) }}" method="POST" id="AcceptIndentedProposal" enctype="multipart/form-data">
                         {{ csrf_field() }}
+                        {{ method_field('PATCH') }}
+
                         <input type="hidden" name="indent_proposal_id" value="{{ $indented_proposal->id }}">
 
                         <div class="row">
@@ -208,6 +212,24 @@
                     </form>
                 </div>
 
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="indentedProposalFormConfirmation">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">You are about to accept this Indented Proposal</h4>
+                </div>
+                <div class="modal-body">
+                    <label for="">Are you sure you want to accept this Proposal?</label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick='document.getElementById("AcceptIndentedProposal").submit();'>Accept</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Decline</button>
+                </div>
             </div>
         </div>
     </div>

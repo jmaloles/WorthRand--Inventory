@@ -26,7 +26,6 @@
         <script type='text/javascript' src="{{ URL::to('/') }}/accordion-menu/js/jquery.dcjqaccordion.2.7.min.js"></script>
         <script type='text/javascript' src="{{ URL::to('/') }}/moment.js"></script>
         <script type='text/javascript' src="{{ URL::to('/') }}/alertifyjs/alertify.min.js"></script>
-        <script type='text/javascript' src="{{ URL::to('/') }}/select2.js"></script>
         @include('layouts.header')
     </head>
 

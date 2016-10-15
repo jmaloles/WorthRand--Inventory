@@ -21,17 +21,17 @@ class ProposalController extends Controller
         return $create_indented_proposal;
     }
 
-    public function salesEngineerIndentProposalView(IndentedProposal $indentedProposal)
-    {
-        $view_selected_items = IndentedProposal::viewIndentedProposal($indentedProposal);
-
-        return $view_selected_items;
-    }
-
     public function salesEngineerSubmitIndentedProposal(Request $request)
     {
        $saveIndentedProposal = IndentedProposal::saveIndentedProposal($request);
 
        return $saveIndentedProposal;
+    }
+
+    public function salesEngineerIndentProposalView(IndentedProposal $indentedProposal)
+    {
+        $view_selected_items = IndentedProposal::showSentIndentedProposal($indentedProposal);
+
+        return $view_selected_items;
     }
 }

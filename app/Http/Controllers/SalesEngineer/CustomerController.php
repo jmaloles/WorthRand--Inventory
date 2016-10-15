@@ -42,12 +42,29 @@ class CustomerController extends Controller
         $customers = Customer::whereUserId(Auth::user()->id)->get();
 
         foreach($customers as $customer) {
-            $jsonData[] = [
+            $jsonData['suggestions'][] = [
                 'id' => $customer->id,
-                'text' => $customer->name
+                'value' => $customer->name,
+                'address' => $customer->address
             ];
         }
 
         return json_encode($jsonData);
+    }
+
+    public function fetchBranchesById($customer_id)
+    {
+        $jsonified = [];
+        $branches = Branch::whereCustomerId($customer_id)->get();
+
+        foreach($branches as $branch) {
+            $jsonified['suggestions'][] = [
+                'id' => $branch->id,
+                'value' => $branch->name,
+                'address' => $branch->address
+            ];
+        }
+
+        return json_encode($jsonified);
     }
 }
