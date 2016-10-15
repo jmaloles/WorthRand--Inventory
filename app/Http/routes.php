@@ -72,6 +72,10 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
         Route::post('/seal/create', 'Admin\ItemController@adminPostSealCreate')->name('admin_post_seal_create');
         Route::get('/seals', 'Admin\ItemController@indexSeal')->name('admin_seal_index');
         Route::get('/seal/{seal}', 'Admin\ItemController@showSeal')->name('admin_seal_show');
+        Route::get('/seal/{seal}/information', 'Admin\ItemController@adminSealInformation')->name('admin_seal_information');
+        Route::patch('/seal/update', 'Admin\ItemController@adminUpdateSealInformation')->name('admin_seal_information_update');
+
+
 
         # PRICING HISTORY
         Route::get('/pricing_history', 'Admin\ItemController@adminPricingHistoryIndex')->name('admin_pricing_history_index');
@@ -107,6 +111,7 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
         Route::post('/indented_proposal/submit', 'Admin\ProposalController@adminSubmitIndentedProposal')->name('admin_submit_indented_proposal');
         Route::get('/indented_proposals', 'Admin\ProposalController@adminIndexIndentedProposal')->name('admin_index_indented_proposal');
         Route::get('/indented_proposal/{indented_proposal}/sent', 'Admin\ProposalController@adminShowSentIndentedProposal')->name('admin_show_sent_indented_proposal');
+        Route::get('/indented_proposal', 'Admin\ProposalController@adminIndentedProposalIndex')->name('admin_indented_proposal_index');
 
         Route::post('/buy_and_sell_proposal/create', 'Admin\ProposalController@adminPostCreateBuyAndSellProposal');
         Route::get('/buy_and_sell_proposal/{buyAndSellProposal}', 'Admin\ProposalController@adminBuyAndSellProposalView');

@@ -20,6 +20,7 @@ use App\Http\Requests\UpdateAfterMarketInformationRequest;
 use App\Http\Requests\CreateSealRequest;
 use App\Http\Controllers\Controller;
 use App\Seal;
+use App\Http\Requests\UpdateSealInformationRequest;
 
 
 
@@ -223,5 +224,19 @@ class ItemController extends Controller
     public function showSeal(Seal $seal)
     {
         return view('item.project.admin.seal.show', compact('seal'));
+    }
+
+    public function adminSealInformation(Seal $seal)
+    {
+        $projects = Project::all();
+        return view('item.project.admin.seal.edit', compact('seal','projects'));
+    }
+
+    public function adminUpdateSealInformation(Request $request, UpdateSealInformationRequest $updateSealInformationRequest)
+    {
+        $seal = Seal::find($request->get('seal_id'));
+        $seal->update($updateSealInformationRequest->except(array('_token', '_method')));
+
+        return redirect()->back()->with('message', 'Seal ['.$seal->name.'] was successfully updated');
     }
 }
