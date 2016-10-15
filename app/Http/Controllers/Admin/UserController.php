@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Doctrine\Common\Annotations\Annotation\Target;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -13,7 +14,7 @@ use App\Http\Controllers\Controller;
 use App\IndentedProposal;
 use App\BuyAndSellProposal;
 use App\BuyAndSellProposalItem;
-
+use App\TargetRevenue;
 
 class UserController extends Controller
 {
@@ -56,34 +57,37 @@ class UserController extends Controller
          * GROUP CHART
          */
 
-        $groups = Group::all();
+        $targetRevenues = TargetRevenue::all();
         // Test if date was submitted
         /*if($request->date) {
             $users = $users->whereRaw("date(txt_sms_activities.created_at) = '" . $request->date . "'");
         }*/
 
         // create datatable
-        $group_chart = new Lavacharts();
+        $target_chart = new Lavacharts();
 
-        $data = $group_chart->DataTable();
+        $data = $target_chart->DataTable();
+
         $data->addStringColumn('Groups')
-            ->addNumberColumn('Target')
-            ->addRow(array('Target Sale', 5000000))
-            ->addNumberColumn('Percent');
-        foreach($groups as $group) {
-            $data->addRow(array($group->name, '1000000'));
+            ->addNumberColumn('Current Sale')
+            ->addNumberColumn('Target Sale')
+            ->addRow(array('Target Sale', 6000000));
+
+
+        foreach($targetRevenues as $targetRevenue) {
+            $data->addRow(array('Current Sale', $targetRevenue->current_sale));
         }
 
-        $pie_chart = $group_chart->ColumnChart('GROUPS')
+        $pie_chart = $target_chart->ColumnChart('TARGETSALE')
             ->setOptions(array(
                 'datatable' => $data,
-                'title' => 'Grouped Project',
+                'title' => 'Target Revenue',
                 'height' => 400,
                 'width' => 500
             )
         );
 
-        return view('auth.admin.dashboard', compact('group_chart', 'lava', 'indented_proposals', 'buy_and_sell_proposals', 'ctr'));
+        return view('auth.admin.dashboard', compact('target_chart', 'lava', 'indented_proposals', 'buy_and_sell_proposals','ctr'));
     }
 
     public function adminUserIndex()
