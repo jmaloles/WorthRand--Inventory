@@ -11,6 +11,9 @@ use App\Http\Requests\CreateUserRequest;
 use App\Group;
 use App\Http\Controllers\Controller;
 use App\IndentedProposal;
+use App\BuyAndSellProposal;
+use App\BuyAndSellProposalItem;
+
 
 class UserController extends Controller
 {
@@ -20,6 +23,9 @@ class UserController extends Controller
         $ctr = 0;
         $indented_proposals = IndentedProposal::where('status', 'SENT')->paginate(30);
         $indented_proposals->setPath('dashboard');
+
+        $buy_and_sell_proposals = BuyAndSellProposal::where('status', 'SENT')->paginate(30);
+        $buy_and_sell_proposals->setPath('dashboard');
 
         $users = User::all();
         // Test if date was submitted
@@ -77,7 +83,7 @@ class UserController extends Controller
             )
         );
 
-        return view('auth.admin.dashboard', compact('group_chart', 'lava', 'indented_proposals', 'ctr'));
+        return view('auth.admin.dashboard', compact('group_chart', 'lava', 'indented_proposals', 'buy_and_sell_proposals', 'ctr'));
     }
 
     public function adminUserIndex()

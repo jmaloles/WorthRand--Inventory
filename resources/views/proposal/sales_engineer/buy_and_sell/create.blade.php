@@ -14,7 +14,7 @@
                 </div>
 
                 <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
-                    <form class="form-horizontal" action="{{ route('admin_submit_buy_and_sell_proposal') }}" method="POST" id="SubmitBuyAndSellProposal">
+                    <form class="form-horizontal" action="{{ route('se_submit_buy_and_sell_proposal') }}" method="POST" id="SubmitBuyAndSellProposal">
                         {{ csrf_field() }}
                         <input type="hidden" name="buy_and_sell_proposal_id" value="{{ $buyAndSellProposal->id }}">
 

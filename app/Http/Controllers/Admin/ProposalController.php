@@ -12,6 +12,9 @@ use Session;
 use App\BuyAndSellProposal;
 use App\Http\Controllers\Controller;
 
+
+
+
 class ProposalController extends Controller
 {
     //
@@ -86,5 +89,12 @@ class ProposalController extends Controller
         $indented_proposal->update(['collection_status' => 'ACCEPTED']);
 
         return redirect()->back()->with('message', 'Indented Proposal Accepted');
+    }
+
+    public function adminShowPendingBuyAndSellProposal(IndentedProposal $buy_and_sell_proposal)
+    {
+        $admin_show_pending_proposal = BuyAndSellProposal::showPendingProposal($buy_and_sell_proposal);
+
+        return $admin_show_pending_proposal;
     }
 }
