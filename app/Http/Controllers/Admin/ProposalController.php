@@ -64,5 +64,12 @@ class ProposalController extends Controller
         return $create_buy_and_sell_proposal;
     }
 
+    public function adminIndentedProposalIndex()
+    {
+        $ctr = 0;
+        $indented_proposals = IndentedProposal::paginate(30);
+        $indented_proposals->setPath('indented_proposals');
 
+        return view('proposal.sales_engineer.indented.index', compact('indented_proposals', 'ctr'));
+    }
 }
