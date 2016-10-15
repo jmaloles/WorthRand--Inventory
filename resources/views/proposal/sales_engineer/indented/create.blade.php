@@ -237,7 +237,10 @@
 
             function getCustomers(data) {
                 $("#customer_field").select2({
-                    data: data
+                    data: data,
+                    placeholder: "-- Please select a customer --",
+                }).on('select2:select', function() {
+                    console.log('test select');
                 });
             }
 
