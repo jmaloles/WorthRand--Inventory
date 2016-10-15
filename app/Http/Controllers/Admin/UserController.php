@@ -62,9 +62,7 @@ class UserController extends Controller
         $target_chart = new Lavacharts();
 
         $data = $target_chart->DataTable();
-        $lava->NumberFormat([
-            'pattern'         => 'PhP ###,###,###'
-        ]);
+
         $data->addStringColumn('Groups')
             ->addNumberColumn('Current Sale')
             ->addNumberColumn('Target Sale')
