@@ -64,5 +64,27 @@ class ProposalController extends Controller
         return $create_buy_and_sell_proposal;
     }
 
+    public function adminIndentedProposalIndex()
+    {
+        $ctr = 0;
+        $indented_proposals = IndentedProposal::where('collection_status', '=', 'PENDING')->paginate(30);
+        $indented_proposals->setPath('indented_proposals');
 
+        return view('proposal.admin.indented_proposal.index', compact('indented_proposals', 'ctr'));
+    }
+
+    public function adminShowPendingProposal(IndentedProposal $indented_proposal)
+    {
+        $admin_show_pending_proposal = IndentedProposal::showPendingProposal($indented_proposal);
+
+        return $admin_show_pending_proposal;
+    }
+
+    public function adminAcceptProposal(IndentedProposal $indented_proposal)
+    {
+        $indented_proposal = IndentedProposal::find($indented_proposal->id);
+        $indented_proposal->update(['collection_status' => 'ACCEPTED']);
+
+        return redirect()->back()->with('message', 'Indented Proposal Accepted');
+    }
 }

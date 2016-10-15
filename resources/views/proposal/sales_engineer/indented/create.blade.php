@@ -7,14 +7,28 @@
 
                 <div class="sidebar col-lg-2 col-md-3 col-sm-3 col-xs-12 ">
                     <ul id="accordion" class="nav nav-pills nav-stacked sidebar-menu">
+                        <li class="nav-item"><a class="nav-link" href="#send_proposal" onclick='document.getElementById("SubmitIndentedProposal").submit();'><i class="fa fa-paper-plane"></i>&nbsp; Submit Proposal</a></li>
+
                         <li class="nav-item"><a class="nav-link"  href="{{ route('search') }}"><i class="fa fa-arrow-left"></i>&nbsp; Back</a></li>
                     </ul>
                 </div>
 
                 <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
-                    <form class="form-horizontal" action="{{ route('admin_submit_indented_proposal') }}" method="POST" id="SubmitIndentedProposal" enctype="multipart/form-data">
+                    <form class="form-horizontal" action="{{ route('se_submit_indented_proposal') }}" method="POST" id="SubmitIndentedProposal" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <input type="hidden" name="indent_proposal_id" value="{{ $indented_proposal->id }}">
+                        <input type="hidden" name="customer_id" id="customer_id">
+                        <input type="hidden" name="branch_id" id="branch_id">
+
+                        {{--@if (count($errors) > 0)
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ str_replace(['quantity.', 'delivery.', 'price.', '.name'], '', $error) }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif--}}
 
                         <div class="row">
                             <div class="col-lg-12 col-lg-pull-1">
@@ -22,25 +36,25 @@
                                     <label for="purchase_order" class="col-sm-2 control-label">P.O: </label>
                                     <div class="col-sm-5">
                                         <input class="form-control" id="purchase_order" name="purchase_order" placeholder="Purchase Order Number"
-                                               value="{{ $indented_proposal->purchase_order != '' ? $indented_proposal->purchase_order : '' }}">
+                                        value="{{ $indented_proposal->purchase_order != '' ? $indented_proposal->purchase_order : '' }}">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="main_company" class="col-sm-2 control-label">To: </label>
                                     <div class="col-sm-5">
-                                        <input class="form-control" id="main_company" name="to" placeholder="To" value="{{ $indented_proposal->to != '' ? $indented_proposal->to : '' }}">
+                                        <input name="to" id="customer_dropdown" class="form-control"/>
                                         <br>
-                                        <textarea name="to_address" id="" class="form-control" placeholder="Address">{{ $indented_proposal->to_address != '' ? $indented_proposal->to_address : '' }}</textarea>
+                                        <textarea name="to_address" id="to_address" class="form-control" placeholder="Address">{{ $indented_proposal->to_address != '' ? $indented_proposal->to_address : '' }}</textarea>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="OfficeSold" class="col-sm-2 control-label">Sold To:</label>
                                     <div class="col-sm-5">
-                                        <input name="sold_to" class="form-control" id="OfficeSold" placeholder="Sold To" value="{{ $indented_proposal->sold_to != '' ? $indented_proposal->sold_to : '' }}">
+                                        <input type="text" class="form-control" name="branch" id="branch_field" required autofocus />
                                         <br>
-                                        <textarea name="sold_to_address" class="form-control" placeholder="Address">{{ $indented_proposal->sold_to_address != '' ? $indented_proposal->sold_to_address : '' }}</textarea>
+                                        <textarea name="branch_address" id="branch_address" class="form-control" placeholder="Address">{{ $indented_proposal->sold_to_address != '' ? $indented_proposal->sold_to_address : '' }}</textarea>
                                     </div>
                                 </div>
 
@@ -77,6 +91,7 @@
                                     <th>QUANTITY</th>
                                     <th>PRICE</th>
                                     <th>DELIVERY</th>
+                                    <th>Notify me After</th>
                                     </thead>
 
                                     <tbody>
@@ -84,7 +99,8 @@
                                         <tr>
                                             <td>{{ ++$ctr }}</td>
                                             <td>
-                                                <b>NAME:&nbsp;</b> {{ $selectedItem->project_name != "" ? $selectedItem->project_name : $selectedItem->after_market_name }}
+                                                <b>NAME:&nbsp;</b>
+                                                {{ $selectedItem->project_name != "" ? $selectedItem->project_name : $selectedItem->after_market_name }}
                                                 <br>
                                                 <b>PN:&nbsp;</b> {{ $selectedItem->project_pn != "" ? $selectedItem->project_pn : $selectedItem->after_market_pn }}
                                                 <br>
@@ -97,7 +113,16 @@
                                             <td><input type="text" class="form-control" name="quantity-{{ $selectedItem->indented_proposal_item_id }}" placeholder="Enter item Quantity" value="{{ $selectedItem->quantity != "" ? $selectedItem->quantity : $selectedItem->after_market_price }}"></td>
                                             <td><input type="text" placeholder="Enter item price" class="form-control" name="price-{{ $selectedItem->indented_proposal_item_id }}" value="{{ $selectedItem->project_price != "" ? $selectedItem->project_price : $selectedItem->after_market_price }}"></td>
                                             <td>
+                                                <div class="input-group">
                                                 <input type="text" class="form-control" name="delivery-{{ $selectedItem->indented_proposal_item_id }}" placeholder="Enter number of Weeks" value="{{ $selectedItem->delivery != "" ? $selectedItem->delivery : $selectedItem->delivery }}">
+                                                <div class="input-group-addon">Weeks</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" name="notify_me_after-{{ $selectedItem->indented_proposal_item_id }}" placeholder="Enter number of Weeks" value="{{ $selectedItem->indented_proposal_item_notify_me_after != "" ? $selectedItem->indented_proposal_item_notify_me_after : $selectedItem->indented_proposal_item_notify_me_after }}">
+                                                    <div class="input-group-addon">Weeks</div>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -178,7 +203,7 @@
                                 <div class="form-group">
                                     <label for="InputBankDetailName" class="col-sm-2 control-label">BANK DETAILS: </label>
                                     <div class="col-sm-5">
-                                        <input class="form-control" id="InputBankDetailName" name="bank_detail_owner" placeholder="Bank Details"  value="{{ $indented_proposal->bank_detail_owner != '' ? $indented_proposal->bank_detail_owner : '' }}">
+                                        <input class="form-control" id="InputBankDetailName" name="bank_detail_owner" placeholder="Bank Details" value="{{ $indented_proposal->bank_detail_owner != '' ? $indented_proposal->bank_detail_owner : '' }}">
                                         <br>
                                         <textarea name="bank_detail_address" id="" class="form-control" placeholder="Bank Details Address">{{ $indented_proposal->bank_detail_address != '' ? $indented_proposal->bank_detail_address : '' }}</textarea>
                                         <br>
@@ -211,4 +236,37 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            var customerId;
+            var data;
+
+            $('#customer_dropdown').autocomplete({
+                serviceUrl: "{{ URL::to('/') }}/{{ Auth::user()->role }}/fetch_customers/",
+                dataType: 'json',
+                type: 'get',
+                onSelect: function (suggestions) {
+                    document.getElementById('to_address').value = "";
+                    document.getElementById('branch_address').value = "";
+                    document.getElementById('branch_field').value = "";
+                    document.getElementById('customer_id').value = "";
+                    document.getElementById('branch_id').value = "";
+
+                    document.getElementById('to_address').value = suggestions.address;
+                    document.getElementById('customer_id').value = suggestions.id;
+
+                    $('#branch_field').autocomplete({
+                        serviceUrl: "{{ URL::to('/') }}/{{ Auth::user()->role }}/fetch_branches/" + suggestions.id,
+                        dataType: 'json',
+                        type: 'get',
+                        onSelect: function (data) {
+                            document.getElementById('branch_address').value = data.address;
+                            document.getElementById('branch_id').value = data.id;
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 @stop

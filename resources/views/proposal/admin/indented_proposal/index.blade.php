@@ -6,27 +6,16 @@
 
 @section('content')
     <div class="container-fluid">
-        <div class="col-lg-12">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="row">
                 @include('layouts.admin-sidebar')
                 <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
+
                     <div class="row">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                DASHBOARD
+                                INDENTED PROPOSALS
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div id="chart"></div>
-                            {!! $lava->render('PieChart', 'USERS', 'chart') !!}
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div id="target_sale_div"></div>
-                            {!! $target_chart->render('ColumnChart', 'TARGETSALE', 'target_sale_div') !!}
                         </div>
                     </div>
 
@@ -36,26 +25,17 @@
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>
-                                            <th>ID</th>
-                                            <th>Purchase Order</th>
-                                            <th>To</th>
-                                            <th>Sold To</th>
-                                            <th>Status</th>
-                                            <th class="text-right">Actions</th>
+                                        <th>ID</th>
+                                        <th>Purchase Order</th>
+                                        <th>To</th>
+                                        <th>Sold To</th>
+                                        <th>Status</th>
+                                        <th class="text-right">Actions</th>
                                         </thead>
-
                                         <tbody>
                                         @foreach($indented_proposals as $indented_proposal)
-                                            <tr class="
-                                                @if($indented_proposal->collection_status == "PENDING")
-                                                    bg-warning
-                                                @elseif($indented_proposal->collection_status == "DECLINED" || $indented_proposal->collection_status == "DELAYED")
-                                                    bg-danger
-                                                @else
-                                                    bg-success
-                                                @endif
-                                            ">
-                                                <td>{{ ((($indented_proposals->currentPage() - 1) * $indented_proposals->perPage()) + ($ctr++) + 1) }}</td>
+                                            <tr class="{{ $indented_proposal->collection_status == "PENDING" ? "bg-warning" : "bg-success" }}">
+                                                <td>{{ $indented_proposal->id }}</td>
                                                 <td>{{ $indented_proposal->purchase_order }}</td>
                                                 <td>{{ $indented_proposal->customer->name }}</td>
                                                 <td>{{ $indented_proposal->branch->name }}</td>

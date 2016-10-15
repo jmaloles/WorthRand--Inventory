@@ -8,13 +8,12 @@
     <div class="container-fluid">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="row">
-                @include('layouts.admin-sidebar')
+                @include('layouts.se-sidebar')
 
                 <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
                     @if(Session::has('message'))
                         <div class="row">
-                            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-top: -1.05rem; border-radius: 0px 0px 0px 0px;
-                            background-color: #d9534f; color: white; border-color: #b52b27; font-size: 15px; margin-bottom: 1rem;">
+                            <div class="alert {{ Session::get('alert') }} alert-dismissible" role="alert" style="margin-top: -1.05rem; border-radius: 0px 0px 0px 0px; font-size: 15px; margin-bottom: 1rem;">
                                 <div class="container">&nbsp;&nbsp;{{ Session::get('message') }}
                                     <button type="button" class="close" style="margin-right: 4rem;" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
                             </div>
@@ -61,6 +60,7 @@
                                                             <option value="" disabled selected>-- Select Item Category --</option>
                                                             <option value="projects">Project</option>
                                                             <option value="after_markets">AfterMarket</option>
+                                                            <option value="seals">Seal</option>
                                                         </select>
 
                                                         @if ($errors->has('item_category'))
@@ -276,12 +276,13 @@
     </div><!-- /.modal -->
 
     <script>
+
         $("#BuyAndSellBtn").on('click', function() {
-            $("#createProposal").attr('action', '/admin/buy_and_sell_proposal/create').submit();
+            $("#createProposal").attr('action', '/sales_engineer/buy_and_sell_proposal/create').submit();
         });
 
         $("#IndentedProposalBtn").on('click', function() {
-            $("#createProposal").attr('action', '/admin/indented_proposal/create').submit();
+            $("#createProposal").attr('action', '/sales_engineer/indented_proposal/create').submit();
         });
 
         var items = [];
@@ -376,11 +377,11 @@
                             );
                         });
                     } if(Object.keys(suggestions.pricinHistoryArray).length == 0) {
-                        var url = "{{ url('admin/:item_category/:item_id/pricing_history/create') }}";
+                        var url = "{{ url('/sales_engineer/:item_category/:item_id/pricing_history/create') }}";
                             url = url.replace(':item_id', suggestions.data);
                         url = url.replace(':item_category', item_category);
 
-                        $(wrapper).append('<div class="alert alert-danger" role="alert" style="background-color: #d9534f; color: white; border-color: #b52b27; font-size: 15px;">Pricing History Data Not Found.... ' + '<a class="btn btn-default btn-sm" style="" href="' + url + '">Add Pricing History</a></div>');
+                        $(wrapper).append('<div class="alert alert-danger" role="alert" style="background-color: #d9534f; color: white; border-color: #b52b27; font-size: 15px;">Pricing History Data Not Found....</div>');
                     }
                 }
             });

@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="{{ URL::to('/') }}/accordion-menu/css/skins/black.css">
         <link rel="stylesheet" href="{{ URL::to('/') }}/alertifyjs/css/themes/default.css">
         <link rel="stylesheet" href="{{ URL::to('/') }}/alertifyjs/css/alertify.css">
+        <link rel="stylesheet" href="{{ URL::to('/') }}/select2.css">
 
         <script type='text/javascript' src="{{ URL::to('/') }}/bootstrap-3.3.7-dist/js/jquery.min.js"></script>
         <script type='text/javascript' src="{{ URL::to('/') }}/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>

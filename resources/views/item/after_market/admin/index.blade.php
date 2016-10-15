@@ -51,7 +51,7 @@
                                                 <td>{{ $aftermarket->tag_number }}</td>
                                                 <td>{{ $aftermarket->drawing_number }}</td>
                                                 <td>
-                                                    <a href="{{ route('admin_project_show', $aftermarket->id) }}" class="btn btn-sm btn-success">View Aftermarket</a>
+                                                    <a href="{{ route('admin_after_market_show', $aftermarket->id) }}" class="btn btn-sm btn-success">View Aftermarket</a>
                                                 </td>
                                             </tr>
                                         @endforeach
