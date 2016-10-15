@@ -22,6 +22,18 @@ Route::group(['middleware' => 'check_if_user_is_super_admin'], function() {
     });
 });
 
+// COLLECTION
+Route::group(['middleware' =>['verify_if_user_is_collection']], function(){
+    Route::group(['prefix' => 'collection'], function () {
+
+    #DASHBOARD
+        Route::get('/dashboard', 'Collection\UserController@collectionDashboard')->name('collection_dashboard');
+
+    });
+});
+
+
+
 // ADMIN ACCOUNT
 Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
     Route::group(['prefix' => 'admin'], function() {

@@ -205,7 +205,7 @@ class IndentedProposal extends Model
 
     public static function showSentIndentedProposal($indented_proposal)
     {
-        if($indented_proposal->status == "SENT") {
+       // if($indented_proposal->status == "SENT") {
             $ctr = 0;
             $selectedItems = DB::table('indented_proposal_item')
                 ->select('projects.*',
@@ -243,14 +243,14 @@ class IndentedProposal extends Model
                 ->where('indented_proposal_item.indented_proposal_id', '=', $indented_proposal->id)->get();
 
             return view('proposal.sales_engineer.indented.sent', compact('indented_proposal', 'selectedItems', 'ctr'));
-        }
+        /*}
 
         \View::composer('errors.400', function($view) use ($indented_proposal)
         {
             $view->with('indented_proposal_id', $indented_proposal->id);
         });
 
-        abort('400', $indented_proposal);
+        abort('400', $indented_proposal);*/
     }
 
     public static function showPendingProposal($indented_proposal)
