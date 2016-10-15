@@ -196,7 +196,7 @@
                                 <div class="form-group">
                                     <label for="InputBankDetailName" class="col-sm-2 control-label">BANK DETAILS: </label>
                                     <div class="col-sm-5">
-                                        <input class="form-control" id="InputBankDetailName" name="bank_detail_owner" placeholder="Bank Details"  value="{{ $indentedProposal->bank_detail_owner != '' ? $indentedProposal->bank_detail_owner : '' }}">
+                                        <input class="form-control" id="InputBankDetailName" name="bank_detail_owner" placeholder="Bank Details" value="{{ $indentedProposal->bank_detail_owner != '' ? $indentedProposal->bank_detail_owner : '' }}">
                                         <br>
                                         <textarea name="bank_detail_address" id="" class="form-control" placeholder="Bank Details Address">{{ $indentedProposal->bank_detail_address != '' ? $indentedProposal->bank_detail_address : '' }}</textarea>
                                         <br>

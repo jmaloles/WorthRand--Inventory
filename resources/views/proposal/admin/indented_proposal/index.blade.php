@@ -10,9 +10,12 @@
             <div class="row">
                 @include('layouts.admin-sidebar')
                 <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Indented Proposal
+
+                    <div class="row">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                INDENTED PROPOSALS
+                            </div>
                         </div>
                     </div>
 
@@ -34,12 +37,11 @@
                                             <tr>
                                                 <td>{{ $indented_proposal->id }}</td>
                                                 <td>{{ $indented_proposal->purchase_order }}</td>
-                                                <td>{{ $indented_proposal->to }}</td>
-                                                <td>{{ $indented_proposal->sold_to }}</td>
-                                                <td>{{ $indented_proposal->status }}</td>
+                                                <td>{{ $indented_proposal->customer->name }}</td>
+                                                <td>{{ $indented_proposal->branch->name }}</td>
+                                                <td>{{ $indented_proposal->collection_status }}</td>
                                                 <td class="text-right">
-                                                    <a href="#" class="btn btn-sm btn-danger">Deactivate</a>
-                                                    <a href="{{ route('admin_show_sales_engineer', $user->id) }}" class="btn btn-sm btn-primary">View Profile</a>
+                                                    <a href="{{ route('admin_show_pending_proposal', $indented_proposal->id) }}" class="btn btn-sm btn-primary">View Proposal</a>
                                                 </td>
                                             </tr>
                                         @endforeach
