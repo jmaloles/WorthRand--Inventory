@@ -162,7 +162,7 @@ Route::group(['middleware' => ['verify_if_user_is_sales_engineer']], function() 
             Route::post('/proposal/create', 'SalesEngineer\ProposalController@adminCreateProposal')->name('se_create_proposal');
             Route::post('/indented_proposal/create', 'SalesEngineer\ProposalController@salesEngineerPostCreateIndentedProposal');
             Route::get('/indented_proposal/{indentedProposal}', 'SalesEngineer\ProposalController@salesEngineerIndentProposalView');
-            Route::post('/indented_proposal/submit', 'SalesEngineer\ProposalController@adminSubmitIndentedProposal')->name('admin_submit_indented_proposal');
+            Route::post('/indented_proposal/submit', 'SalesEngineer\ProposalController@salesEngineerSubmitIndentedProposal')->name('se_submit_indented_proposal');
             Route::post('/buy_and_sell_proposal/create', 'ProposalController@adminPostCreateBuyAndSellProposal');
             Route::get('/buy_and_sell_proposal/{buy_and_sell_proposal}', 'ProposalController@adminBuyAndSellProposalView');
             Route::post('/buy_and_sell/create', 'BuyAndSellProposalsController@adminPostCreateBuySellProposal')->name('admin_post_buy_sell_proposal');
@@ -170,5 +170,6 @@ Route::group(['middleware' => ['verify_if_user_is_sales_engineer']], function() 
 
         # SEARCH
             Route::get('/search', function() { return view('search.sales_engineer.index'); })->name('search');
+            Route::get('/fetch_customers', 'SalesEngineer\CustomerController@fetchCustomers')->name('fetch_customers');
     });
 });

@@ -92,9 +92,15 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'quantity.*' => [
+            'required' => ':attribute must have a Quantity',
         ],
+        'price.*' => [
+            'required' => ':attribute must have a Price'
+        ],
+        'delivery.*' => [
+            'required' => ':attribute must have Delivery Date'
+        ]
     ],
 
     /*

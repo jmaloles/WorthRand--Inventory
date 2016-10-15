@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\SalesEngineer;
 
+use App\Project;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\IndentedProposal;
+use App\Http\Requests\CreateIndentedProposalRequest;
+use App\IndentedProposalItem;
 
 class ProposalController extends Controller
 {
@@ -23,5 +26,12 @@ class ProposalController extends Controller
         $view_selected_items = IndentedProposal::viewIndentedProposal($indentedProposal);
 
         return $view_selected_items;
+    }
+
+    public function salesEngineerSubmitIndentedProposal(Request $request)
+    {
+       $saveIndentedProposal = IndentedProposal::saveIndentedProposal($request);
+
+       return $saveIndentedProposal;
     }
 }
