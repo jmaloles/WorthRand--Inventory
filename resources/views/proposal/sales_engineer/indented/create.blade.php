@@ -17,6 +17,8 @@
                     <form class="form-horizontal" action="{{ route('se_submit_indented_proposal') }}" method="POST" id="SubmitIndentedProposal" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <input type="hidden" name="indent_proposal_id" value="{{ $indentedProposal->id }}">
+                        <input type="hidden" id="customer_id">
+                        <input type="hidden" id="branch_id">
 
                         {{--@if (count($errors) > 0)
                             <div class="alert alert-danger">
@@ -41,19 +43,18 @@
                                 <div class="form-group">
                                     <label for="main_company" class="col-sm-2 control-label">To: </label>
                                     <div class="col-sm-5">
-                                        <select name="to" id="customer_field" class="form-control"></select>
-                                        <br><br>
-                                        <textarea name="to_address" id="" class="form-control" placeholder="Address">{{ $indentedProposal->to_address != '' ? $indentedProposal->to_address : '' }}</textarea>
+                                        <input name="to" id="customer_dropdown" class="form-control"/>
+                                        <br>
+                                        <textarea name="to_address" id="to_address" class="form-control" placeholder="Address">{{ $indentedProposal->to_address != '' ? $indentedProposal->to_address : '' }}</textarea>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="OfficeSold" class="col-sm-2 control-label">Sold To:</label>
                                     <div class="col-sm-5">
-                                        <select name="sold_to" id="" class="form-control">
-                                        </select>
+                                        <input type="text" class="form-control" name="branch" id="branch_field" required autofocus />
                                         <br>
-                                        <textarea name="sold_to_address" class="form-control" placeholder="Address">{{ $indentedProposal->sold_to_address != '' ? $indentedProposal->sold_to_address : '' }}</textarea>
+                                        <textarea name="branch_address" id="branch_address" class="form-control" placeholder="Address">{{ $indentedProposal->sold_to_address != '' ? $indentedProposal->sold_to_address : '' }}</textarea>
                                     </div>
                                 </div>
 
@@ -231,19 +232,34 @@
 
     <script>
         $(document).ready(function() {
-            var data = [];
+            var customerId;
+            var data;
 
-            $.getJSON("{{ route('fetch_customers') }}", {data}, getCustomers);
+            $('#customer_dropdown').autocomplete({
+                serviceUrl: "{{ URL::to('/') }}/{{ Auth::user()->role }}/fetch_customers/",
+                dataType: 'json',
+                type: 'get',
+                onSelect: function (suggestions) {
+                    document.getElementById('to_address').value = "";
+                    document.getElementById('branch_address').value = "";
+                    document.getElementById('branch_field').value = "";
+                    document.getElementById('customer_id').value = "";
+                    document.getElementById('branch_id').value = "";
 
-            function getCustomers(data) {
-                $("#customer_field").select2({
-                    data: data,
-                    placeholder: "-- Please select a customer --",
-                }).on('select2:select', function() {
-                    console.log('test select');
-                });
-            }
+                    document.getElementById('to_address').value = suggestions.address;
+                    document.getElementById('customer_id').value = suggestions.id;
 
+                    $('#branch_field').autocomplete({
+                        serviceUrl: "{{ URL::to('/') }}/{{ Auth::user()->role }}/fetch_branches/" + suggestions.id,
+                        dataType: 'json',
+                        type: 'get',
+                        onSelect: function (data) {
+                            document.getElementById('branch_address').value = data.address;
+                            document.getElementById('branch_id').value = data.id;
+                        }
+                    });
+                }
+            });
         });
     </script>
 @stop

@@ -110,7 +110,6 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
         Route::get('/indented_proposal/{indentedProposal}', 'Admin\ProposalController@adminIndentProposalView');
         Route::post('/indented_proposal/submit', 'Admin\ProposalController@adminSubmitIndentedProposal')->name('admin_submit_indented_proposal');
         Route::get('/indented_proposals', 'Admin\ProposalController@adminIndexIndentedProposal')->name('admin_index_indented_proposal');
-        Route::get('/indented_proposal/{indented_proposal}/sent', 'Admin\ProposalController@adminShowSentIndentedProposal')->name('admin_show_sent_indented_proposal');
         Route::get('/indented_proposal', 'Admin\ProposalController@adminIndentedProposalIndex')->name('admin_indented_proposal_index');
 
         Route::post('/buy_and_sell_proposal/create', 'Admin\ProposalController@adminPostCreateBuyAndSellProposal');
@@ -153,6 +152,7 @@ Route::group(['middleware' => ['verify_if_user_is_sales_engineer']], function() 
             Route::get('/customers', 'SalesEngineer\CustomerController@index')->name('customer_index');
             Route::get('/customer/{customer}', 'SalesEngineer\CustomerController@show')->name('show_customer');
             Route::get('/customer/{customer}/branches', 'SalesEngineer\CustomerController@customerBranchList')->name('customer_branch_list');
+            Route::get('/fetch_branches/{customer_id}/', 'SalesEngineer\CustomerController@fetchBranchesById');
 
         # BRANCHES
             Route::get('/branches', 'SalesEngineer\BranchController@adminBranchIndex')->name('se_branch_index');
@@ -167,6 +167,7 @@ Route::group(['middleware' => ['verify_if_user_is_sales_engineer']], function() 
             Route::get('/buy_and_sell_proposal/{buy_and_sell_proposal}', 'ProposalController@adminBuyAndSellProposalView');
             Route::post('/buy_and_sell/create', 'BuyAndSellProposalsController@adminPostCreateBuySellProposal')->name('admin_post_buy_sell_proposal');
             Route::get('/indented_proposals', 'ProposalController@adminIndexIndentedProposal')->name('admin_index_indented_proposal');
+            Route::get('/indented_proposal/{indentedProposal}/sent', 'SalesEngineer\ProposalController@showSentIndentedProposal');
 
         # SEARCH
             Route::get('/search', function() { return view('search.sales_engineer.index'); })->name('search');

@@ -29,18 +29,18 @@
                                 <div class="form-group">
                                     <label for="main_company" class="col-sm-2 control-label">To: </label>
                                     <div class="col-sm-5">
-                                        <input class="form-control" id="main_company" name="to" placeholder="To" value="{{ $indented_proposal->to != '' ? $indented_proposal->to : '' }}">
+                                        <input class="form-control" id="main_company" name="to" placeholder="To" value="{{ $indented_proposal->customer->name }}">
                                         <br>
-                                        <textarea name="to_address" id="" class="form-control" placeholder="Address">{{ $indented_proposal->to_address != '' ? $indented_proposal->to_address : '' }}</textarea>
+                                        <textarea name="to_address" id="" class="form-control" placeholder="Address">{{ $indented_proposal->customer->address }}</textarea>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="OfficeSold" class="col-sm-2 control-label">Sold To:</label>
                                     <div class="col-sm-5">
-                                        <input name="sold_to" class="form-control" id="OfficeSold" placeholder="Sold To" value="{{ $indented_proposal->sold_to != '' ? $indented_proposal->sold_to : '' }}">
+                                        <input name="sold_to" class="form-control" id="OfficeSold" placeholder="Sold To" value="{{ $indented_proposal->branch->name }}">
                                         <br>
-                                        <textarea name="sold_to_address" class="form-control" placeholder="Address">{{ $indented_proposal->sold_to_address != '' ? $indented_proposal->sold_to_address : '' }}</textarea>
+                                        <textarea name="sold_to_address" class="form-control" placeholder="Address">{{ $indented_proposal->branch->address }}</textarea>
                                     </div>
                                 </div>
 
