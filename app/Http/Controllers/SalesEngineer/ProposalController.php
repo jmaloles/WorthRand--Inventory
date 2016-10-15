@@ -28,19 +28,10 @@ class ProposalController extends Controller
         return $view_selected_items;
     }
 
-    public function salesEngineerSubmitIndentedProposal(Request $createIndentedProposalRequest)
+    public function salesEngineerSubmitIndentedProposal(Request $request)
     {
-        foreach($createIndentedProposalRequest->all() as $key => $value) {
-            if(strpos($key, 'quantity') !== FALSE) {
-                foreach($value as $k => $v) {
-                    foreach($v as $x => $s) {
-                        $indented_proposal_item = IndentedProposalItem::find($x);
-                        $project = Project::find($indented_proposal_item->item_id);
+       $saveIndentedProposal = IndentedProposal::saveIndentedProposal($request);
 
-                        var_dump($project->name);
-                    }
-                }
-            }
-        }
+       return $saveIndentedProposal;
     }
 }

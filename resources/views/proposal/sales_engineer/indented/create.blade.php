@@ -18,7 +18,7 @@
                         {{ csrf_field() }}
                         <input type="hidden" name="indent_proposal_id" value="{{ $indentedProposal->id }}">
 
-                        @if (count($errors) > 0)
+                        {{--@if (count($errors) > 0)
                             <div class="alert alert-danger">
                                 <ul>
                                     @foreach ($errors->all() as $error)
@@ -26,7 +26,7 @@
                                     @endforeach
                                 </ul>
                             </div>
-                        @endif
+                        @endif--}}
 
                         <div class="row">
                             <div class="col-lg-12 col-lg-pull-1">
@@ -51,11 +51,6 @@
                                     <label for="OfficeSold" class="col-sm-2 control-label">Sold To:</label>
                                     <div class="col-sm-5">
                                         <select name="sold_to" id="" class="form-control">
-                                            @foreach(Auth::user()->customers as $customer)
-                                                @foreach($customer->branches as $branch)
-                                                    <option value="{{ $branch->id }}">{{ $branch->name }}</option>
-                                                @endforeach
-                                            @endforeach
                                         </select>
                                         <br>
                                         <textarea name="sold_to_address" class="form-control" placeholder="Address">{{ $indentedProposal->sold_to_address != '' ? $indentedProposal->sold_to_address : '' }}</textarea>
@@ -113,11 +108,11 @@
                                                 <br>
                                                 <b>TAG NO.:&nbsp;</b> {{ $selectedItem->project_tn != "" ? $selectedItem->project_tn : $selectedItem->after_market_tn }}
                                             </td>
-                                            <td><input type="text" class="form-control" name="quantity[{{ $selectedItem->project_name != "" ? $selectedItem->project_name : $selectedItem->after_market_name }}][{{ $selectedItem->indented_proposal_item_id }}]" placeholder="Enter item Quantity" value="{{ $selectedItem->quantity != "" ? $selectedItem->quantity : $selectedItem->after_market_price }}"></td>
-                                            <td><input type="text" placeholder="Enter item price" class="form-control" name="price[{{ $selectedItem->project_name != "" ? $selectedItem->project_name : $selectedItem->after_market_name }}]" value="{{ $selectedItem->project_price != "" ? $selectedItem->project_price : $selectedItem->after_market_price }}"></td>
+                                            <td><input type="text" class="form-control" name="quantity-{{ $selectedItem->indented_proposal_item_id }}" placeholder="Enter item Quantity" value="{{ $selectedItem->quantity != "" ? $selectedItem->quantity : $selectedItem->after_market_price }}"></td>
+                                            <td><input type="text" placeholder="Enter item price" class="form-control" name="price-{{ $selectedItem->indented_proposal_item_id }}" value="{{ $selectedItem->project_price != "" ? $selectedItem->project_price : $selectedItem->after_market_price }}"></td>
                                             <td>
                                                 <div class="input-group">
-                                                <input type="text" class="form-control" name="delivery[{{ $selectedItem->project_name != "" ? $selectedItem->project_name : $selectedItem->after_market_name }}]" placeholder="Enter number of Weeks" value="{{ $selectedItem->delivery != "" ? $selectedItem->delivery : $selectedItem->delivery }}">
+                                                <input type="text" class="form-control" name="delivery-{{ $selectedItem->indented_proposal_item_id }}" placeholder="Enter number of Weeks" value="{{ $selectedItem->delivery != "" ? $selectedItem->delivery : $selectedItem->delivery }}">
                                                 <div class="input-group-addon">Weeks</div>
                                                 </div>
                                             </td>
@@ -242,10 +237,6 @@
 
             function getCustomers(data) {
                 $("#customer_field").select2({
-                    placeholder: {
-                        id: '-1', // the value of the option
-                        text: '-- Select a Customer --'
-                    },
                     data: data
                 });
             }
