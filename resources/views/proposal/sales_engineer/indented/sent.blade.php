@@ -12,7 +12,7 @@
                 </div>
 
                 <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
-                    <form class="form-horizontal" action="{{ route('admin_submit_indented_proposal') }}" method="POST" id="SubmitIndentedProposal" enctype="multipart/form-data">
+                    <form class="form-horizontal" action="{{ route('se_submit_indented_proposal') }}" method="POST" id="SubmitIndentedProposal" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <input type="hidden" name="indent_proposal_id" value="{{ $indented_proposal->id }}">
 
@@ -29,18 +29,18 @@
                                 <div class="form-group">
                                     <label for="main_company" class="col-sm-2 control-label">To: </label>
                                     <div class="col-sm-5">
-                                        <input class="form-control" disabled id="main_company" name="to" placeholder="To" value="{{ $indented_proposal->customer->name }}">
+                                        <input class="form-control" disabled id="main_company" name="to" placeholder="To" value="{{ $indented_proposal->customer_id != '' ? $indented_proposal->customer->name : '' }}">
                                         <br>
-                                        <textarea disabled name="to_address" id="" class="form-control" placeholder="Address">{{ $indented_proposal->customer->address }}</textarea>
+                                        <textarea disabled name="to_address" id="" class="form-control" placeholder="Address">{{ $indented_proposal->customer_id != '' ? $indented_proposal->customer->address : '' }}</textarea>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="OfficeSold" class="col-sm-2 control-label">Sold To:</label>
                                     <div class="col-sm-5">
-                                        <input name="sold_to" class="form-control" id="OfficeSold" placeholder="Sold To" value="{{ $indented_proposal->branch->name }}" disabled>
+                                        <input name="sold_to" class="form-control" id="OfficeSold" placeholder="Sold To" value="{{ $indented_proposal->branch_id != '' ? $indented_proposal->branch->name : '' }}" disabled>
                                         <br>
-                                        <textarea disabled name="sold_to_address" class="form-control" placeholder="Address">{{ $indented_proposal->branch->address }}</textarea>
+                                        <textarea disabled name="sold_to_address" class="form-control" placeholder="Address"> {{ $indented_proposal->branch_id != '' ? $indented_proposal->branch->address : '' }} </textarea>
                                     </div>
                                 </div>
 
