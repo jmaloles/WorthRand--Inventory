@@ -19,6 +19,12 @@
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <a class="btn btn-success" href="{{ route('admin_customer_create') }}">Add Customer</a>
+                        </div>
+                    </div>
+
                     <br>
 
                     <div class="row">

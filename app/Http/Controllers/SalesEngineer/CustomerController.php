@@ -35,4 +35,19 @@ class CustomerController extends Controller
 
         return view('customer.sales_engineer.branch.index', compact('branches', 'ctr', 'customer'));
     }
+
+    public function fetchCustomers()
+    {
+        $jsonData = [];
+        $customers = Customer::whereUserId(Auth::user()->id)->get();
+
+        foreach($customers as $customer) {
+            $jsonData[] = [
+                'id' => $customer->id,
+                'text' => $customer->name
+            ];
+        }
+
+        return json_encode($jsonData);
+    }
 }
