@@ -25,8 +25,8 @@
                         </div>
 
                         <div class="col-lg-6">
-                            <div id="group-chart-div"></div>
-                            {!! $group_chart->render('ColumnChart', 'GROUPS', 'group-chart-div') !!}
+                            <div id="target_sale_div"></div>
+                            {!! $target_chart->render('ColumnChart', 'TARGETSALE', 'target_sale_div') !!}
                         </div>
                     </div>
 

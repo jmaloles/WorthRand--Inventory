@@ -22,6 +22,7 @@ Route::group(['middleware' => 'check_if_user_is_super_admin'], function() {
     });
 });
 
+
 // COLLECTION
 Route::group(['middleware' =>['verify_if_user_is_collection']], function(){
     Route::group(['prefix' => 'collection'], function () {
@@ -29,6 +30,10 @@ Route::group(['middleware' =>['verify_if_user_is_collection']], function(){
     #DASHBOARD
         Route::get('/dashboard', 'Collection\UserController@collectionDashboard')->name('collection_dashboard');
 
+    #PROPOSALS
+        Route::get('/indented_proposals', 'Collection\ProposalController@indexIndentedProposal')->name('index_indented_proposal');
+        Route::get('/indented_proposal/{indentedProposal}/collect', 'Collection\ProposalController@forCollection')->name('for_collection');
+        Route::post('/indented_proposal/{indentedProposal}/collect', 'Collection\ProposalController@collectIndentedProposal')->name('collect_indented_proposal');
     });
 });
 

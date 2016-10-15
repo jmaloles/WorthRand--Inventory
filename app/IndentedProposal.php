@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Input;
 use Storage;
 use File;
 use Auth;
+use App\TargetRevenue;
 
 class IndentedProposal extends Model
 {
@@ -302,5 +303,35 @@ class IndentedProposal extends Model
             ->where('indented_proposal_item.indented_proposal_id', '=', $indented_proposal->id)->get();
 
         return view('proposal.admin.indented_proposal.pending', compact('indented_proposal', 'selectedItems', 'ctr'));
+    }
+
+    public static function collectIndentedProposal($request, $indentedProposal)
+    {
+        $total_collected = "";
+        if($indentedProposal->collection_status == "FOR-COLLECTION") {
+            $indented_proposal_items = IndentedProposalItem::where('indented_proposal_id', $request->get('indent_proposal_id'))->get();
+            $getTargetRevenueId = TargetRevenue::whereUserId($indentedProposal->user_id)->first();
+
+            foreach($indented_proposal_items as $indented_proposal_item) {
+                $total_collected += $indented_proposal_item->price * $indented_proposal_item->quantity;
+                $total_price = $indented_proposal_item->price * $indented_proposal_item->quantity;
+
+                $target_revenue_history = new TargetRevenueHistory();
+                $target_revenue_history->target_revenue_id = $getTargetRevenueId->id;
+                $target_revenue_history->collected = $total_price;
+                $target_revenue_history->date = date('Y-m-d');
+                $target_revenue_history->proposal_type = 'indented_proposal';
+                $target_revenue_history->proposal_id = $indentedProposal->id;
+                $target_revenue_history->save();
+            }
+
+            $target_revenue = TargetRevenue::whereUserId($indentedProposal->user_id)->first();
+            $target_revenue->current_sale = $total_collected;
+            $target_revenue->save();
+
+            $indentedProposal->status = "COMPLETED";
+            $indentedProposal->collection_status = "COMPLETED";
+            $indentedProposal->save();
+        }
     }
 }
