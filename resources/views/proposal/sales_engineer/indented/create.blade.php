@@ -20,15 +20,15 @@
                         <input type="hidden" name="customer_id" id="customer_id">
                         <input type="hidden" name="branch_id" id="branch_id">
 
-                        {{--@if (count($errors) > 0)
+                        @if (count($errors) > 0)
                             <div class="alert alert-danger">
                                 <ul>
                                     @foreach ($errors->all() as $error)
-                                        <li>{{ str_replace(['quantity.', 'delivery.', 'price.', '.name'], '', $error) }}</li>
+                                        <li>{{  $error }}</li>
                                     @endforeach
                                 </ul>
                             </div>
-                        @endif--}}
+                        @endif
 
                         <div class="row">
                             <div class="col-lg-12 col-lg-pull-1">
@@ -91,7 +91,6 @@
                                     <th>QUANTITY</th>
                                     <th>PRICE</th>
                                     <th>DELIVERY</th>
-                                    <th>Notify me After</th>
                                     </thead>
 
                                     <tbody>
@@ -116,12 +115,6 @@
                                                 <div class="input-group">
                                                 <input type="text" class="form-control" name="delivery-{{ $selectedItem->indented_proposal_item_id }}" placeholder="Enter number of Weeks" value="{{ $selectedItem->delivery != "" ? $selectedItem->delivery : $selectedItem->delivery }}">
                                                 <div class="input-group-addon">Weeks</div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" name="notify_me_after-{{ $selectedItem->indented_proposal_item_id }}" placeholder="Enter number of Weeks" value="{{ $selectedItem->indented_proposal_item_notify_me_after != "" ? $selectedItem->indented_proposal_item_notify_me_after : $selectedItem->indented_proposal_item_notify_me_after }}">
-                                                    <div class="input-group-addon">Weeks</div>
                                                 </div>
                                             </td>
                                         </tr>

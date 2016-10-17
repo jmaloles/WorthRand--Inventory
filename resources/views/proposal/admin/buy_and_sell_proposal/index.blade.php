@@ -19,6 +19,7 @@
                         </div>
                     </div>
 
+                    @if(count($buy_and_sell_proposals) != 0)
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="col-lg-12">
@@ -51,6 +52,13 @@
                             </div>
                         </div>
                     </div>
+                    @else
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="alert alert-danger" role="alert" style="background-color: #d9534f; border-color: #b52b27; color: white;">You Have 0 Pending Proposal for Buy And Sell Proposal.</div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

@@ -8,6 +8,7 @@
     <div class="container-fluid">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="row">
+
                 <div class="sidebar col-lg-2 col-md-3 col-sm-3 col-xs-12 ">
                     <ul id="accordion" class="nav nav-pills nav-stacked sidebar-menu">
                         <li>
@@ -30,7 +31,6 @@
                             </li>
                         </li>
 
-
                         <li class="nav-item"><a class="nav-link"  href="{{ route('admin_project_index') }}"><i class="fa fa-arrow-left"></i>&nbsp; back</a></li>
                     </ul>
                 </div>
@@ -44,6 +44,7 @@
                         </div>
                     </div>
 
+                    @if(count($project->project_pricing_history) != 0)
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="col-lg-12">
@@ -79,6 +80,13 @@
                             </div>
                         </div>
                     </div>
+                    @else
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="alert alert-danger" role="alert" style="background-color: #d9534f; border-color: #b52b27; color: white;">You have 0 records for {{ $project->name }}'s Pricing History.</div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

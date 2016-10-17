@@ -23,9 +23,9 @@ class ProposalController extends Controller
         return $create_indented_proposal;
     }
 
-    public function salesEngineerSubmitIndentedProposal(Request $request)
+    public function salesEngineerSubmitIndentedProposal(Request $createIndentedProposalRequest)
     {
-       $saveIndentedProposal = IndentedProposal::saveIndentedProposal($request);
+       $saveIndentedProposal = IndentedProposal::saveIndentedProposal($createIndentedProposalRequest);
 
        return $saveIndentedProposal;
     }
@@ -57,6 +57,4 @@ class ProposalController extends Controller
 
         return $saveBuyAndSellProposal;
     }
-
-
 }

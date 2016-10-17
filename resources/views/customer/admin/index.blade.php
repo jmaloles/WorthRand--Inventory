@@ -14,7 +14,7 @@
                     <div class="row">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                MY CUSTOMER LIST
+                                CUSTOMERS
                             </div>
                         </div>
                     </div>
@@ -27,6 +27,7 @@
 
                     <br>
 
+                    @if(count($customers) != 0)
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="table-reponsive">
@@ -55,7 +56,13 @@
                             </div>
                         </div>
                     </div>
-                    
+                    @else
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="alert alert-danger" role="alert" style="background-color: #d9534f; border-color: #b52b27; color: white;">You have 0 records for Customers.</div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

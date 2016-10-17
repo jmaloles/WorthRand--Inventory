@@ -32,13 +32,6 @@ class ProposalController extends Controller
         return $view_selected_items;
     }
 
-    public function adminSubmitIndentedProposal(Request $request)
-    {
-        $save_indented_proposal = IndentedProposal::saveIndentedProposal($request);
-
-        return $save_indented_proposal;
-    }
-
     public function adminShowSentIndentedProposal(IndentedProposal $indented_proposal)
     {
         $showSentIndentedProposal = IndentedProposal::showSentIndentedProposal($indented_proposal);
@@ -96,5 +89,12 @@ class ProposalController extends Controller
         $admin_show_pending_proposal = BuyAndSellProposal::showPendingProposal($buy_and_sell_proposal);
 
         return $admin_show_pending_proposal;
+    }
+
+    public function adminBuyAndSellProposalIndex()
+    {
+        $buy_and_sell_proposals = BuyAndSellProposal::whereStatus('SENT')->get();
+
+        return view('proposal.admin.buy_and_sell_proposal.index', compact('buy_and_sell_proposals'));
     }
 }

@@ -124,13 +124,11 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
         Route::get('/indented_proposal/{indented_proposal}', 'Admin\ProposalController@adminShowPendingProposal')->name('admin_show_pending_proposal');
         Route::patch('/indented_proposal/{indented_proposal}/accept', 'Admin\ProposalController@adminAcceptProposal')->name('admin_accept_indented_proposal');
 
-
+        Route::get('/buy_and_sell_proposals', 'Admin\ProposalController@adminBuyAndSellProposalIndex')->name('admin_buy_and_sell_proposal_index');
         Route::post('/buy_and_sell_proposal/create', 'Admin\ProposalController@adminPostCreateBuyAndSellProposal');
         Route::get('/buy_and_sell_proposal/{buyAndSellProposal}', 'Admin\ProposalController@adminBuyAndSellProposalView');
         Route::post('/buy_and_sell_proposal/submit', 'Admin\ProposalController@adminSubmitBuyAndSellProposal')->name('admin_submit_buy_and_sell_proposal');
         Route::get('/buy_and_sell_proposal/{buy_and_sell_proposal}', 'Admin\ProposalController@adminShowPendingBuyAndSellProposal')->name('admin_show_pending_buy_and_sell_proposal');
-
-
     });
 });
 

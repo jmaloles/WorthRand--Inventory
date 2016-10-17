@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
+
 class CreateIndentedProposalRequest extends Request
 {
     /**
@@ -25,15 +26,13 @@ class CreateIndentedProposalRequest extends Request
     {
         return [
             'purchase_order'    => 'required|unique:indented_proposals,purchase_order',
-            'to'                => 'required',
-            'to_address'        => 'required',
-            'sold_to'           => 'required',
-            'sold_to_address'   => 'required',
+            'customer_id'       => 'required',
+            'branch_id'         => 'required',
             'invoice'           => 'required',
             'invoice_address'   => 'required',
             'ship_to'           => 'required',
             'ship_to_address'   => 'required',
-            'quantity.*.name'   => 'required',
+            'quantity.*'        => 'required',
             'price.*'           => 'required',
             'delivery.*'        => 'required',
             'special_instruction' => 'required',
@@ -53,7 +52,14 @@ class CreateIndentedProposalRequest extends Request
             'commission_address' => 'required',
             'commission_account_number' => 'required',
             'commission_swift_code' => 'required'
+        ];
+    }
 
+    public function messages()
+    {
+        return [
+            'customer_id.required' => 'The customer you entered is not in our database. Please provided legal customer',
+            'branch_id. required' => 'The branch you entered is not in our database. Please provided legal branch'
         ];
     }
 }

@@ -99,6 +99,16 @@ class IndentedProposal extends Model
 
     public static function saveIndentedProposal($request)
     {
+         //dd($createIndentedProposalRequest->all());
+        /*foreach($createIndentedProposalRequest->all() as $key => $value) {
+            if(strpos($key, 'delivery') !== FALSE)  {
+                //$indented_proposal_items = IndentedProposalItem::find();
+
+                //var_dump($indented_proposal_items->id);
+
+                var_dump(array_keys($value[2]);
+            }
+        }*/
         $indented_proposal = IndentedProposal::find($request->get('indent_proposal_id'));
         $indented_proposal->customer_id = $request->get('customer_id');
         $indented_proposal->branch_id = $request->get('branch_id');
@@ -132,15 +142,6 @@ class IndentedProposal extends Model
         if($indented_proposal->save()) {
             foreach($request->all() as $key => $value) {
 
-                if(strpos($key, 'delivery') !== FALSE) {
-                    $delivery = explode('-', $key);
-                    $indented_proposal_item_id = $delivery[1];
-
-                    $indented_proposal_item = IndentedProposalItem::find($indented_proposal_item_id);
-                    $indented_proposal_item->delivery = $value * 7;
-                    $indented_proposal_item->status = "PROCESSING";
-                    $indented_proposal_item->save();
-                }
 
                 if(strpos($key, 'quantity') !== FALSE) {
                     $delivery = explode('-', $key);
@@ -157,6 +158,16 @@ class IndentedProposal extends Model
 
                     $indented_proposal_item = IndentedProposalItem::find($indented_proposal_item_id);
                     $indented_proposal_item->price = $value;
+                    $indented_proposal_item->save();
+                }
+
+                if(strpos($key, 'delivery') !== FALSE) {
+                    $delivery = explode('-', $key);
+                    $indented_proposal_item_id = $delivery[1];
+
+                    $indented_proposal_item = IndentedProposalItem::find($indented_proposal_item_id);
+                    $indented_proposal_item->delivery = $value * 7;
+                    $indented_proposal_item->status = "PROCESSING";
                     $indented_proposal_item->save();
                 }
 
@@ -206,9 +217,7 @@ class IndentedProposal extends Model
                 }
             }
 
-            /*$file = Input::file('fileField');
-            $extension = $file->getClientOriginalExtension();
-            Storage::disk('ftp')->put($file->getFilename().'.'.$extension,  File::get($file));*/
+
             return redirect()->to('/sales_engineer/search')->with('message', 'Indented Proposal [ Purchase Order Number: #'.$indented_proposal->purchase_order.' ] was successfully sent.')
                 ->with('alert', "alert-success");
         }
