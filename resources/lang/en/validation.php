@@ -93,13 +93,13 @@ return [
 
     'custom' => [
         'quantity.*' => [
-            'required' => ':attribute must have a Quantity',
+            'required' => 'Please fill up all Quantity fields',
         ],
         'price.*' => [
-            'required' => ':attribute must have a Price'
+            'required' => 'Please fill up all Price fields'
         ],
         'delivery.*' => [
-            'required' => ':attribute must have Delivery Date'
+            'required' => 'Please fill up all Delivery fields'
         ]
     ],
 

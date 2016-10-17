@@ -19,27 +19,31 @@ class BuyAndSellProposal extends Model
 
     public static function salesEngineerPostCreateBuyAndSellProposal($request)
     {
-        $array_id = [];
-        $item_ids = explode(',', $request->get('array_id'));
+        if(trim($request->get('array_id')) == "") {
+            return redirect()->back()->with('message', 'You didn\'t select any item')->with('alert', "alert-danger");
+        } else {
+            $array_id = [];
+            $item_ids = explode(',', $request->get('array_id'));
 
-        $buy_and_sell_proposal = new BuyAndSellProposal();
-        $buy_and_sell_proposal->status = "DRAFT";
+            $buy_and_sell_proposal = new BuyAndSellProposal();
+            $buy_and_sell_proposal->status = "DRAFT";
 
-        if($buy_and_sell_proposal->save()) {
-            foreach($item_ids as $item_id) {
-                $explodedValue = explode('-', $item_id);
-                $id = $explodedValue[0];
-                $table = $explodedValue[1];
+            if($buy_and_sell_proposal->save()) {
+                foreach($item_ids as $item_id) {
+                    $explodedValue = explode('-', $item_id);
+                    $id = $explodedValue[0];
+                    $table = $explodedValue[1];
 
-                $buy_and_sell_proposal_item = new BuyAndSellProposalItem();
-                $buy_and_sell_proposal_item->buy_and_sell_proposal_id = $buy_and_sell_proposal->id;
-                $buy_and_sell_proposal_item->item_id = $id;
-                $buy_and_sell_proposal_item->type = $table;
-                $buy_and_sell_proposal_item->save();
+                    $buy_and_sell_proposal_item = new BuyAndSellProposalItem();
+                    $buy_and_sell_proposal_item->buy_and_sell_proposal_id = $buy_and_sell_proposal->id;
+                    $buy_and_sell_proposal_item->item_id = $id;
+                    $buy_and_sell_proposal_item->type = $table;
+                    $buy_and_sell_proposal_item->save();
+                }
             }
-        }
 
-        return redirect()->to('/sales_engineer/buy_and_sell_proposal/'.$buy_and_sell_proposal->id);
+            return redirect()->to('/sales_engineer/buy_and_sell_proposal/'.$buy_and_sell_proposal->id);
+        }
     }
 
     public static function viewBuyAndSellProposal($buyAndSellProposal)
@@ -130,7 +134,8 @@ class BuyAndSellProposal extends Model
                 }
             }
 
-            return redirect()->to('/sales_engineer/buy_and_sell_proposal');
+            return redirect()->to('/sales_engineer/search')->with('message', 'Buy And Sell Proposal [ Purchase Order Number: #'.$buy_and_sell_proposal->purchase_order.' ] was successfully sent.')
+                ->with('alert', "alert-success");
         }
     }
 
@@ -170,7 +175,8 @@ class BuyAndSellProposal extends Model
                 $join->on('buy_and_sell_proposal_item.item_id', '=', 'after_markets.id')
                     ->where('buy_and_sell_proposal_item.type', '=', 'after_markets');
             })
-            ->where('buy_and_Sell_proposal_item.buy_and_sell_proposal_id', '=', $buy_and_sell_proposal->id)->get();
+            ->where('buy_and_sell_proposal_item.buy_and_sell_proposal_id', '=', $buy_and_sell_proposal->id)
+            ->where('buy_and_sell_proposal.collection_status', '=', 'PENDING')->get();
 
         return view('proposal.admin.indented_proposal.pending', compact('buy_and_sell_proposal', 'selectedItems', 'ctr'));
     }

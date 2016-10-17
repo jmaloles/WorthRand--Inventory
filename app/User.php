@@ -4,6 +4,13 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use App\IndentedProposal;
+use App\BuyAndSellProposal;
+use App\BuyAndSellProposalItem;
+use App\TargetRevenue;
+use Khill\Lavacharts\Lavacharts;
+use App\Group;
+
 class User extends Authenticatable
 {
     /**
@@ -50,5 +57,64 @@ class User extends Authenticatable
             return redirect()->back()->with('message', 'Adding user was unsuccessful')->with('alert', $alert)
                 ->with('icon', $icon);
         }
+    }
+
+    public static function adminDashboard()
+    {
+        $ctr = 0;
+        $indented_proposals = IndentedProposal::where('status', 'SENT')->paginate(30);
+        $indented_proposals->setPath('dashboard');
+
+        $buy_and_sell_proposals = BuyAndSellProposal::where('status', 'SENT')->paginate(30);
+        $buy_and_sell_proposals->setPath('dashboard');
+
+
+        $users = User::all();
+
+        // create datatable
+        $lava = new Lavacharts();
+
+        $reasons = $lava->DataTable();
+        $reasons->addStringColumn('Users')
+            ->addNumberColumn('Percent');
+        foreach($users as $user) {
+            $reasons->addRow(array($user->name, $user->id));
+        }
+
+        $piechart = $lava->PieChart('USERS')
+            ->setOptions(array(
+                'datatable' => $reasons,
+                'title' => 'Project Sales',
+                'is3D' => true,
+                'height' => 400,
+                'width' => 400
+            ));
+
+        /*
+         * TARGET SALES CHART
+         */
+
+        $targetRevenues = TargetRevenue::all();
+
+        $target_chart = new Lavacharts();
+        $data = $target_chart->DataTable();
+        $data->addStringColumn('Groups')
+            ->addNumberColumn('Current Sale');
+
+
+        foreach($targetRevenues as $targetRevenue) {
+            $data->addRow(array('Current Sale', $targetRevenue->current_sale));
+        }
+
+        $pie_chart = $target_chart->ColumnChart('TARGETSALE')
+            ->setOptions(array(
+                    'datatable' => $data,
+                    'title' => 'Total Sales',
+                    'height' => 400,
+                    'width' => 500
+                )
+            );
+
+        return view('auth.admin.dashboard', compact('target_chart', 'lava', 'indented_proposals', 'buy_and_sell_proposals','ctr'));
     }
 }

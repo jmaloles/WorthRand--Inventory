@@ -11,22 +11,21 @@
                 <div class="sidebar col-lg-2 col-md-3 col-sm-3 col-xs-12 ">
                     <ul id="accordion" class="nav nav-pills nav-stacked sidebar-menu">
                         <li>
-                        <li class="nav-item"><a class="nav-link" href="#"><i class="fa fa-cog"></i>&nbsp; {{ $afterMarket->name }}</a>
-                            <ul class="sub">
-                                <li><a href="{{ route('admin_after_market_show', $afterMarket->id) }}"><i class="fa fa-cog"></i>&nbsp;Profile</a></li>
-                                <li><a href="{{ route('admin_after_market_information', $afterMarket->id) }}"><i class="fa fa-pencil"></i>&nbsp;Update Information</a></li>
-                                <li class="nav-item"><a class="nav-link"  href="{{ route('admin_after_market_pricing_history_create', $afterMarket->id) }}"><i class="fa fa-plus"></i>&nbsp; Add AfterMarket</a></li>
-                            </ul>
-                        </li>
+                            <li class="nav-item"><a class="nav-link" href="#"><i class="fa fa-cog"></i>&nbsp; {{ $afterMarket->name }}</a>
+                                <ul class="sub">
+                                    <li><a href="{{ route('admin_after_market_show', $afterMarket->id) }}"><i class="fa fa-cog"></i>&nbsp;Profile</a></li>
+                                    <li><a href="{{ route('admin_after_market_information', $afterMarket->id) }}"><i class="fa fa-pencil"></i>&nbsp;Update Information</a></li>
+                                </ul>
+                            </li>
                         </li>
 
                         <li>
-                        <li class="nav-item"><a class="nav-link"  href="#"><i class="fa fa-th-list"></i>&nbsp; Pricing History</a>
-                            <ul class="sub">
-                                <li><a href="{{ route('admin_after_market_pricing_history_index', $afterMarket->id) }}"><i class="fa fa-th-list"></i>&nbsp;Pricing History List</a></li>
-                                <li class="nav-item"><a class="nav-link"  href="{{ route('admin_after_market_pricing_history_create', $afterMarket->id) }}"><i class="fa fa-plus"></i>&nbsp; Add Pricing History</a></li>
-                            </ul>
-                        </li>
+                            <li class="nav-item"><a class="nav-link"  href="#"><i class="fa fa-th-list"></i>&nbsp; Pricing History</a>
+                                <ul class="sub">
+                                    <li><a href="{{ route('admin_after_market_pricing_history_index', $afterMarket->id) }}"><i class="fa fa-th-list"></i>&nbsp;Pricing History List</a></li>
+                                    <li class="nav-item"><a class="nav-link"  href="{{ route('admin_after_market_pricing_history_create', $afterMarket->id) }}"><i class="fa fa-plus"></i>&nbsp; Add Pricing History</a></li>
+                                </ul>
+                            </li>
                         </li>
 
 
@@ -35,12 +34,21 @@
                 </div>
 
                 <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            {{ strtoupper($afterMarket->name) }} PRICING HISTORY
+
+                    <div class="row">
+                        <a href="{{ route('admin_project_show', $afterMarket->project->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-arrow-circle-left"></i> Go to Project {{ $afterMarket->project->name }}</a>
+                    </div>
+
+                    <br>
+                    <div class="row">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                {{ strtoupper($afterMarket->name) }} PRICING HISTORY
+                            </div>
                         </div>
                     </div>
 
+                    @if(count($afterMarket->after_market_pricing_history) != 0)
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="col-lg-12">
@@ -76,8 +84,15 @@
                             </div>
                         </div>
                     </div>
+                    @else
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="alert alert-danger" role="alert" style="background-color: #d9534f; border-color: #b52b27; color: white;">You have 0 records for {{ $afterMarket->name }}'s Pricing History.</div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
-@endsection
+@stop

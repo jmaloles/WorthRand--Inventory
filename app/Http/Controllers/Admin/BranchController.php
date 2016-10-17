@@ -20,7 +20,11 @@ class BranchController extends Controller
 
     public function adminPostCreateBranch(CreateCustomerBranchRequest $createCustomerBranchRequest, Customer $customer)
     {
-        $branch = Branch::create($createCustomerBranchRequest->all());
+        $branch = new Branch();
+        $branch->name = ucwords($createCustomerBranchRequest->get('name'), ' ');
+        $branch->address = ucwords($createCustomerBranchRequest->get('address'), ' ');
+        $branch->city = ucwords($createCustomerBranchRequest->get('city'), ' ');
+        $branch->postal_code = $createCustomerBranchRequest->get('postal_code');
 
         return redirect()->back()->with('message', 'Branch ['. $branch->name .'] was successfully created');
     }
