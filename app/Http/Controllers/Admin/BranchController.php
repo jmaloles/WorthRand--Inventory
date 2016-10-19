@@ -21,12 +21,15 @@ class BranchController extends Controller
     public function adminPostCreateBranch(CreateCustomerBranchRequest $createCustomerBranchRequest, Customer $customer)
     {
         $branch = new Branch();
+        $branch->customer_id = $createCustomerBranchRequest->get('customer_id');
         $branch->name = ucwords($createCustomerBranchRequest->get('name'), ' ');
         $branch->address = ucwords($createCustomerBranchRequest->get('address'), ' ');
         $branch->city = ucwords($createCustomerBranchRequest->get('city'), ' ');
         $branch->postal_code = $createCustomerBranchRequest->get('postal_code');
 
-        return redirect()->back()->with('message', 'Branch ['. $branch->name .'] was successfully created');
+        if($branch->save()) {
+            return redirect()->back()->with('message', 'Branch ['. $branch->name .'] was successfully created');
+        }
     }
 
     public function adminBranchIndex()

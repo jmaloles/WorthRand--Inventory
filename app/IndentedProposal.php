@@ -97,123 +97,105 @@ class IndentedProposal extends Model
         return view('proposal.sales_engineer.indented.create', compact('selectedItems', 'ctr', 'indentedProposal', 'customers'));
     }
 
-    public static function saveIndentedProposal($request)
+    public static function saveIndentedProposal($createIndentedProposalRequest)
     {
-         //dd($createIndentedProposalRequest->all());
-        /*foreach($createIndentedProposalRequest->all() as $key => $value) {
-            if(strpos($key, 'delivery') !== FALSE)  {
-                //$indented_proposal_items = IndentedProposalItem::find();
-
-                //var_dump($indented_proposal_items->id);
-
-                var_dump(array_keys($value[2]);
-            }
-        }*/
-        $indented_proposal = IndentedProposal::find($request->get('indent_proposal_id'));
-        $indented_proposal->customer_id = $request->get('customer_id');
-        $indented_proposal->branch_id = $request->get('branch_id');
-        $indented_proposal->purchase_order = $request->get('purchase_order');
-        $indented_proposal->invoice_to = $request->get('invoice');
-        $indented_proposal->invoice_to_address = $request->get('invoice_address');
-        $indented_proposal->ship_to = $request->get('ship_to');
-        $indented_proposal->ship_to_address = $request->get('ship_to_address');
-        $indented_proposal->special_instructions = $request->get('special_instruction');
-        $indented_proposal->insurance = $request->get('insurance');
-        $indented_proposal->ship_via = $request->get('ship_via');
-        $indented_proposal->packing = $request->get('packing');
-        $indented_proposal->amount = $request->get('amount');
-        $indented_proposal->documents = $request->get('documents');
+        $indented_proposal = IndentedProposal::find($createIndentedProposalRequest->get('indent_proposal_id'));
+        $indented_proposal->customer_id = $createIndentedProposalRequest->get('customer_id');
+        $indented_proposal->branch_id = $createIndentedProposalRequest->get('branch_id');
+        $indented_proposal->purchase_order = $createIndentedProposalRequest->get('purchase_order');
+        $indented_proposal->invoice_to = $createIndentedProposalRequest->get('invoice');
+        $indented_proposal->invoice_to_address = $createIndentedProposalRequest->get('invoice_address');
+        $indented_proposal->ship_to = $createIndentedProposalRequest->get('ship_to');
+        $indented_proposal->ship_to_address = $createIndentedProposalRequest->get('ship_to_address');
+        $indented_proposal->special_instructions = $createIndentedProposalRequest->get('special_instruction');
+        $indented_proposal->insurance = $createIndentedProposalRequest->get('insurance');
+        $indented_proposal->ship_via = $createIndentedProposalRequest->get('ship_via');
+        $indented_proposal->packing = $createIndentedProposalRequest->get('packing');
+        $indented_proposal->amount = $createIndentedProposalRequest->get('amount');
+        $indented_proposal->documents = $createIndentedProposalRequest->get('documents');
         $indented_proposal->wpcoc = "indented";
-        $indented_proposal->order_entry_no = $request->get('purchase_order');
-        $indented_proposal->terms_of_payment_1 = $request->get('terms_of_payment_1');
-        $indented_proposal->terms_of_payment_address = $request->get('terms_of_payment_address');
-        $indented_proposal->bank_detail_name = $request->get('bank_detail_owner');
-        $indented_proposal->bank_detail_account_no = $request->get('bank_detail_account_number');
-        $indented_proposal->bank_detail_swift_code = $request->get('bank_detail_swift_code');
-        $indented_proposal->bank_detail_account_name = $request->get('bank_detail_account_name');
-        $indented_proposal->bank_detail_address = $request->get('bank_detail_address');
-        $indented_proposal->commission_note = $request->get('commission_note');
-        $indented_proposal->commission_address = $request->get('bank_detail_account_number');
-        $indented_proposal->commission_account_number = $request->get('bank_detail_swift_code');
-        $indented_proposal->commission_swift_code = $request->get('bank_detail_account_name');
+        $indented_proposal->order_entry_no = $createIndentedProposalRequest->get('purchase_order');
+        $indented_proposal->terms_of_payment_1 = $createIndentedProposalRequest->get('terms_of_payment_1');
+        $indented_proposal->terms_of_payment_address = $createIndentedProposalRequest->get('terms_of_payment_address');
+        $indented_proposal->bank_detail_name = $createIndentedProposalRequest->get('bank_detail_owner');
+        $indented_proposal->bank_detail_address = $createIndentedProposalRequest->get('bank_detail_address');
+        $indented_proposal->bank_detail_account_no = $createIndentedProposalRequest->get('bank_detail_account_number');
+        $indented_proposal->bank_detail_swift_code = $createIndentedProposalRequest->get('bank_detail_swift_code');
+        $indented_proposal->bank_detail_account_name = $createIndentedProposalRequest->get('bank_detail_account_name');
+        $indented_proposal->commission_note = $createIndentedProposalRequest->get('commission_note');
+        $indented_proposal->commission_address = $createIndentedProposalRequest->get('commission_address');
+        $indented_proposal->commission_account_number = $createIndentedProposalRequest->get('commission_account_number');
+        $indented_proposal->commission_swift_code = $createIndentedProposalRequest->get('commission_swift_code');
         $indented_proposal->status = "SENT";
         $indented_proposal->collection_status = "PENDING";
 
         if($indented_proposal->save()) {
-            foreach($request->all() as $key => $value) {
-
-
-                if(strpos($key, 'quantity') !== FALSE) {
-                    $delivery = explode('-', $key);
-                    $indented_proposal_item_id = $delivery[1];
-
-                    $indented_proposal_item = IndentedProposalItem::find($indented_proposal_item_id);
-                    $indented_proposal_item->quantity = $value;
-                    $indented_proposal_item->save();
+            foreach($createIndentedProposalRequest->all() as $key => $value) {
+                if(strpos($key, 'quantity') !== FALSE)  {
+                    foreach($value as $indented_proposal_item_id => $quantity_value) {
+                        $indented_proposal_item = IndentedProposalItem::find($indented_proposal_item_id);
+                        $indented_proposal_item->quantity = $quantity_value;
+                        $indented_proposal_item->save();
+                    }
                 }
 
                 if(strpos($key, 'price') !== FALSE) {
-                    $delivery = explode('-', $key);
-                    $indented_proposal_item_id = $delivery[1];
-
-                    $indented_proposal_item = IndentedProposalItem::find($indented_proposal_item_id);
-                    $indented_proposal_item->price = $value;
-                    $indented_proposal_item->save();
+                    foreach($value as $indented_proposal_item_id => $quantity_value) {
+                        $indented_proposal_item = IndentedProposalItem::find($indented_proposal_item_id);
+                        $indented_proposal_item->price = $quantity_value;
+                        $indented_proposal_item->save();
+                    }
                 }
 
                 if(strpos($key, 'delivery') !== FALSE) {
-                    $delivery = explode('-', $key);
-                    $indented_proposal_item_id = $delivery[1];
-
-                    $indented_proposal_item = IndentedProposalItem::find($indented_proposal_item_id);
-                    $indented_proposal_item->delivery = $value * 7;
-                    $indented_proposal_item->status = "PROCESSING";
-                    $indented_proposal_item->save();
-                }
-
-                if(strpos($key, 'notify_me_after') !== FALSE) {
-                    $delivery = explode('-', $key);
-                    $indented_proposal_item_id = $delivery[1];
-
-                    $indented_proposal_item = IndentedProposalItem::find($indented_proposal_item_id);
-                    $indented_proposal_item->notify_me_after = $value * 7;
-                    $indented_proposal_item->save();
+                    foreach($value as $indented_proposal_item_id => $quantity_value) {
+                        $indented_proposal_item = IndentedProposalItem::find($indented_proposal_item_id);
+                        $indented_proposal_item->delivery = $quantity_value;
+                        $indented_proposal_item->save();
+                    }
                 }
             }
 
             $indented_proposal_items = IndentedProposalItem::whereIndentedProposalId($indented_proposal->id)->get();
 
-            foreach($indented_proposal_items as $indented_proposal_item) {
-                $indented_proposal_item->status = "PROCESSING";
-                $indented_proposal_item->save();
+            foreach($indented_proposal_items as $indentedProposalItem) {
+                $indentedProposalItem->status = "PROCESSING";
+                $indentedProposalItem->save();
 
-                if($indented_proposal_item->type == "projects") {
-                    $project_pricing_history = new ProjectPricingHistory();
-                    $project_pricing_history->project_id = $indented_proposal_item->item_id;
-                    $project_pricing_history->price = $indented_proposal_item->price;
-                    $project_pricing_history->pricing_date = date('Y');
-                    $project_pricing_history->terms = $indented_proposal->terms_of_payment_1;
-                    $project_pricing_history->delivery = "TEST DELIVERY";
-                    $project_pricing_history->fpd_reference = "TEST_FPD_REFERENCE";
-                    $project_pricing_history->wpc_reference = "TEST_WPC_REFERENCE";
-                    $project_pricing_history->po_number = $indented_proposal->purchase_order;
+                if($indentedProposalItem->save()) {
+                    if($indentedProposalItem->type == "projects") {
+                        $project_pricing_history = new ProjectPricingHistory();
+                        $project_pricing_history->project_id = $indentedProposalItem->item_id;
+                        $project_pricing_history->price = $indentedProposalItem->price;
+                        $project_pricing_history->pricing_date = date('Y');
+                        $project_pricing_history->terms = $indented_proposal->terms_of_payment_1;
+                        $project_pricing_history->delivery = "TEST DELIVERY";
+                        $project_pricing_history->fpd_reference = "TEST_FPD_REFERENCE";
+                        $project_pricing_history->wpc_reference = "TEST_WPC_REFERENCE";
+                        $project_pricing_history->po_number = $indented_proposal->purchase_order;
 
-                    if($project_pricing_history->save()) {
-                        $project = Project::find($project_pricing_history->project_id);
-                        $project->price = $project_pricing_history->price;
-                        $project->save();
+                        if($project_pricing_history->save()) {
+                            $project = Project::find($project_pricing_history->project_id);
+                            $project->price = $project_pricing_history->price;
+                            $project->save();
+                        }
+                    } else if($indentedProposalItem->type == "after_markets") {
+                        $after_marketpricing_history = new AfterMarketPricingHistory();
+                        $after_marketpricing_history->after_market_id = $indentedProposalItem->item_id;
+                        $after_marketpricing_history->price = $indentedProposalItem->price;
+                        $after_marketpricing_history->pricing_date = date('Y');
+                        $after_marketpricing_history->terms = $indented_proposal->terms_of_payment_1;
+                        $after_marketpricing_history->delivery = "TEST DELIVERY";
+                        $after_marketpricing_history->fpd_reference = "TEST_FPD_REFERENCE";
+                        $after_marketpricing_history->wpc_reference = "TEST_WPC_REFERENCE";
+                        $after_marketpricing_history->po_number = $indented_proposal->purchase_order;
+
+                        if($after_marketpricing_history->save()) {
+                            $aftermarket = AfterMarket::find($after_marketpricing_history->after_market_id);
+                            $aftermarket->price = $after_marketpricing_history->price;
+                            $aftermarket->save();
+                        }
                     }
-                } else if($indented_proposal_item->type == "after_markets") {
-                    $after_marketpricing_history = new AfterMarketPricingHistory();
-                    $after_marketpricing_history->project_id = $indented_proposal_item->item_id;
-                    $after_marketpricing_history->price = $indented_proposal_item->price;
-                    $after_marketpricing_history->pricing_date = date('Y');
-                    $after_marketpricing_history->terms = $indented_proposal->terms_of_payment_1;
-                    $after_marketpricing_history->delivery = "TEST DELIVERY";
-                    $after_marketpricing_history->fpd_reference = "TEST_FPD_REFERENCE";
-                    $after_marketpricing_history->wpc_reference = "TEST_WPC_REFERENCE";
-                    $after_marketpricing_history->po_number = $indented_proposal->pruchase_number;
-                    $after_marketpricing_history->save();
                 }
             }
 

@@ -93,13 +93,13 @@ return [
 
     'custom' => [
         'quantity.*' => [
-            'required' => 'Please fill up all Quantity fields',
+            'required' => 'Please fill up this Quantity field.',
         ],
         'price.*' => [
-            'required' => 'Please fill up all Price fields'
+            'required' => 'Please fill up this Price field.'
         ],
         'delivery.*' => [
-            'required' => 'Please fill up all Delivery fields'
+            'required' => 'Please fill up this Delivery field.'
         ]
     ],
 

@@ -23,7 +23,7 @@ class ProposalController extends Controller
         return $create_indented_proposal;
     }
 
-    public function salesEngineerSubmitIndentedProposal(Request $createIndentedProposalRequest)
+    public function salesEngineerSubmitIndentedProposal(CreateIndentedProposalRequest $createIndentedProposalRequest)
     {
        $saveIndentedProposal = IndentedProposal::saveIndentedProposal($createIndentedProposalRequest);
 

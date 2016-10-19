@@ -12,7 +12,7 @@
                 <div class="sidebar col-lg-2 col-md-3 col-sm-3 col-xs-12 ">
                     <ul id="accordion" class="nav nav-pills nav-stacked sidebar-menu">
                         <li>
-                            <li class="nav-item"><a class="nav-link"><i class="fa fa-cog"></i>&nbsp;{{ $project->name }}</a>
+                            <li class="nav-item"><a class="nav-link" href="#"><i class="fa fa-cog"></i>&nbsp;{{ $project->name }}</a>
                                 <ul class="sub">
                                     <li class="nav-item"><a href="{{ route('admin_project_show', $project->id) }}"><i class="fa fa-cog"></i>&nbsp;Profile</a></li>
                                     <li class="nav-item"><a href="{{ route('admin_project_information', $project->id) }}"><i class="fa fa-pencil"></i>&nbsp;Update Information</a></li>
