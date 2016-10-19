@@ -29,8 +29,8 @@
                                         value="{{ old('purchase_order') }}">
                                         @if ($errors->has('purchase_order'))
                                             <span class="help-block">
-                                            <strong>{{ $errors->first('purchase_order') }}</strong>
-                                        </span>
+                                                <strong>{{ $errors->first('purchase_order') }}</strong>
+                                            </span>
                                         @endif
                                     </div>
                                 </div>

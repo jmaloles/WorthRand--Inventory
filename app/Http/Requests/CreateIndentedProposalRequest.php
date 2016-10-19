@@ -26,8 +26,8 @@ class CreateIndentedProposalRequest extends Request
         return [
             'indent_proposal_id' => 'required',
             'purchase_order'    => 'required|unique:indented_proposals,purchase_order',
-            'customer_id'       => 'required',
-            'branch_id'         => 'required',
+            'customer_id'       => 'required|exists:customers,id',
+            'branch_id'         => 'required|exists:branches,id',
             'invoice'           => 'required',
             'invoice_address'   => 'required',
             'ship_to'           => 'required',

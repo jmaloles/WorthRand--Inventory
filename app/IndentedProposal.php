@@ -150,7 +150,7 @@ class IndentedProposal extends Model
                 if(strpos($key, 'delivery') !== FALSE) {
                     foreach($value as $indented_proposal_item_id => $quantity_value) {
                         $indented_proposal_item = IndentedProposalItem::find($indented_proposal_item_id);
-                        $indented_proposal_item->delivery = $quantity_value;
+                        $indented_proposal_item->delivery = $quantity_value * 7;
                         $indented_proposal_item->save();
                     }
                 }

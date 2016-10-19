@@ -12,6 +12,7 @@ use App\Http\Requests\CreateIndentedProposalRequest;
 use App\IndentedProposalItem;
 use App\BuyAndSellProposal;
 use App\BuyAndSellProposalItem;
+use App\Http\Requests\CreateBuyAndSellProposalRequest;
 
 class ProposalController extends Controller
 {
@@ -51,9 +52,9 @@ class ProposalController extends Controller
         return $view_selected_items;
     }
 
-    public function salesEngineerSubmitBuyAndSellProposal(Request $request)
+    public function salesEngineerSubmitBuyAndSellProposal(CreateBuyAndSellProposalRequest $createBuyAndSellProposalRequest)
     {
-        $saveBuyAndSellProposal = BuyAndSellProposal::saveBuyAndSellProposal($request);
+        $saveBuyAndSellProposal = BuyAndSellProposal::saveBuyAndSellProposal($createBuyAndSellProposalRequest);
 
         return $saveBuyAndSellProposal;
     }
