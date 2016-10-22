@@ -245,5 +245,9 @@ Route::group(['middleware' => ['verify_if_user_is_assistant']], function() {
    Route::group(['prefix' => 'assistant'], function() {
        # DASHBOARD
             Route::get('/dashboard', 'Assistant\UserController@dashboard')->name('assistant_dashboard');
+
+       # PROPOSALS
+            Route::get('/proposal/indented/{indentedProposal}/accepted', 'Assistant\ProposalController@showAcceptedProposal')->name('assistant_show_pending_proposal');
+            Route::patch('/proposal/indented/{indentedProposal}/update', 'Assistant\ProposalController@updateIndentedProposal')->name('assistant_update_accepted_proposal');
    });
 });

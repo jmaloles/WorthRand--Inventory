@@ -151,6 +151,7 @@ class IndentedProposal extends Model
                     foreach($value as $indented_proposal_item_id => $quantity_value) {
                         $indented_proposal_item = IndentedProposalItem::find($indented_proposal_item_id);
                         $indented_proposal_item->delivery = $quantity_value * 7;
+                        $indented_proposal_item->notify_me_after = ($quantity_value - 2) * 7;
                         $indented_proposal_item->save();
                     }
                 }
@@ -293,28 +294,78 @@ class IndentedProposal extends Model
         $total_collected = "";
         if($indentedProposal->collection_status == "FOR-COLLECTION") {
             $indented_proposal_items = IndentedProposalItem::where('indented_proposal_id', $request->get('indent_proposal_id'))->get();
+            $user = User::find($indentedProposal->user_id);
             $getTargetRevenueId = TargetRevenue::whereUserId($indentedProposal->user_id)->first();
 
-            foreach($indented_proposal_items as $indented_proposal_item) {
-                $total_collected += $indented_proposal_item->price * $indented_proposal_item->quantity;
-                $total_price = $indented_proposal_item->price * $indented_proposal_item->quantity;
+            if(count($getTargetRevenueId) != 0) {
+                foreach($indented_proposal_items as $indented_proposal_item) {
+                    $total_collected += $indented_proposal_item->price * $indented_proposal_item->quantity;
+                    $total_price = $indented_proposal_item->price * $indented_proposal_item->quantity;
 
-                $target_revenue_history = new TargetRevenueHistory();
-                $target_revenue_history->target_revenue_id = $getTargetRevenueId->id;
-                $target_revenue_history->collected = $total_price;
-                $target_revenue_history->date = date('Y-m-d');
-                $target_revenue_history->proposal_type = 'indented_proposal';
-                $target_revenue_history->proposal_id = $indentedProposal->id;
-                $target_revenue_history->save();
+                    $target_revenue_history = new TargetRevenueHistory();
+                    $target_revenue_history->target_revenue_id = $getTargetRevenueId->id;
+                    $target_revenue_history->collected = $total_price;
+                    $target_revenue_history->date = date('Y-m-d');
+                    $target_revenue_history->proposal_type = 'indented_proposal';
+                    $target_revenue_history->proposal_id = $indentedProposal->id;
+                    $target_revenue_history->save();
+                }
+
+                $target_revenue = TargetRevenue::whereUserId($indentedProposal->user_id)->first();
+                $target_revenue->current_sale = $total_collected;
+                $target_revenue->save();
+
+                $indentedProposal->status = "COMPLETED";
+                $indentedProposal->collection_status = "COMPLETED";
+                $indentedProposal->save();
+            } else {
+                return redirect()->back()
+                    ->with('message', ucwords($user->name, " ") . '\'s Target Revenue has not been set. Please inform the Administration.')
+                    ->with('alert', "alert-danger")
+                    ->with('bg-error', '#d9534f')
+                    ->with('alert-icon', 'fa fa-bolt');
             }
-
-            $target_revenue = TargetRevenue::whereUserId($indentedProposal->user_id)->first();
-            $target_revenue->current_sale = $total_collected;
-            $target_revenue->save();
-
-            $indentedProposal->status = "COMPLETED";
-            $indentedProposal->collection_status = "COMPLETED";
-            $indentedProposal->save();
         }
+    }
+
+    public static function showAcceptedProposal($indentedProposal)
+    {
+        $ctr = 0;
+        $selectedItems = DB::table('indented_proposal_item')
+            ->select('projects.*',
+                DB::raw('wr_crm_projects.name as "project_name"'),
+                DB::raw('wr_crm_projects.model as "project_md"'),
+                DB::raw('wr_crm_projects.serial_number as "project_sn"'),
+                DB::raw('wr_crm_projects.part_number as "project_pn"'),
+                DB::raw('wr_crm_projects.drawing_number as "project_dn"'),
+                DB::raw('wr_crm_projects.tag_number as "project_tn"'),
+                DB::raw('wr_crm_projects.material_number as "project_mn"'),
+                DB::raw('wr_crm_projects.price as "project_price"'),
+                'after_markets.*',
+                DB::raw('wr_crm_after_markets.name as "after_market_name"'),
+                DB::raw('wr_crm_after_markets.model as "after_market_md"'),
+                DB::raw('wr_crm_after_markets.part_number as "after_market_pn"'),
+                DB::raw('wr_crm_after_markets.drawing_number as "after_market_dn"'),
+                DB::raw('wr_crm_after_markets.material_number as "after_market_mn"'),
+                DB::raw('wr_crm_after_markets.material_number as "after_market_sn"'),
+                DB::raw('wr_crm_after_markets.tag_number as "after_market_tn"'),
+                DB::raw('wr_crm_after_markets.price as "after_market_price"'),
+                'indented_proposal_item.*',
+                DB::raw('wr_crm_indented_proposal_item.id as "indented_proposal_item_id"'),
+                DB::raw('wr_crm_indented_proposal_item.quantity as "indented_proposal_item_quantity"'),
+                DB::raw('wr_crm_indented_proposal_item.delivery as "indented_proposal_item_delivery"'),
+                DB::raw('wr_crm_indented_proposal_item.price as "indented_proposal_item_price"'),
+                DB::raw('wr_crm_indented_proposal_item.notify_me_after as "indented_proposal_item_notify_me_after"'))
+            ->leftJoin('projects', function($join) {
+                $join->on('indented_proposal_item.item_id', '=', 'projects.id')
+                    ->where('indented_proposal_item.type', '=', 'projects');
+            })
+            ->leftJoin('after_markets', function($join) {
+                $join->on('indented_proposal_item.item_id', '=', 'after_markets.id')
+                    ->where('indented_proposal_item.type', '=', 'after_markets');
+            })
+            ->where('indented_proposal_item.indented_proposal_id', '=', $indentedProposal->id)->get();
+
+        return view('proposal.assistant.indented_proposal.accepted', compact('ctr', 'selectedItems', 'indentedProposal'));
     }
 }

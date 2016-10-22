@@ -7,25 +7,25 @@
 
                 <div class="sidebar col-lg-2 col-md-3 col-sm-3 col-xs-12 ">
                     <ul id="accordion" class="nav nav-pills nav-stacked sidebar-menu">
-                        <li class="nav-item"><a class="nav-link" style="cursor: pointer;" data-toggle="modal" data-target="#collectionIndentedProposalForm"><i class="fa fa-check"></i>&nbsp; Collect Proposal</a></li>
-                        <li class="nav-item"><a class="nav-link" ><i class="fa fa-close"></i>&nbsp; Decline Proposal</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('index_indented_proposal') }}"><i class="fa fa-arrow-left"></i>&nbsp; Back</a></li>
+                        <li class="nav-item"><a class="nav-link" style="cursor: pointer;" onclick='document.getElementById("AcceptIndentedProposal").submit();'><i class="fa fa-check"></i>&nbsp; Update Proposal</a></li>
+                        <li class="nav-item"><a href="{{ route('admin_export_pending_proposal', $indentedProposal->id) }}" class="nav-link"><i class="fa fa-download"></i>&nbsp; Export to XLSX</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('admin_indented_proposal_index') }}"><i class="fa fa-arrow-left"></i>&nbsp; Back</a></li>
                     </ul>
                 </div>
 
                 <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
-
                     @if(Session::has('message'))
                         <div class="row">
-                            <div class="alert {{ Session::get('alert') }} alert-dismissible" role="alert" style="background-color: {{ Session::get('bg-error') }}; color: white; margin-top: -1.05rem; border-radius: 0px 0px 0px 0px; font-size: 15px; margin-bottom: 1rem;">
-                                <div class="container"><i class="{{ Session::get('alert-icon') }}"></i>&nbsp;&nbsp;{{ Session::get('message') }}
+                            <div class="alert {{ Session::get('alert') }} alert-dismissible" role="alert" style="margin-top: -1.05rem; border-radius: 0px 0px 0px 0px; font-size: 15px; margin-bottom: 1rem;">
+                                <div class="container">&nbsp;&nbsp;{{ Session::get('message') }}
                                     <button type="button" class="close" style="margin-right: 4rem;" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
                             </div>
                         </div>
                     @endif
 
-                    <form class="form-horizontal" action="{{ route('collect_indented_proposal', $indentedProposal->id) }}" method="POST" id="AcceptIndentedProposal" enctype="multipart/form-data">
+                    <form class="form-horizontal" action="{{ route('assistant_update_accepted_proposal', $indentedProposal->id) }}" method="POST" id="AcceptIndentedProposal" enctype="multipart/form-data">
                         {{ csrf_field() }}
+                        {{ method_field('PATCH') }}
 
                         <input type="hidden" name="indent_proposal_id" value="{{ $indentedProposal->id }}">
 
@@ -86,17 +86,21 @@
                                 <table class="table">
                                     <thead>
                                     <th>ITEM NO#</th>
+                                    <th>MATERIAL CODE</th>
                                     <th>DESCRIPTION</th>
                                     <th>QUANTITY</th>
                                     <th>PRICE</th>
                                     <th>DELIVERY</th>
+                                    <th>Notify me Afetr</th>
+                                    <th>ACTIONS</th>
                                     </thead>
 
                                     <tbody>
                                     @foreach($selectedItems as $selectedItem)
                                         <tr>
                                             <td>{{ ++$ctr }}</td>
-                                            <td>
+                                            <td style="width: 13%;">{{ $selectedItem->project_mn != "" ? $selectedItem->project_mn : $selectedItem->after_market_mn }}</td>
+                                            <td style="width: 20%;">
                                                 <b>NAME:&nbsp;</b> {{ $selectedItem->project_name != "" ? $selectedItem->project_name : $selectedItem->after_market_name }}
                                                 <br>
                                                 <b>PN:&nbsp;</b> {{ $selectedItem->project_pn != "" ? $selectedItem->project_pn : $selectedItem->after_market_pn }}
@@ -107,10 +111,43 @@
                                                 <br>
                                                 <b>TAG NO.:&nbsp;</b> {{ $selectedItem->project_tn != "" ? $selectedItem->project_tn : $selectedItem->after_market_tn }}
                                             </td>
-                                            <td><input type="text" disabled class="form-control" name="quantity-{{ $selectedItem->indented_proposal_item_id }}" placeholder="Enter item Quantity" value="{{ $selectedItem->quantity != "" ? $selectedItem->quantity : $selectedItem->after_market_price }}"></td>
-                                            <td><input type="text" disabled placeholder="Enter item price" class="form-control" name="price-{{ $selectedItem->indented_proposal_item_id }}" value="{{ $selectedItem->project_price != "" ? $selectedItem->project_price : $selectedItem->after_market_price }}"></td>
                                             <td>
-                                                <input type="text" disabled class="form-control" name="delivery-{{ $selectedItem->indented_proposal_item_id }}" placeholder="Enter number of Weeks" value="{{ $selectedItem->delivery != "" ? $selectedItem->delivery : $selectedItem->delivery }}">
+                                                <div class="form-group">
+                                                    <div class="col-lg-12">
+                                                        <input type="text" disabled class="form-control" name="quantity-{{ $selectedItem->indented_proposal_item_id }}" placeholder="Enter item Quantity" value="{{ $selectedItem->quantity != "" ? $selectedItem->quantity : $selectedItem->after_market_price }}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <div class="col-lg-12">
+                                                        <input type="text" disabled placeholder="Enter item price" class="form-control" name="price-{{ $selectedItem->indented_proposal_item_id }}" value="{{ $selectedItem->project_price != "" ? $selectedItem->project_price : $selectedItem->after_market_price }}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <div class="col-lg-12">
+                                                        <div class="input-group">
+                                                            <input type="text" disabled class="form-control" name="delivery[{{ $selectedItem->indented_proposal_item_id }}]" placeholder="Enter number of Weeks" value="{{ $selectedItem->delivery != "" ? ($selectedItem->delivery / 7) : ($selectedItem->delivery / 7) }}">
+                                                            <div class="input-group-addon">Weeks</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <div class="col-lg-12">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" name="delivery[{{ $selectedItem->indented_proposal_item_id }}]" value="{{ $selectedItem->delivery != "" ? $selectedItem->notify_me_after : $selectedItem->notify_me_after }}">
+                                                            <div class="input-group-addon">Weeks</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td style="width: 15%;">
+                                                <a href="#" class="btn btn-success btn-sm">Delivered</a>
+                                                <a href="#" class="btn btn-danger btn-sm">Delayed</a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -225,7 +262,7 @@
         </div>
     </div>
 
-    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="collectionIndentedProposalForm">
+    {{--<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="indentedProposalFormConfirmation">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -233,7 +270,7 @@
                     <h4 class="modal-title" id="myModalLabel">You are about to accept this Indented Proposal</h4>
                 </div>
                 <div class="modal-body">
-                    <label for="">Are you sure you want to accept this Proposal?</label>
+                    <label for="">Are you sure you want to accept this Proposal <b>[ Purchase Order Number: {{ $indentedProposal->purchase_order }} ]</b> ?</label>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" onclick='document.getElementById("AcceptIndentedProposal").submit();'>Accept</button>
@@ -241,5 +278,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>--}}
 @stop
