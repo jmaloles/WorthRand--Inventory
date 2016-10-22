@@ -4,6 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use DB;
+use Auth;
+use App\BuyAndSellProposalItem;
+use App\ProjectPricingHistory;
+use App\AfterMarketPricingHistory;
+use App\Project;
+use App\AfterMarket;
 
 class BuyAndSellProposal extends Model
 {
@@ -84,53 +90,90 @@ class BuyAndSellProposal extends Model
         return view('proposal.sales_engineer.buy_and_sell.create', compact('selectedItems', 'ctr','buyAndSellProposal'));
     }
 
-    public static function saveBuyAndSellProposal($request)
+    public static function saveBuyAndSellProposal($createBuyAndSellProposalRequest)
     {
-        // dd($request->all());
-        $buy_and_sell_proposal = BuyAndSellProposal::find($request->get('buy_and_sell_proposal_id'));
-        $buy_and_sell_proposal->purchase_order = $request->get('purchase_order');
-        $buy_and_sell_proposal->wpc_reference = $request->get('wpc_ref');
-        $buy_and_sell_proposal->date = $request->get('date');
-        $buy_and_sell_proposal->sold_to = $request->get('sold');
-        $buy_and_sell_proposal->sold_to_address = $request->get('sold_to_address');
-        $buy_and_sell_proposal->invoice_to = $request->get('invoice_to');
-        $buy_and_sell_proposal->invoice_address = $request->get('invoice_address');
-        $buy_and_sell_proposal->qrc_ref = $request->get('qrc_ref');
-        $buy_and_sell_proposal->validity = $request->get('validity');
-        $buy_and_sell_proposal->payment_terms = $request->get('terms');
+        $buy_and_sell_proposal = BuyAndSellProposal::find($createBuyAndSellProposalRequest->get('buy_and_sell_proposal_id'));
+        $buy_and_sell_proposal->purchase_order = $createBuyAndSellProposalRequest->get('purchase_order');
+        $buy_and_sell_proposal->wpc_reference = $createBuyAndSellProposalRequest->get('wpc_reference');
+        $buy_and_sell_proposal->date = $createBuyAndSellProposalRequest->get('date');
+        $buy_and_sell_proposal->invoice_to = $createBuyAndSellProposalRequest->get('invoice_to');
+        $buy_and_sell_proposal->invoice_address = $createBuyAndSellProposalRequest->get('invoice_address');
+        $buy_and_sell_proposal->qrc_ref = $createBuyAndSellProposalRequest->get('qrc_reference');
+        $buy_and_sell_proposal->validity = $createBuyAndSellProposalRequest->get('validity');
+        $buy_and_sell_proposal->payment_terms = $createBuyAndSellProposalRequest->get('terms');
         $buy_and_sell_proposal->status = "SENT";
+        $buy_and_sell_proposal->collection_status = "PENDING";
+        $buy_and_sell_proposal->user_id = Auth::user()->id;
+        $buy_and_sell_proposal->customer_id = $createBuyAndSellProposalRequest->get('customer_id');
+        $buy_and_sell_proposal->branch_id = $createBuyAndSellProposalRequest->get('branch_id');
 
         if($buy_and_sell_proposal->save()) {
-            foreach($request->all() as $key => $value) {
-                if(strpos($key, 'delivery') !== FALSE) {
-                    $delivery = explode('-', $key);
-                    $buy_and_sell_proposal_item_id = $delivery[1];
-
-                    $buy_and_sell_proposal_item = BuyAndSellProposalItem::find($buy_and_sell_proposal_item_id);
-                    $buy_and_sell_proposal_item->delivery = $value;
-                    $buy_and_sell_proposal_item->save();
+            foreach($createBuyAndSellProposalRequest->all() as $key => $value) {
+                if(strpos($key, 'quantity') !== FALSE)  {
+                    foreach($value as $buy_and_sell_proposal_id => $quantity_value) {
+                        $buy_and_sell_proposal_item = BuyAndSellProposalItem::find($buy_and_sell_proposal_id);
+                        $buy_and_sell_proposal_item->quantity = $quantity_value;
+                        $buy_and_sell_proposal_item->save();
+                    }
                 }
-            }
 
-            foreach($request->all() as $key => $value) {
-                if(strpos($key, 'quantity') !== FALSE) {
-                    $delivery = explode('-', $key);
-                    $buy_and_sell_proposal_item_id = $delivery[1];
-
-                    $buy_and_sell_proposal_item_id = BuyAndSellProposalItem::find($buy_and_sell_proposal_item_id);
-                    $buy_and_sell_proposal_item_id->quantity = $value;
-                    $buy_and_sell_proposal_item_id->save();
-                }
-            }
-
-            foreach($request->all() as $key => $value) {
                 if(strpos($key, 'price') !== FALSE) {
-                    $delivery = explode('-', $key);
-                    $buy_and_sell_proposal_item_id = $delivery[1];
+                    foreach($value as $buy_and_sell_proposal_id => $price) {
+                        $buy_and_sell_proposal_item = BuyAndSellProposalItem::find($buy_and_sell_proposal_id);
+                        $buy_and_sell_proposal_item->price = $price;
+                        $buy_and_sell_proposal_item->save();
+                    }
+                }
 
-                    $buy_and_sell_proposal_item = BuyAndSellProposalItem::find($buy_and_sell_proposal_item_id);
-                    $buy_and_sell_proposal_item->price = $value;
-                    $buy_and_sell_proposal_item->save();
+                if(strpos($key, 'delivery') !== FALSE) {
+                    foreach($value as $buy_and_sell_proposal_id => $delivery) {
+                        $buy_and_sell_proposal_item = BuyAndSellProposalItem::find($buy_and_sell_proposal_id);
+                        $buy_and_sell_proposal_item->delivery = $delivery * 7;
+                        $buy_and_sell_proposal_item->save();
+                    }
+                }
+            }
+
+            $buy_and_sell_proposal_items = BuyAndSellProposalItem::where('buy_and_sell_proposal_id', $buy_and_sell_proposal->id)->get();
+
+            foreach($buy_and_sell_proposal_items as $buyAndSellProposalItem) {
+                $buyAndSellProposalItem->status = "PROCESSING";
+                $buyAndSellProposalItem->save();
+
+                if($buyAndSellProposalItem->save()) {
+                    if($buyAndSellProposalItem->type == "projects") {
+                        $project_pricing_history = new ProjectPricingHistory();
+                        $project_pricing_history->project_id = $buyAndSellProposalItem->item_id;
+                        $project_pricing_history->price = $buyAndSellProposalItem->price;
+                        $project_pricing_history->pricing_date = date('Y');
+                        $project_pricing_history->terms = $buy_and_sell_proposal->payment_terms;
+                        $project_pricing_history->delivery = "TEST DELIVERY";
+                        $project_pricing_history->fpd_reference = "TEST_FPD_REFERENCE";
+                        $project_pricing_history->wpc_reference = "TEST_WPC_REFERENCE";
+                        $project_pricing_history->po_number = $buy_and_sell_proposal->purchase_order;
+
+                        if($project_pricing_history->save()) {
+                            $project = Project::find($project_pricing_history->project_id);
+                            $project->price = $project_pricing_history->price;
+                            $project->save();
+                        }
+                    } else if($buyAndSellProposalItem->type == "after_markets") {
+                        $after_marketpricing_history = new AfterMarketPricingHistory();
+                        $after_marketpricing_history->after_market_id = $buyAndSellProposalItem->item_id;
+                        $after_marketpricing_history->price = $buyAndSellProposalItem->price;
+                        $after_marketpricing_history->pricing_date = date('Y');
+                        $after_marketpricing_history->terms = $buy_and_sell_proposal->payment_terms;
+                        $after_marketpricing_history->delivery = "TEST DELIVERY";
+                        $after_marketpricing_history->fpd_reference = "TEST_FPD_REFERENCE";
+                        $after_marketpricing_history->wpc_reference = "TEST_WPC_REFERENCE";
+                        $after_marketpricing_history->po_number = $buy_and_sell_proposal->purchase_order;
+
+                        if($after_marketpricing_history->save()) {
+                            $aftermarket = AfterMarket::find($after_marketpricing_history->after_market_id);
+                            $aftermarket->price = $after_marketpricing_history->price;
+                            $aftermarket->save();
+                        }
+                    }
                 }
             }
 

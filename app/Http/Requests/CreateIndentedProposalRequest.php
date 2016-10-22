@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-
 class CreateIndentedProposalRequest extends Request
 {
     /**
@@ -25,9 +24,10 @@ class CreateIndentedProposalRequest extends Request
     public function rules()
     {
         return [
+            'indent_proposal_id' => 'required',
             'purchase_order'    => 'required|unique:indented_proposals,purchase_order',
-            'customer_id'       => 'required',
-            'branch_id'         => 'required',
+            'customer_id'       => 'required|exists:customers,id',
+            'branch_id'         => 'required|exists:branches,id',
             'invoice'           => 'required',
             'invoice_address'   => 'required',
             'ship_to'           => 'required',
@@ -35,7 +35,6 @@ class CreateIndentedProposalRequest extends Request
             'quantity.*'        => 'required',
             'price.*'           => 'required',
             'delivery.*'        => 'required',
-            'special_instruction' => 'required',
             'ship_via'          => 'required',
             'amount'            => 'required',
             'packing'           => 'required',
@@ -58,8 +57,9 @@ class CreateIndentedProposalRequest extends Request
     public function messages()
     {
         return [
-            'customer_id.required' => 'The customer you entered is not in our database. Please provided legal customer',
-            'branch_id. required' => 'The branch you entered is not in our database. Please provided legal branch'
+            'customer_id.required' => 'Please provide a legal Customer',
+            'branch_id.required' => 'Please provide a legal Branch',
+            'terms_of_payment_1.required' => 'The terms of payment note field is required'
         ];
     }
 }

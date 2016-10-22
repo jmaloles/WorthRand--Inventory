@@ -65,6 +65,7 @@ class User extends Authenticatable
         $indented_proposals = IndentedProposal::where('status', 'SENT')->paginate(30);
         $indented_proposals->setPath('dashboard');
 
+        $ctr2 = 0;
         $buy_and_sell_proposals = BuyAndSellProposal::where('status', 'SENT')->paginate(30);
         $buy_and_sell_proposals->setPath('dashboard');
 
@@ -115,6 +116,6 @@ class User extends Authenticatable
                 )
             );
 
-        return view('auth.admin.dashboard', compact('target_chart', 'lava', 'indented_proposals', 'buy_and_sell_proposals','ctr'));
+        return view('auth.admin.dashboard', compact('target_chart', 'lava', 'indented_proposals', 'buy_and_sell_proposals', 'ctr', 'ctr2'));
     }
 }

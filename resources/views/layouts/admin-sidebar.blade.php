@@ -2,7 +2,7 @@
     <ul id="accordion" class="nav nav-pills nav-stacked  sidebar-menu">
         <li class="nav-item {{ Request::route()->getName() == 'admin_dashboard' ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin_dashboard') }}" class="nav-link"><i class="fa fa-tachometer"></i>&nbsp; Dashboard</a></li>
         <li>
-            <li class="nav-item {{ Request::route()->getName() == 'admin_user_index' ? 'active' : '' }}"><a class="nav-link"><i class="fa fa-user"></i>&nbsp; Users</a>
+            <li class="nav-item {{ Request::route()->getName() == 'admin_user_index' ? 'active' : '' }}"><a class="nav-link" href="#"><i class="fa fa-user"></i>&nbsp; Users</a>
                 <ul class="sub">
                     <li><a href="{{ route('admin_user_index') }}"><i class="fa fa-users"></i>&nbsp;Users List</a></li>
                 </ul>

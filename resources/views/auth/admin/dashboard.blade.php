@@ -32,7 +32,11 @@
 
                     <div class="row">
                         <div class="col-lg-12">
+                            <div class="page-header">
+                                <h1>Indented Proposals</h1>
+                            </div>
                             <div class="col-lg-12">
+                                @if(count($indented_proposals) != 0)
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>
@@ -47,19 +51,21 @@
                                         <tbody>
                                         @foreach($indented_proposals as $indented_proposal)
                                             <tr class="
-                                                @if($indented_proposal->collection_status == "PENDING")
-                                                    bg-warning
-                                                @elseif($indented_proposal->collection_status == "DECLINED" || $indented_proposal->collection_status == "DELAYED")
-                                                    bg-danger
-                                                @else
-                                                    bg-success
-                                                @endif
+
                                             ">
                                                 <td>{{ ((($indented_proposals->currentPage() - 1) * $indented_proposals->perPage()) + ($ctr++) + 1) }}</td>
                                                 <td>{{ $indented_proposal->purchase_order }}</td>
                                                 <td>{{ $indented_proposal->customer->name }}</td>
                                                 <td>{{ $indented_proposal->branch->name }}</td>
-                                                <td>{{ $indented_proposal->collection_status }}</td>
+                                                <td>
+                                                    @if($indented_proposal->collection_status == "PENDING")
+                                                        <span style="font-size: 12px;" class="label label-warning">{{ $indented_proposal->collection_status }}</span>
+                                                    @elseif($indented_proposal->collection_status == "DECLINED" || $indented_proposal->collection_status == "DELAYED")
+                                                        <span style="font-size: 12px;" class="label label-danger">{{ $indented_proposal->collection_status }}</span>
+                                                    @else
+                                                        <span style="font-size: 12px;" class="label label-success">{{ $indented_proposal->collection_status }}</span>
+                                                    @endif
+                                                </td>
                                                 <td class="text-right">
                                                     <a href="{{ route('admin_show_pending_proposal', $indented_proposal->id) }}" class="btn btn-sm btn-primary">View Proposal</a>
                                                 </td>
@@ -68,13 +74,24 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                @else
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="alert alert-danger" role="alert" style="background-color: #d9534f; border-color: #b52b27; color: white;">You Have 0 Records For Indented Proposals.</div>
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-lg-12">
+                            <div class="page-header">
+                                <h1>Buy & Sell Proposals</h1>
+                            </div>
                             <div class="col-lg-12">
+                                @if(count($buy_and_sell_proposals) != 0)
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>
@@ -88,20 +105,20 @@
 
                                         <tbody>
                                         @foreach($buy_and_sell_proposals as $buy_and_sell_proposal)
-                                            <tr class="
-                                               @if($buy_and_sell_proposal->collection_status == "PENDING")
-                                                    bg-warning
-                                                @elseif($buy_and_sell_proposal->collection_status == "DECLINED" || $buy_and_sell_proposal->collection_status == "DELAYED")
-                                                    bg-danger
-                                                @else
-                                                    bg-success
-                                                @endif
-                                                    ">
-                                                <td>{{ ((($buy_and_sell_proposals->currentPage() - 1) * $buy_and_sell_proposals->perPage()) + ($ctr++) + 1) }}</td>
+                                            <tr>
+                                                <td>{{ ((($buy_and_sell_proposals->currentPage() - 1) * $buy_and_sell_proposals->perPage()) + ($ctr2++) + 1) }}</td>
                                                 <td>{{ $buy_and_sell_proposal->purchase_order }}</td>
                                                 <td>{{ $buy_and_sell_proposal->customer->name }}</td>
                                                 <td>{{ $buy_and_sell_proposal->branch->name }}</td>
-                                                <td>{{ $buy_and_sell_proposal->collection_status }}</td>
+                                                <td>
+                                                    @if($buy_and_sell_proposal->collection_status == "PENDING")
+                                                        <span style="font-size: 12px;" class="label label-warning">{{ $buy_and_sell_proposal->collection_status }}</span>
+                                                    @elseif($buy_and_sell_proposal->collection_status == "DECLINED" || $buy_and_sell_proposal->collection_status == "DELAYED")
+                                                        <span style="font-size: 12px;" class="label label-danger">{{ $buy_and_sell_proposal->collection_status }}</span>
+                                                    @else
+                                                        <span style="font-size: 12px;" class="label label-success">{{ $buy_and_sell_proposal->collection_status }}</span>
+                                                    @endif
+                                                </td>
                                                 <td class="text-right">
                                                     <a href="{{ route('admin_show_pending_buy_and_sell_proposal', $buy_and_sell_proposal->id) }}" class="btn btn-sm btn-primary">View Proposal</a>
                                                 </td>
@@ -110,6 +127,13 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                @else
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="alert alert-danger" role="alert" style="background-color: #d9534f; border-color: #b52b27; color: white;">You Have 0 Records For Buy & Sell Proposals.</div>
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
