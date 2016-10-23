@@ -25,6 +25,11 @@ class IndentedProposal extends Model
         return $this->belongsTo(Branch::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public static function salesEngineerPostCreateIndentedProposal($request)
     {
         if(trim($request->get('array_id')) == "") {
@@ -318,6 +323,12 @@ class IndentedProposal extends Model
                 $indentedProposal->status = "COMPLETED";
                 $indentedProposal->collection_status = "COMPLETED";
                 $indentedProposal->save();
+
+                return redirect()->back()
+                    ->with('message', 'Collected amount was added to [ ' . ucwords($user->name, " ") . ' ] \'s Target Revenue .')
+                    ->with('alert', "alert-success")
+                    ->with('bg-success', '#5cb85c')
+                    ->with('alert-icon', 'fa fa-check');
             } else {
                 return redirect()->back()
                     ->with('message', ucwords($user->name, " ") . '\'s Target Revenue has not been set. Please inform the Administration.')

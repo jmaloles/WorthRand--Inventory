@@ -6,11 +6,14 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\User;
 
 class UserController extends Controller
 {
     public function dashboard()
     {
-        return view('auth.sales_engineer.dashboard');
+        $se_dashboard = User::salesEngineerDashboard();
+
+        return $se_dashboard;
     }
 }

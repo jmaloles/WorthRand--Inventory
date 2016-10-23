@@ -37,6 +37,7 @@
                             </div>
                             <div class="col-lg-12">
                                 @if(count($indented_proposals) != 0)
+
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>
@@ -44,6 +45,7 @@
                                             <th>Purchase Order</th>
                                             <th>To</th>
                                             <th>Sold To</th>
+                                            <th>Submitted By:</th>
                                             <th>Status</th>
                                             <th class="text-right">Actions</th>
                                         </thead>
@@ -57,6 +59,7 @@
                                                 <td>{{ $indented_proposal->purchase_order }}</td>
                                                 <td>{{ $indented_proposal->customer->name }}</td>
                                                 <td>{{ $indented_proposal->branch->name }}</td>
+                                                <td>{{ $indented_proposal->user->name }}</td>
                                                 <td>
                                                     @if($indented_proposal->collection_status == "PENDING")
                                                         <span style="font-size: 12px;" class="label label-warning">{{ $indented_proposal->collection_status }}</span>
@@ -74,6 +77,7 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                {{ $indented_proposals->links() }}
                                 @else
                                     <div class="row">
                                         <div class="col-lg-12">
@@ -99,6 +103,7 @@
                                         <th>Purchase Order</th>
                                         <th>To</th>
                                         <th>Sold To</th>
+                                        <th>Submitted By:</th>
                                         <th>Status</th>
                                         <th class="text-right">Actions</th>
                                         </thead>
@@ -110,6 +115,7 @@
                                                 <td>{{ $buy_and_sell_proposal->purchase_order }}</td>
                                                 <td>{{ $buy_and_sell_proposal->customer->name }}</td>
                                                 <td>{{ $buy_and_sell_proposal->branch->name }}</td>
+                                                <td>{{ $buy_and_sell_proposal->user->name }}</td>
                                                 <td>
                                                     @if($buy_and_sell_proposal->collection_status == "PENDING")
                                                         <span style="font-size: 12px;" class="label label-warning">{{ $buy_and_sell_proposal->collection_status }}</span>
@@ -127,6 +133,7 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                {{ $buy_and_sell_proposals->links() }}
                                 @else
                                     <div class="row">
                                         <div class="col-lg-12">

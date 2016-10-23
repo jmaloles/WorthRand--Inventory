@@ -13,6 +13,8 @@ use App\AfterMarket;
 
 class BuyAndSellProposal extends Model
 {
+    protected $fillable = ['collection_status'];
+
     public function customer()
     {
         return $this->belongsTo(Customer::class);
@@ -21,6 +23,11 @@ class BuyAndSellProposal extends Model
     public function branch()
     {
         return $this->belongsTo(Branch::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public static function salesEngineerPostCreateBuyAndSellProposal($request)
@@ -87,7 +94,7 @@ class BuyAndSellProposal extends Model
             })
             ->where('buy_and_sell_proposal_item.buy_and_sell_proposal_id', '=', $buyAndSellProposal->id)->get();
 
-        return view('proposal.sales_engineer.buy_and_sell.create', compact('selectedItems', 'ctr','buyAndSellProposal'));
+        return view('proposal.admin.buy_and_sell_proposal.pending', compact('selectedItems', 'ctr','buyAndSellProposal'));
     }
 
     public static function saveBuyAndSellProposal($createBuyAndSellProposalRequest)

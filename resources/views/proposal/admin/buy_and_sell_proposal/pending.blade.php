@@ -7,62 +7,106 @@
 
                 <div class="sidebar col-lg-2 col-md-3 col-sm-3 col-xs-12 ">
                     <ul id="accordion" class="nav nav-pills nav-stacked sidebar-menu">
-                        <li class="nav-item"><a class="nav-link" style="cursor: pointer;" data-toggle="modal" data-target="#indentedProposalFormConfirmation"><i class="fa fa-check"></i>&nbsp; Accept Proposal</a></li>
-                        <li class="nav-item"><a class="nav-link" ><i class="fa fa-close"></i>&nbsp; Decline Proposal</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('admin_indented_proposal_index') }}"><i class="fa fa-arrow-left"></i>&nbsp; Back</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#accept_proposal" onclick='document.getElementById("AcceptBuyAndSellProposal").submit();'><i class="fa fa-paper-plane"></i>&nbsp; Accept Proposal</a></li>
+
+                        <li class="nav-item"><a class="nav-link"  href="{{ route('admin_dashboard') }}"><i class="fa fa-arrow-left"></i>&nbsp; Back</a></li>
                     </ul>
                 </div>
 
                 <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
-                    <form class="form-horizontal" action="{{ route('admin_accept_indented_proposal', $indented_proposal->id) }}" method="POST" id="AcceptIndentedProposal" enctype="multipart/form-data">
+                    @if(Session::has('message'))
+                        <div class="row">
+                            <div class="alert {{ Session::get('alert') }} alert-dismissible" role="alert" style="margin-top: -1.05rem; border-radius: 0px 0px 0px 0px; font-size: 15px; margin-bottom: 1rem;
+                                color: white;
+                                background-color: #5cb85c;
+                                border-color: #3d8b3d;">
+                                <div class="container"><i class="fa fa-check"></i> &nbsp;{{ Session::get('message') }}
+                                    <button type="button" class="close" style="margin-right: 4rem;" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+                            </div>
+                        </div>
+                    @endif
+
+                    <form class="form-horizontal" action="{{ route('admin_accept_buy_and_sell_proposal', $buyAndSellProposal->id) }}" method="POST" id="AcceptBuyAndSellProposal">
                         {{ csrf_field() }}
                         {{ method_field('PATCH') }}
 
-                        <input type="hidden" name="indent_proposal_id" value="{{ $indented_proposal->id }}">
+                        <input type="hidden" name="buyAndSellProposal_id" value="{{ $buyAndSellProposal->id }}">
+                        <input type="hidden" name="customer_id" id="customer_id">
+                        <input type="hidden" name="branch_id" id="branch_id">
 
                         <div class="row">
                             <div class="col-lg-12 col-lg-pull-1">
                                 <div class="form-group">
                                     <label for="purchase_order" class="col-sm-2 control-label">P.O: </label>
                                     <div class="col-sm-5">
-                                        <input class="form-control" disabled id="purchase_order" name="purchase_order" placeholder="Purchase Order Number"
-                                               value="{{ $indented_proposal->purchase_order != '' ? $indented_proposal->purchase_order : '' }}">
+                                        <input disabled class="form-control" id="purchase_order" name="purchase_order" placeholder="Purchase Order Number" value="{{ $buyAndSellProposal->purchase_order }}">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="wpc_reference" class="col-sm-2 control-label">WPC REFERENCE</label>
+                                    <div class="col-sm-5">
+                                        <input disabled class="form-control" id="wpc_reference" name="wpc_reference" placeholder="WPC Reference" value="{{ $buyAndSellProposal->wpc_reference }}">
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="OfficeSold" class="col-sm-2 control-label">Date</label>
+                                    <div class="col-sm-5">
+                                        <input disabled name="date" class="form-control" id="Date" placeholder="Date" value="{{ $buyAndSellProposal->date }}">
+
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="main_company" class="col-sm-2 control-label">To: </label>
                                     <div class="col-sm-5">
-                                        <input class="form-control" disabled id="main_company" name="to" placeholder="To" value="{{ $indented_proposal->customer->name }}">
-                                        <br>
-                                        <textarea disabled name="to_address" id="" class="form-control" placeholder="Address">{{ $indented_proposal->customer->address }}</textarea>
+                                        <input disabled name="to" id="customer_dropdown" class="form-control" value="{{ $buyAndSellProposal->customer->name }}"/>
+
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="OfficeSold" class="col-sm-2 control-label">Sold To:</label>
-                                    <div class="col-sm-5">
-                                        <input name="sold_to" class="form-control" id="OfficeSold" placeholder="Sold To" value="{{ $indented_proposal->branch->name }}" disabled>
-                                        <br>
-                                        <textarea disabled name="sold_to_address" class="form-control" placeholder="Address">{{ $indented_proposal->branch->address }}</textarea>
+                                    <div class="col-sm-5 col-lg-push-2">
+                                        <textarea disabled name="to_address" id="to_address" class="form-control" placeholder="Address">{{ $buyAndSellProposal->customer->address }}</textarea>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="inputInvoice" class="col-sm-2 control-label">Invoice To:</label>
+                                    <label for="branch_field" class="col-sm-2 control-label">Sold To:</label>
                                     <div class="col-sm-5">
-                                        <input class="form-control" disabled id="inputInvoice" name="invoice" placeholder="Enter Invoice" value="{{ $indented_proposal->invoice_to != '' ? $indented_proposal->invoice_to : '' }}">
-                                        <br>
-                                        <textarea disabled name="invoice_address" id="" class="form-control" placeholder="Invoice Address">{{ $indented_proposal->invoice_to_address != '' ? $indented_proposal->invoice_to_address : '' }}</textarea>
+                                        <input disabled class="form-control" id="branch_field" name="sold" placeholder="Sold To" value="{{ $buyAndSellProposal->branch->name }}">
+
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="ShitpTo" class="col-sm-2 control-label">Ship To:</label>
+                                    <div class="col-sm-5 col-lg-push-2">
+                                        <textarea disabled name="sold_to_address" id="sold_to_address" class="form-control" placeholder="Address">{{ $buyAndSellProposal->branch->address }}</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="ShitpTo" class="col-sm-2 control-label">Invoice To:</label>
                                     <div class="col-sm-5">
-                                        <input name="ship_to" disabled class="form-control" id="ShitpTo" placeholder="Ship To" value="{{ $indented_proposal->ship_to != '' ? $indented_proposal->ship_to : '' }}">
-                                        <br>
-                                        <textarea disabled name="ship_to_address" id="" class="form-control" placeholder="Ship To Address">{{ $indented_proposal->ship_to_address != '' ? $indented_proposal->ship_to_address : '' }}</textarea>
+                                        <input disabled name="invoice_to" class="form-control" id="InvoiceTo" placeholder="Invoice To" value="{{ $buyAndSellProposal->invoice_to }}">
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-5 col-lg-push-2">
+                                        <textarea disabled name="invoice_address" id=invoice_address"" class="form-control" placeholder="Invoice Address">{{ $buyAndSellProposal->invoice_address }}</textarea>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="qrc_reference" class="col-sm-2 control-label">QRC REFERENCE</label>
+                                    <div class="col-sm-5">
+                                        <input disabled class="form-control" id="qrc_reference" name="qrc_reference" placeholder="QRC Reference" value="{{ $buyAndSellProposal->qrc_ref }}">
+
                                     </div>
                                 </div>
                             </div>
@@ -98,10 +142,32 @@
                                                 <br>
                                                 <b>TAG NO.:&nbsp;</b> {{ $selectedItem->project_tn != "" ? $selectedItem->project_tn : $selectedItem->after_market_tn }}
                                             </td>
-                                            <td><input type="text" disabled class="form-control" name="quantity-{{ $selectedItem->indented_proposal_item_id }}" placeholder="Enter item Quantity" value="{{ $selectedItem->quantity != "" ? $selectedItem->quantity : $selectedItem->after_market_price }}"></td>
-                                            <td><input type="text" disabled placeholder="Enter item price" class="form-control" name="price-{{ $selectedItem->indented_proposal_item_id }}" value="{{ $selectedItem->project_price != "" ? $selectedItem->project_price : $selectedItem->after_market_price }}"></td>
                                             <td>
-                                                <input type="text" disabled class="form-control" name="delivery-{{ $selectedItem->indented_proposal_item_id }}" placeholder="Enter number of Weeks" value="{{ $selectedItem->delivery != "" ? $selectedItem->delivery : $selectedItem->delivery }}">
+                                                <div class="form-group">
+                                                    <div class="col-lg-12">
+                                                        <input disabled type="text" class="form-control" name="quantity[{{ $selectedItem->buy_and_sell_proposal_item_id }}]" value="{{ $selectedItem->quantity }}" placeholder="Enter item Quantity">
+
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <div class="col-lg-12">
+                                                        <input disabled type="text" placeholder="Enter item price" class="form-control" name="price[{{ $selectedItem->buy_and_sell_proposal_item_id }}]" value="{{ $selectedItem->project_price != "" ? $selectedItem->project_price : $selectedItem->after_market_price }}">
+
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <div class="col-lg-12">
+                                                        <div class="input-group">
+                                                            <input disabled type="text" class="form-control" name="delivery[{{ $selectedItem->buy_and_sell_proposal_item_id }}]" placeholder="Enter number of Weeks" value="{{ $selectedItem->delivery }}">
+                                                            <div class="input-group-addon">Weeks</div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -114,121 +180,26 @@
                             <hr>
                         </div>
 
-                        <div class="form-group" style="font-size: 16px;">
-                            <label for="exampleInputFile">File input</label>
-                            <br>
-                            <input type="file" id="exampleInputFile" name="fileField">
-                            <p class="help-block">Upload File Here</p>
-                        </div>
-
-                        <div class="row">
-                            <hr>
-                        </div>
-
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label for="InputSpecialInstruction" class="col-sm-2 control-label"><b><i>SPECIAL INSTRUCTION</i></b>: </label>
+                                    <label for="InputSpecialInstruction" class="col-sm-2 control-label"><b><i>Validity:</i></b> </label>
                                     <div class="col-sm-5">
-                                        <textarea disabled name="special_instruction" id="InputSpecialInstruction" class="form-control" placeholder="Special Instruction">{{ $indented_proposal->special_instructions != '' ? $indented_proposal->special_instructions : '' }}</textarea>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="InputShipVia" class="col-sm-2 control-label">SHIP VIA:</label>
-                                    <div class="col-sm-5">
-                                        <input name="ship_via" class="form-control" id="InputShipVia" disabled placeholder="Ship via" value="{{ $indented_proposal->ship_via != '' ? $indented_proposal->ship_via : '' }}">
+                                        <input disabled name="validity" id="InputValidity" class="form-control" placeholder="Validity" value="{{ $buyAndSellProposal->validity }}"/>
 
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="InputAmount" class="col-sm-2 control-label">AMOUNT:</label>
+                                    <label for="InputAmount" class="col-sm-2 control-label">Payment Terms:</label>
                                     <div class="col-sm-5">
-                                        <input class="form-control" disabled id="InputAmount" name="amount" placeholder="Amount" value="{{ $indented_proposal->amount != '' ? $indented_proposal->amount : '' }}">
+                                        <input disabled class="form-control" id="InputPaymentTerms" name="terms" placeholder="Payment Terms" value="{{ $buyAndSellProposal->payment_terms }}">
+
                                     </div>
                                 </div>
-
-                                <div class="form-group">
-                                    <label for="InputPacking" class="col-sm-2 control-label">PACKING:</label>
-                                    <div class="col-sm-5">
-                                        <textarea disabled name="packing" id="InputPacking" class="form-control" placeholder="Packing" >{{ $indented_proposal->packing != '' ? $indented_proposal->packing : '' }}</textarea>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="InputDocuments" class="col-sm-2 control-label">DOCUMENTS:</label>
-                                    <div class="col-sm-5">
-                                        <textarea disabled name="documents" id="InputDocuments" class="form-control" placeholder="Documents">{{ $indented_proposal->documents != '' ? $indented_proposal->documents : '' }}</textarea>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="InputInsurance" class="col-sm-2 control-label">INSURANCE:</label>
-                                    <div class="col-sm-5">
-                                        <input class="form-control" disabled id="InputInsurance" name="insurance" placeholder="Insurance"  value="{{ $indented_proposal->insurance != '' ? $indented_proposal->insurance : '' }}">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="InputTermsOfPayment" class="col-sm-2 control-label">TERMS OF PAYMENT: </label>
-                                    <div class="col-sm-5">
-                                        <input class="form-control" disabled id="InputTermsOfPayment" name="terms_of_payment_1" placeholder="Note"  value="{{ $indented_proposal->terms_of_payment_1 != '' ? $indented_proposal->terms_of_payment_1 : '' }}">
-                                        <br>
-                                        <textarea disabled name="terms_of_payment_address" id="InputTermsOfPayment2" class="form-control" placeholder="Address">{{ $indented_proposal->terms_of_payment_address != '' ? $indented_proposal->terms_of_payment_address : '' }}</textarea>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="InputBankDetailName" class="col-sm-2 control-label">BANK DETAILS: </label>
-                                    <div class="col-sm-5">
-                                        <input class="form-control" disabled id="InputBankDetailName" name="bank_detail_owner" placeholder="Bank Details"  value="{{ $indented_proposal->bank_detail_owner != '' ? $indented_proposal->bank_detail_owner : '' }}">
-                                        <br>
-                                        <textarea disabled name="bank_detail_address" id="" class="form-control" placeholder="Bank Details Address">{{ $indented_proposal->bank_detail_address != '' ? $indented_proposal->bank_detail_address : '' }}</textarea>
-                                        <br>
-                                        <input class="form-control" disabled id="InputBankDetailName" name="bank_detail_account_number" placeholder="Account Number"  value="{{ $indented_proposal->bank_detail_account_no != '' ? $indented_proposal->bank_detail_account_no : '' }}">
-                                        <br>
-                                        <input class="form-control" disabled id="InputBankDetailName" name="bank_detail_swift_code" placeholder="Swift Code"  value="{{ $indented_proposal->bank_detail_swift_code != '' ? $indented_proposal->bank_detail_swift_code : '' }}">
-                                        <br>
-                                        <input class="form-control" disabled id="InputBankDetailName" name="bank_detail_account_name" placeholder="Bank Account Name"  value="{{ $indented_proposal->bank_detail_account_name != '' ? $indented_proposal->bank_detail_account_name : '' }}">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="InputBankDetailName" class="col-sm-2 control-label">COMMISSION: </label>
-                                    <div class="col-sm-5">
-                                        <input class="form-control" disabled id="InputBankDetailName" name="commission_note" placeholder="Commission Details"  value="{{ $indented_proposal->commission_note != '' ? $indented_proposal->commission_note : '' }}">
-                                        <br>
-                                        <textarea disabled name="commission_address" id="" class="form-control" placeholder="Commission Address" >{{ $indented_proposal->commission_address != '' ? $indented_proposal->commission_address : '' }}</textarea>
-                                        <br>
-                                        <input class="form-control" disabled id="InputBankDetailName" name="commission_account_number" placeholder="Commission Account Number"  value="{{ $indented_proposal->commission_account_number != '' ? $indented_proposal->commission_account_number : '' }}">
-                                        <br>
-                                        <input class="form-control" disabled id="InputBankDetailName" name="commission_swift_code" placeholder="Commission Swift Code"  value="{{ $indented_proposal->commission_swift_code != '' ? $indented_proposal->commission_swift_code : '' }}">
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
                     </form>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="indentedProposalFormConfirmation">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">You are about to accept this Indented Proposal</h4>
-                </div>
-                <div class="modal-body">
-                    <label for="">Are you sure you want to accept this Proposal?</label>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick='document.getElementById("AcceptIndentedProposal").submit();'>Accept</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>
