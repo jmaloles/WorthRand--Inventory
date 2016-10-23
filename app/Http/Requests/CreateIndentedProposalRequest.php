@@ -24,19 +24,17 @@ class CreateIndentedProposalRequest extends Request
     public function rules()
     {
         return [
+            'indent_proposal_id' => 'required',
             'purchase_order'    => 'required|unique:indented_proposals,purchase_order',
-            'to'                => 'required',
-            'to_address'        => 'required',
-            'sold_to'           => 'required',
-            'sold_to_address'   => 'required',
+            'customer_id'       => 'required|exists:customers,id',
+            'branch_id'         => 'required|exists:branches,id',
             'invoice'           => 'required',
             'invoice_address'   => 'required',
             'ship_to'           => 'required',
             'ship_to_address'   => 'required',
-            'quantity.*.name'   => 'required',
+            'quantity.*'        => 'required',
             'price.*'           => 'required',
             'delivery.*'        => 'required',
-            'special_instruction' => 'required',
             'ship_via'          => 'required',
             'amount'            => 'required',
             'packing'           => 'required',
@@ -53,7 +51,15 @@ class CreateIndentedProposalRequest extends Request
             'commission_address' => 'required',
             'commission_account_number' => 'required',
             'commission_swift_code' => 'required'
+        ];
+    }
 
+    public function messages()
+    {
+        return [
+            'customer_id.required' => 'Please provide a legal Customer',
+            'branch_id.required' => 'Please provide a legal Branch',
+            'terms_of_payment_1.required' => 'The terms of payment note field is required'
         ];
     }
 }

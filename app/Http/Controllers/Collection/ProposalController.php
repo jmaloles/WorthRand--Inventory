@@ -25,7 +25,7 @@ class ProposalController extends Controller
 
     public function forCollection(IndentedProposal $indentedProposal)
     {
-        if($indentedProposal->collection_status == "FOR-COLLECTION") {
+        if($indentedProposal->collection_status != "FOR-COLLECTION") {
             $ctr = 0;
             $selectedItems = DB::table('indented_proposal_item')
                 ->select('projects.*',

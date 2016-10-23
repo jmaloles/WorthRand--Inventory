@@ -9,9 +9,12 @@ class IndentedProposalItem extends Model
     //
     protected $table = 'indented_proposal_item';
 
+    protected $fillable =
+        ['quantity', 'price', 'delivery'];
+
     public function project()
     {
-        return $this->belongsTo(Project::class);
+        return $this->belongsTo(Project::class, 'item_id');
     }
 
 

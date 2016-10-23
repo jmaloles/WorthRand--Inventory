@@ -25,6 +25,7 @@
                     </div>
                     <br>
 
+                    @if(count($projects) != 0)
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="table-responsive">
@@ -61,6 +62,13 @@
                             </div>
                         </div>
                     </div>
+                    @else
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="alert alert-danger" role="alert" style="background-color: #d9534f; border-color: #b52b27; color: white;">You have 0 records for Projects.</div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

@@ -10,6 +10,9 @@ use App\Http\Controllers\Controller;
 use App\IndentedProposal;
 use App\Http\Requests\CreateIndentedProposalRequest;
 use App\IndentedProposalItem;
+use App\BuyAndSellProposal;
+use App\BuyAndSellProposalItem;
+use App\Http\Requests\CreateBuyAndSellProposalRequest;
 
 class ProposalController extends Controller
 {
@@ -21,9 +24,9 @@ class ProposalController extends Controller
         return $create_indented_proposal;
     }
 
-    public function salesEngineerSubmitIndentedProposal(Request $request)
+    public function salesEngineerSubmitIndentedProposal(CreateIndentedProposalRequest $createIndentedProposalRequest)
     {
-       $saveIndentedProposal = IndentedProposal::saveIndentedProposal($request);
+       $saveIndentedProposal = IndentedProposal::saveIndentedProposal($createIndentedProposalRequest);
 
        return $saveIndentedProposal;
     }
@@ -33,5 +36,26 @@ class ProposalController extends Controller
         $view_selected_items = IndentedProposal::showSentIndentedProposal($indentedProposal);
 
         return $view_selected_items;
+    }
+
+    public function salesEngineerPostCreateBuyAndSellProposal(Request $request)
+    {
+        $create_buy_and_sell_proposal = BuyAndSellProposal::salesEngineerPostCreateBuyAndSellProposal($request);
+
+        return $create_buy_and_sell_proposal;
+    }
+
+    public function salesEngineerBuyAndSellProposalView(BuyAndSellProposal $buyAndSellProposal)
+    {
+        $view_selected_items = BuyAndSellProposal::viewBuyAndSellProposal($buyAndSellProposal);
+
+        return $view_selected_items;
+    }
+
+    public function salesEngineerSubmitBuyAndSellProposal(CreateBuyAndSellProposalRequest $createBuyAndSellProposalRequest)
+    {
+        $saveBuyAndSellProposal = BuyAndSellProposal::saveBuyAndSellProposal($createBuyAndSellProposalRequest);
+
+        return $saveBuyAndSellProposal;
     }
 }

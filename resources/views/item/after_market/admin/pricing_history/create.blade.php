@@ -15,7 +15,6 @@
                             <ul class="sub">
                                 <li><a href="{{ route('admin_after_market_show', $afterMarket->id) }}"><i class="fa fa-cog"></i>&nbsp;Profile</a></li>
                                 <li><a href="{{ route('admin_after_market_information', $afterMarket->id) }}"><i class="fa fa-pencil"></i>&nbsp;Update Information</a></li>
-                                <li class="nav-item"><a class="nav-link"  href="{{ route('admin_after_market_pricing_history_create', $afterMarket->id) }}"><i class="fa fa-plus"></i>&nbsp; Add AfterMarket</a></li>
                             </ul>
                         </li>
                         </li>
@@ -42,6 +41,12 @@
                             </div>
                         </div>
                     @endif
+
+                    <div class="row">
+                        <a href="{{ route('admin_project_show', $afterMarket->project->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-arrow-circle-left"></i> Go to Project {{ $afterMarket->project->name }}</a>
+                    </div>
+
+                    <br>
 
                     <div class="row">
                         <div class="panel panel-default">
