@@ -52,6 +52,9 @@
 <table>
     <tr>
         <th><b>Item #</b></th>
+
+        <th><b>Material Code</b></th>
+
         <th><b>Description</b></th>
 
         <th><b>Quantity</b></th>
@@ -63,6 +66,7 @@
     @foreach($selectedItems as $selectedItem)
         <tr >
             <td>{{ ++$ctr }}</td>
+            <td>{{ $selectedItem->project_mn != "" ? $selectedItem->project_mn : $selectedItem->after_market_mn }}</td>
             <td  style="text-align: left;">
                 <b>NAME:&nbsp;</b> {{ $selectedItem->project_name != "" ? $selectedItem->project_name : $selectedItem->after_market_name }}
                 <br>

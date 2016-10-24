@@ -45,13 +45,6 @@ class ProposalController extends Controller
         return $view_selected_items;
     }
 
-    public function adminPostCreateBuyAndSellProposal(Request $request)
-    {
-        $create_buy_and_sell_proposal = BuyAndSellProposal::adminPostCreateBuyAndSellProposal($request);
-
-        return $create_buy_and_sell_proposal;
-    }
-
     public function adminIndentedProposalIndex()
     {
         $ctr = 0;
@@ -88,5 +81,12 @@ class ProposalController extends Controller
         $buy_and_sell_proposals = BuyAndSellProposal::whereStatus('SENT')->get();
 
         return view('proposal.admin.buy_and_sell_proposal.index', compact('buy_and_sell_proposals'));
+    }
+
+    public function adminAcceptBuyAndSellProposal(BuyAndSellProposal $buyAndSellProposal)
+    {
+        $buyAndSellProposal->update(['collection_status' => 'ACCEPTED']);
+
+        return redirect()->back()->with('message', 'Buy and Sell Proposal [ Purchase Order Number: #' . $buyAndSellProposal->purchase_order . ' ] Accepted')->with('alert', "alert-success");
     }
 }

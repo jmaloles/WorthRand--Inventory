@@ -52,6 +52,7 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
         Route::get('/sales_engineers', 'Admin\UserController@showSalesEngineers')->name('admin_sales_engineer_index');
         Route::get('/sales_engineer/{sales_engineer}', 'Admin\UserController@showSalesEngineer')->name('admin_show_sales_engineer');
         Route::get('/sales_engineer/{sales_engineer}/edit', 'Admin\UserController@adminEditSalesEngineer')->name('admin_edit_sales_engineer_information');
+        Route::post('/sales_engineer/{salesEngineer}/update', 'Admin\UserController@adminUpdateSalesEngineer')->name('admin_update_sales_engineer');
 
         # ITEMS
         Route::get('/items', 'Admin\ItemController@index')->name('items');
@@ -180,7 +181,7 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
         Route::get('/buy_and_sell_proposals', 'Admin\ProposalController@adminBuyAndSellProposalIndex')->name('admin_buy_and_sell_proposal_index');
         Route::post('/buy_and_sell_proposal/create', 'Admin\ProposalController@adminPostCreateBuyAndSellProposal');
         Route::get('/buy_and_sell_proposal/{buyAndSellProposal}', 'Admin\ProposalController@adminBuyAndSellProposalView');
-        Route::post('/buy_and_sell_proposal/submit', 'Admin\ProposalController@adminSubmitBuyAndSellProposal')->name('admin_submit_buy_and_sell_proposal');
+        Route::patch('/buy_and_sell_proposal/{buyAndSellProposal}/accept', 'Admin\ProposalController@adminAcceptBuyAndSellProposal')->name('admin_accept_buy_and_sell_proposal');
         Route::get('/buy_and_sell_proposal/{buy_and_sell_proposal}', 'Admin\ProposalController@adminShowPendingBuyAndSellProposal')->name('admin_show_pending_buy_and_sell_proposal');
     });
 });
@@ -245,5 +246,10 @@ Route::group(['middleware' => ['verify_if_user_is_assistant']], function() {
    Route::group(['prefix' => 'assistant'], function() {
        # DASHBOARD
             Route::get('/dashboard', 'Assistant\UserController@dashboard')->name('assistant_dashboard');
+
+       # PROPOSALS
+            Route::get('/proposal/indented/{indentedProposal}/accepted', 'Assistant\ProposalController@showAcceptedProposal')->name('assistant_show_pending_proposal');
+            Route::patch('/proposal/indented/{indentedProposal}/update', 'Assistant\ProposalController@updateIndentedProposal')->name('assistant_update_accepted_proposal');
+            Route::get('/proposal/buy_and_sell/{buyAndSellProposal/accepted', 'Assistant\ProposalController@assistantShowPendingBuyAndSellProposal')->name('assistant_show_pending_buy_and_sell_proposal');
    });
 });
