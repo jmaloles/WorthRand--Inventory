@@ -40,6 +40,7 @@ class BuyAndSellProposal extends Model
 
             $buy_and_sell_proposal = new BuyAndSellProposal();
             $buy_and_sell_proposal->status = "DRAFT";
+            $buy_and_sell_proposal->collection_status = 'ON-CREATE';
 
             if($buy_and_sell_proposal->save()) {
                 foreach($item_ids as $item_id) {
@@ -94,7 +95,7 @@ class BuyAndSellProposal extends Model
             })
             ->where('buy_and_sell_proposal_item.buy_and_sell_proposal_id', '=', $buyAndSellProposal->id)->get();
 
-        return view('proposal.admin.buy_and_sell_proposal.pending', compact('selectedItems', 'ctr','buyAndSellProposal'));
+        return view('proposal.sales_engineer.buy_and_sell.create', compact('selectedItems', 'ctr','buyAndSellProposal'));
     }
 
     public static function saveBuyAndSellProposal($createBuyAndSellProposalRequest)

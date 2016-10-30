@@ -129,10 +129,10 @@ class User extends Authenticatable
         $aftermarket_tally = 0;
 
         $ctr = 0;
-        $indented_proposals = IndentedProposal::where('user_id', Auth::user()->id)->orderBy('collection_status', 'desc')->simplePaginate(20, ['*'], 'indented_proposals');
+        $indented_proposals = IndentedProposal::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->simplePaginate(20, ['*'], 'indented_proposals');
 
         $ctr2 = 0;
-        $buy_and_sell_proposals = BuyAndSellProposal::where('user_id', Auth::user()->id)->orderBy('collection_status', 'desc')->simplePaginate(20, ['*'], 'buy_and_sell_proposals');
+        $buy_and_sell_proposals = BuyAndSellProposal::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->simplePaginate(20, ['*'], 'buy_and_sell_proposals');
         // Project Chart
         $mostSoldProjects = DB::table('indented_proposals')
             ->select(
@@ -221,6 +221,7 @@ class User extends Authenticatable
                 'width' => 600
             ));
 
-        return view('auth.sales_engineer.dashboard', compact('chartForMostSoldProjects', 'chartForMostSoldAftermarket', 'indented_proposals', 'buy_and_sell_proposals', 'ctr', 'ctr2', 'aftermarket_tally', 'project_tally'));
+        return view('auth.sales_engineer.dashboard', compact('chartForMostSoldProjects', 'chartForMostSoldAftermarket',
+            'indented_proposals', 'buy_and_sell_proposals', 'ctr', 'ctr2', 'aftermarket_tally', 'project_tally'));
     }
 }
