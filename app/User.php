@@ -69,10 +69,10 @@ class User extends Authenticatable
     public static function adminDashboard()
     {
         $ctr = 0;
-        $indented_proposals = IndentedProposal::orderBy('collection_status', 'desc')->simplePaginate(20, ['*'], 'indented_proposals');
+        $indented_proposals = IndentedProposal::orderBy('created_at', 'desc')->simplePaginate(20, ['*'], 'indented_proposals');
 
         $ctr2 = 0;
-        $buy_and_sell_proposals = BuyAndSellProposal::orderBy('collection_status', 'desc')->simplePaginate(20, ['*'], 'buy_and_sell_proposals');
+        $buy_and_sell_proposals = BuyAndSellProposal::orderBy('created_at', 'desc')->simplePaginate(20, ['*'], 'buy_and_sell_proposals');
 
         $users = User::all();
 

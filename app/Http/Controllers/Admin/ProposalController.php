@@ -12,18 +12,8 @@ use Session;
 use App\BuyAndSellProposal;
 use App\Http\Controllers\Controller;
 
-
-
-
 class ProposalController extends Controller
 {
-    //
-    public function adminPostCreateIndentedProposal(Request $request)
-    {
-        $create_indented_proposal = IndentedProposal::adminPostCreateIndentedProposal($request);
-
-        return $create_indented_proposal;
-    }
 
     public function adminIndentProposalView(IndentedProposal $indentedProposal)
     {
@@ -54,9 +44,9 @@ class ProposalController extends Controller
         return view('proposal.admin.indented_proposal.index', compact('indented_proposals', 'ctr'));
     }
 
-    public function adminShowPendingProposal(IndentedProposal $indented_proposal)
+    public function adminShowPendingIndentedProposal(IndentedProposal $indented_proposal)
     {
-        $admin_show_pending_proposal = IndentedProposal::showPendingProposal($indented_proposal);
+        $admin_show_pending_proposal = IndentedProposal::showPendingIndentedProposal($indented_proposal);
 
         return $admin_show_pending_proposal;
     }
@@ -71,7 +61,7 @@ class ProposalController extends Controller
 
     public function adminShowPendingBuyAndSellProposal(IndentedProposal $buy_and_sell_proposal)
     {
-        $admin_show_pending_proposal = BuyAndSellProposal::showPendingProposal($buy_and_sell_proposal);
+        $admin_show_pending_proposal = BuyAndSellProposal::showPendingBuyAndSellProposal($buy_and_sell_proposal);
 
         return $admin_show_pending_proposal;
     }

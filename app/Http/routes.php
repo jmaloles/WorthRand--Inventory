@@ -122,7 +122,7 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
 
         # PROPOSALS
         Route::get('/indented_proposal', 'Admin\ProposalController@adminIndentedProposalIndex')->name('admin_indented_proposal_index');
-        Route::get('/indented_proposal/{indented_proposal}', 'Admin\ProposalController@adminShowPendingProposal')->name('admin_show_pending_proposal');
+        Route::get('/indented_proposal/{indented_proposal}', 'Admin\ProposalController@adminShowPendingIndentedProposal')->name('admin_show_pending_proposal');
         Route::get('export/indented_proposal/{indented_proposal}', function(\App\IndentedProposal $indented_proposal) {
             $excel = Excel::create('Test Files', function($excel) use($indented_proposal) {
                 $excel->sheet('WorthRand Inventory PO', function($sheet) use ($indented_proposal, $excel) {
@@ -182,7 +182,7 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
         Route::post('/buy_and_sell_proposal/create', 'Admin\ProposalController@adminPostCreateBuyAndSellProposal');
         Route::get('/buy_and_sell_proposal/{buyAndSellProposal}', 'Admin\ProposalController@adminBuyAndSellProposalView');
         Route::patch('/buy_and_sell_proposal/{buyAndSellProposal}/accept', 'Admin\ProposalController@adminAcceptBuyAndSellProposal')->name('admin_accept_buy_and_sell_proposal');
-        Route::get('/buy_and_sell_proposal/{buy_and_sell_proposal}', 'Admin\ProposalController@adminShowPendingBuyAndSellProposal')->name('admin_show_pending_buy_and_sell_proposal');
+        Route::get('/buy_and_sell_proposal/{buy_and_sell_proposal}/pending', 'Admin\ProposalController@adminShowPendingBuyAndSellProposal')->name('admin_show_pending_buy_and_sell_proposal');
     });
 });
 

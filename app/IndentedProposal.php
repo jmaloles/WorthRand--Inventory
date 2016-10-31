@@ -295,7 +295,7 @@ class IndentedProposal extends Model
         return view('proposal.sales_engineer.indented.create', compact('indented_proposal', 'selectedItems', 'ctr'));
     }
 
-    public static function showPendingProposal($indented_proposal)
+    public static function showPendingIndentedProposal($indented_proposal)
     {
         $ctr = 0;
         $selectedItems = DB::table('indented_proposal_item')
