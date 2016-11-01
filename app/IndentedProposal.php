@@ -381,7 +381,7 @@ class IndentedProposal extends Model
         }
     }
 
-    public static function showAcceptedProposal($indentedProposal)
+    public static function showAcceptedIndentedProposal($indentedProposal)
     {
         $ctr = 0;
         $selectedItems = DB::table('indented_proposal_item')

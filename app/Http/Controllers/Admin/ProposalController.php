@@ -59,7 +59,7 @@ class ProposalController extends Controller
         return redirect()->back()->with('message', 'Indented Proposal [ Purchase Order Number: #' . $indented_proposal->purchase_order . ' ] Accepted')->with('alert', "alert-success");
     }
 
-    public function adminShowPendingBuyAndSellProposal(IndentedProposal $buy_and_sell_proposal)
+    public function adminShowPendingBuyAndSellProposal(BuyAndSellProposal $buy_and_sell_proposal)
     {
         $admin_show_pending_proposal = BuyAndSellProposal::showPendingBuyAndSellProposal($buy_and_sell_proposal);
 

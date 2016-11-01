@@ -47,6 +47,7 @@
                                             <th>Sold To</th>
                                             <th>Submitted By:</th>
                                             <th>Status</th>
+                                            <th>Date Received</th>
                                             <th class="text-right">Actions</th>
                                         </thead>
 
@@ -88,6 +89,7 @@
                                                         <span style="font-size: 12px;" class="label label-success">{{ $indented_proposal->collection_status }}</span>
                                                     @endif
                                                 </td>
+                                                <td>{{ date('F d, Y', strtotime($indented_proposal->created_at)) }}</td>
                                                 <td class="text-right">
                                                     <a href="{{ route('admin_show_pending_proposal', $indented_proposal->id) }}" class="btn btn-sm btn-primary">View Proposal</a>
                                                 </td>
@@ -124,6 +126,7 @@
                                         <th>Sold To</th>
                                         <th>Submitted By:</th>
                                         <th>Status</th>
+                                        <th>Date Received</th>
                                         <th class="text-right">Actions</th>
                                         </thead>
 
@@ -163,6 +166,7 @@
                                                         <span style="font-size: 12px;" class="label label-success">{{ $buy_and_sell_proposal->collection_status }}</span>
                                                     @endif
                                                 </td>
+                                                <td>{{ date('F d, Y', strtotime($buy_and_sell_proposal->created_at)) }}</td>
                                                 <td class="text-right">
                                                     <a href="{{ route('admin_show_pending_buy_and_sell_proposal', $buy_and_sell_proposal->id) }}" class="btn btn-sm btn-primary">View Proposal</a>
                                                 </td>

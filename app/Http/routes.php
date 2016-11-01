@@ -248,8 +248,9 @@ Route::group(['middleware' => ['verify_if_user_is_assistant']], function() {
             Route::get('/dashboard', 'Assistant\UserController@dashboard')->name('assistant_dashboard');
 
        # PROPOSALS
-            Route::get('/proposal/indented/{indentedProposal}/accepted', 'Assistant\ProposalController@showAcceptedProposal')->name('assistant_show_pending_proposal');
+            Route::get('/proposal/indented/{indentedProposal}/accepted', 'Assistant\ProposalController@showAcceptedIndentedProposal')->name('assistant_show_pending_proposal');
             Route::patch('/proposal/indented/{indentedProposal}/update', 'Assistant\ProposalController@updateIndentedProposal')->name('assistant_update_accepted_proposal');
-            Route::get('/proposal/buy_and_sell/{buyAndSellProposal/accepted', 'Assistant\ProposalController@assistantShowPendingBuyAndSellProposal')->name('assistant_show_pending_buy_and_sell_proposal');
+            Route::get('/proposal/buy_and_sell/{buyAndSellProposal}/accepted', 'Assistant\ProposalController@assistantShowPendingBuyAndSellProposal')->name('assistant_show_pending_buy_and_sell_proposal');
+            Route::patch('/proposal/buy_and_sell/{buyAndSellProposal}/update', 'Assistant\ProposalController@acceptBuyAndSellProposal')->name('assistant_accept_buy_and_sell_proposal');
    });
 });

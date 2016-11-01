@@ -35,6 +35,14 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group{{ $errors->has('date') ? ' has-error' : '' }}">
+                                    <label for="" class="col-sm-2 control-label">
+                                        <div class="col-sm-5">
+                                            <input type="text" class="form-control" value="{{ date('Y') }}">
+                                        </div>
+                                    </label>
+                                </div>
+
                                 <div class="form-group{{ $errors->has('customer_id') ? ' has-error' : ($errors->has('to') ? ' has-error' : '')  }}">
                                     <label for="main_company" class="col-sm-2 control-label">To: </label>
                                     <div class="col-sm-5">

@@ -232,4 +232,46 @@ class BuyAndSellProposal extends Model
 
         return view('proposal.admin.buy_and_sell_proposal.pending', compact('buyAndSellProposal', 'selectedItems', 'ctr'));
     }
+
+    public static function showAssistantPendingBuyAndSellProposal($buyAndSellProposal)
+    {
+        $ctr = 0;
+        $selectedItems = DB::table('buy_and_sell_proposal_item')
+            ->select(
+            'projects.*',
+                DB::raw('wr_crm_projects.name as "project_name"'),
+                DB::raw('wr_crm_projects.model as "project_md"'),
+                DB::raw('wr_crm_projects.serial_number as "project_sn"'),
+                DB::raw('wr_crm_projects.part_number as "project_pn"'),
+                DB::raw('wr_crm_projects.drawing_number as "project_dn"'),
+                DB::raw('wr_crm_projects.tag_number as "project_tn"'),
+                DB::raw('wr_crm_projects.material_number as "project_mn"'),
+                DB::raw('wr_crm_projects.price as "project_price"'),
+            'after_markets.*',
+                DB::raw('wr_crm_after_markets.name as "after_market_name"'),
+                DB::raw('wr_crm_after_markets.model as "after_market_md"'),
+                DB::raw('wr_crm_after_markets.part_number as "after_market_pn"'),
+                DB::raw('wr_crm_after_markets.drawing_number as "after_market_dn"'),
+                DB::raw('wr_crm_after_markets.material_number as "after_market_mn"'),
+                DB::raw('wr_crm_after_markets.material_number as "after_market_sn"'),
+                DB::raw('wr_crm_after_markets.tag_number as "after_market_tn"'),
+                DB::raw('wr_crm_after_markets.price as "after_market_price"'),
+            'buy_and_sell_proposal_item.*',
+                DB::raw('wr_crm_buy_and_sell_proposal_item.id as "buy_and_sell_proposal_item_id"'),
+                DB::raw('wr_crm_buy_and_sell_proposal_item.quantity as "buy_and_sell_proposal_item_quantity"'),
+                DB::raw('wr_crm_buy_and_sell_proposal_item.delivery as "buy_and_sell_proposal_item_delivery"'),
+                DB::raw('wr_crm_buy_and_sell_proposal_item.price as "buy_and_sell_proposal_item_price"'),
+                DB::raw('wr_crm_buy_and_sell_proposal_item.notify_me_after as "buy_and_sell_proposal_item_notify_me_after"'))
+            ->leftJoin('projects', function($join) {
+                $join->on('buy_and_sell_proposal_item.item_id', '=', 'projects.id')
+                    ->where('buy_and_sell_proposal_item.type', '=', 'projects');
+            })
+            ->leftJoin('after_markets', function($join) {
+                $join->on('buy_and_sell_proposal_item.item_id', '=', 'after_markets.id')
+                    ->where('buy_and_sell_proposal_item.type', '=', 'after_markets');
+            })
+            ->where('buy_and_sell_proposal_item.buy_and_sell_proposal_id', '=', $buyAndSellProposal->id)->get();
+
+        return view('proposal.assistant.buy_and_sell_proposal.pending', compact('buyAndSellProposal', 'selectedItems', 'ctr'));
+    }
 }
