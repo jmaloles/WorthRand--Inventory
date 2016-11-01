@@ -14,13 +14,6 @@ use App\Http\Controllers\Controller;
 
 class ProposalController extends Controller
 {
-    //
-    public function adminPostCreateIndentedProposal(Request $request)
-    {
-        $create_indented_proposal = IndentedProposal::adminPostCreateIndentedProposal($request);
-
-        return $create_indented_proposal;
-    }
 
     public function adminIndentProposalView(IndentedProposal $indentedProposal)
     {
@@ -29,39 +22,17 @@ class ProposalController extends Controller
         return $view_selected_items;
     }
 
-    public function adminSubmitIndentedProposal(Request $request)
-    {
-        $save_indented_proposal = IndentedProposal::saveIndentedProposal($request);
-
-        return $save_indented_proposal;
-    }
-
     public function adminShowSentIndentedProposal(IndentedProposal $indented_proposal)
     {
         $showSentIndentedProposal = IndentedProposal::showSentIndentedProposal($indented_proposal);
 
         return $showSentIndentedProposal;
     }
-
-    public function adminSubmitBuyAndSellProposal(Request $request)
-    {
-        $save_buy_and_sell_proposal = BuyAndSellProposal::saveBuyAndSellProposal($request);
-
-        return $save_buy_and_sell_proposal;
-    }
-
     public function adminBuyAndSellProposalView(BuyAndSellProposal $buyAndSellProposal)
     {
         $view_selected_items = BuyAndSellProposal::viewBuyAndSellProposal($buyAndSellProposal);
 
         return $view_selected_items;
-    }
-
-    public function adminPostCreateBuyAndSellProposal(Request $request)
-    {
-        $create_buy_and_sell_proposal = BuyAndSellProposal::adminPostCreateBuyAndSellProposal($request);
-
-        return $create_buy_and_sell_proposal;
     }
 
     public function adminIndentedProposalIndex()
@@ -73,9 +44,9 @@ class ProposalController extends Controller
         return view('proposal.admin.indented_proposal.index', compact('indented_proposals', 'ctr'));
     }
 
-    public function adminShowPendingProposal(IndentedProposal $indented_proposal)
+    public function adminShowPendingIndentedProposal(IndentedProposal $indented_proposal)
     {
-        $admin_show_pending_proposal = IndentedProposal::showPendingProposal($indented_proposal);
+        $admin_show_pending_proposal = IndentedProposal::showPendingIndentedProposal($indented_proposal);
 
         return $admin_show_pending_proposal;
     }
@@ -85,6 +56,27 @@ class ProposalController extends Controller
         $indented_proposal = IndentedProposal::find($indented_proposal->id);
         $indented_proposal->update(['collection_status' => 'ACCEPTED']);
 
-        return redirect()->back()->with('message', 'Indented Proposal Accepted');
+        return redirect()->back()->with('message', 'Indented Proposal [ Purchase Order Number: #' . $indented_proposal->purchase_order . ' ] Accepted')->with('alert', "alert-success");
+    }
+
+    public function adminShowPendingBuyAndSellProposal(BuyAndSellProposal $buy_and_sell_proposal)
+    {
+        $admin_show_pending_proposal = BuyAndSellProposal::showPendingBuyAndSellProposal($buy_and_sell_proposal);
+
+        return $admin_show_pending_proposal;
+    }
+
+    public function adminBuyAndSellProposalIndex()
+    {
+        $buy_and_sell_proposals = BuyAndSellProposal::whereStatus('SENT')->get();
+
+        return view('proposal.admin.buy_and_sell_proposal.index', compact('buy_and_sell_proposals'));
+    }
+
+    public function adminAcceptBuyAndSellProposal(BuyAndSellProposal $buyAndSellProposal)
+    {
+        $buyAndSellProposal->update(['collection_status' => 'ACCEPTED']);
+
+        return redirect()->back()->with('message', 'Buy and Sell Proposal [ Purchase Order Number: #' . $buyAndSellProposal->purchase_order . ' ] Accepted')->with('alert', "alert-success");
     }
 }

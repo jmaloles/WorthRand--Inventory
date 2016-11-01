@@ -52,6 +52,7 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
         Route::get('/sales_engineers', 'Admin\UserController@showSalesEngineers')->name('admin_sales_engineer_index');
         Route::get('/sales_engineer/{sales_engineer}', 'Admin\UserController@showSalesEngineer')->name('admin_show_sales_engineer');
         Route::get('/sales_engineer/{sales_engineer}/edit', 'Admin\UserController@adminEditSalesEngineer')->name('admin_edit_sales_engineer_information');
+        Route::post('/sales_engineer/{salesEngineer}/update', 'Admin\UserController@adminUpdateSalesEngineer')->name('admin_update_sales_engineer');
 
         # ITEMS
         Route::get('/items', 'Admin\ItemController@index')->name('items');
@@ -121,13 +122,67 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
 
         # PROPOSALS
         Route::get('/indented_proposal', 'Admin\ProposalController@adminIndentedProposalIndex')->name('admin_indented_proposal_index');
-        Route::get('/indented_proposal/{indented_proposal}', 'Admin\ProposalController@adminShowPendingProposal')->name('admin_show_pending_proposal');
-        Route::patch('/indented_proposal/{indented_proposal}/accept', 'Admin\ProposalController@adminAcceptProposal')->name('admin_accept_indented_proposal');
+        Route::get('/indented_proposal/{indented_proposal}', 'Admin\ProposalController@adminShowPendingIndentedProposal')->name('admin_show_pending_proposal');
+        Route::get('export/indented_proposal/{indented_proposal}', function(\App\IndentedProposal $indented_proposal) {
+            $excel = Excel::create('Test Files', function($excel) use($indented_proposal) {
+                $excel->sheet('WorthRand Inventory PO', function($sheet) use ($indented_proposal, $excel) {
+                    $ctr = 0;
 
+                    $selectedItems = DB::table('indented_proposal_item')
+                        ->select('projects.*',
+                            DB::raw('wr_crm_projects.name as "project_name"'),
+                            DB::raw('wr_crm_projects.model as "project_md"'),
+                            DB::raw('wr_crm_projects.serial_number as "project_sn"'),
+                            DB::raw('wr_crm_projects.part_number as "project_pn"'),
+                            DB::raw('wr_crm_projects.drawing_number as "project_dn"'),
+                            DB::raw('wr_crm_projects.tag_number as "project_tn"'),
+                            DB::raw('wr_crm_projects.material_number as "project_mn"'),
+                            DB::raw('wr_crm_projects.price as "project_price"'),
+                            'after_markets.*',
+                            DB::raw('wr_crm_after_markets.name as "after_market_name"'),
+                            DB::raw('wr_crm_after_markets.model as "after_market_md"'),
+                            DB::raw('wr_crm_after_markets.part_number as "after_market_pn"'),
+                            DB::raw('wr_crm_after_markets.drawing_number as "after_market_dn"'),
+                            DB::raw('wr_crm_after_markets.material_number as "after_market_mn"'),
+                            DB::raw('wr_crm_after_markets.material_number as "after_market_sn"'),
+                            DB::raw('wr_crm_after_markets.tag_number as "after_market_tn"'),
+                            DB::raw('wr_crm_after_markets.price as "after_market_price"'),
+                            'indented_proposal_item.*',
+                            DB::raw('wr_crm_indented_proposal_item.id as "indented_proposal_item_id"'),
+                            DB::raw('wr_crm_indented_proposal_item.quantity as "indented_proposal_item_quantity"'),
+                            DB::raw('wr_crm_indented_proposal_item.delivery as "indented_proposal_item_delivery"'),
+                            DB::raw('wr_crm_indented_proposal_item.price as "indented_proposal_item_price"'),
+                            DB::raw('wr_crm_indented_proposal_item.notify_me_after as "indented_proposal_item_notify_me_after"'))
+                        ->leftJoin('projects', function($join) {
+                            $join->on('indented_proposal_item.item_id', '=', 'projects.id')
+                                ->where('indented_proposal_item.type', '=', 'projects');
+                        })
+                        ->leftJoin('after_markets', function($join) {
+                            $join->on('indented_proposal_item.item_id', '=', 'after_markets.id')
+                                ->where('indented_proposal_item.type', '=', 'after_markets');
+                        })
+                        ->where('indented_proposal_item.indented_proposal_id', '=', $indented_proposal->id)->get();
+                    $total_count = 14 + count($selectedItems);
+                    $sheet->cell('A14:E'. $total_count, function($cells) {
+
+                        $cells->setValignment(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                        // Set vertical alignment to middle
+                        $cells->setAlignment(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+                    });
+
+                    $sheet->loadView('proposal.admin.indented_proposal.proposal_to_xls', array('indented_proposal' => $indented_proposal, 'selectedItems' => $selectedItems, 'ctr' => $ctr));
+                });
+                $lastrow= $excel->getActiveSheet()->getHighestRow();
+                $excel->getActiveSheet()->getStyle('A1:J'.$lastrow)->getAlignment()->setWrapText(true);
+            })->export('xlsx');
+        })->name('admin_export_pending_proposal');
+        Route::patch('/indented_proposal/{indented_proposal}/accept', 'Admin\ProposalController@adminAcceptProposal')->name('admin_accept_indented_proposal');
+        Route::get('/buy_and_sell_proposals', 'Admin\ProposalController@adminBuyAndSellProposalIndex')->name('admin_buy_and_sell_proposal_index');
         Route::post('/buy_and_sell_proposal/create', 'Admin\ProposalController@adminPostCreateBuyAndSellProposal');
         Route::get('/buy_and_sell_proposal/{buyAndSellProposal}', 'Admin\ProposalController@adminBuyAndSellProposalView');
-        Route::post('/buy_and_sell_proposal/submit', 'Admin\ProposalController@adminSubmitBuyAndSellProposal')->name('admin_submit_buy_and_sell_proposal');
-
+        Route::patch('/buy_and_sell_proposal/{buyAndSellProposal}/accept', 'Admin\ProposalController@adminAcceptBuyAndSellProposal')->name('admin_accept_buy_and_sell_proposal');
+        Route::get('/buy_and_sell_proposal/{buy_and_sell_proposal}/pending', 'Admin\ProposalController@adminShowPendingBuyAndSellProposal')->name('admin_show_pending_buy_and_sell_proposal');
     });
 });
 
@@ -173,14 +228,29 @@ Route::group(['middleware' => ['verify_if_user_is_sales_engineer']], function() 
             Route::post('/indented_proposal/create', 'SalesEngineer\ProposalController@salesEngineerPostCreateIndentedProposal');
             Route::get('/indented_proposal/{indentedProposal}', 'SalesEngineer\ProposalController@salesEngineerIndentProposalView');
             Route::post('/indented_proposal/submit', 'SalesEngineer\ProposalController@salesEngineerSubmitIndentedProposal')->name('se_submit_indented_proposal');
-            Route::post('/buy_and_sell_proposal/create', 'ProposalController@adminPostCreateBuyAndSellProposal');
-            Route::get('/buy_and_sell_proposal/{buy_and_sell_proposal}', 'ProposalController@adminBuyAndSellProposalView');
-            Route::post('/buy_and_sell/create', 'BuyAndSellProposalsController@adminPostCreateBuySellProposal')->name('admin_post_buy_sell_proposal');
+            Route::post('/buy_and_sell_proposal/create', 'SalesEngineer\ProposalController@salesEngineerPostCreateBuyAndSellProposal');
+            Route::get('/buy_and_sell_proposal/{buyAndSellProposal}', 'SalesEngineer\ProposalController@salesEngineerBuyAndSellProposalView');
+            Route::post('/buy_and_sell/create', 'SalesEngineer\ProposalController@salesEngineerPostCreateBuyAndSellProposal')->name('se_create_buy_and_sale_proposal');
             Route::get('/indented_proposals', 'ProposalController@adminIndexIndentedProposal')->name('admin_index_indented_proposal');
-            Route::get('/indented_proposal/{indentedProposal}/sent', 'SalesEngineer\ProposalController@showSentIndentedProposal');
+            Route::get('/indented_proposal/{indentedProposal}/sent', 'SalesEngineer\ProposalController@showSentIndentedProposal')->name('se_sent_indented_proposal');
+            Route::post('/buy_and_sell_proposal/submit', 'SalesEngineer\ProposalController@salesEngineerSubmitBuyAndSellProposal')->name('se_submit_buy_and_sell_proposal');
 
         # SEARCH
             Route::get('/search', function() { return view('search.sales_engineer.index'); })->name('search');
             Route::get('/fetch_customers', 'SalesEngineer\CustomerController@fetchCustomers')->name('fetch_customers');
     });
+});
+
+// ASSISTANT ACCOUNT
+Route::group(['middleware' => ['verify_if_user_is_assistant']], function() {
+   Route::group(['prefix' => 'assistant'], function() {
+       # DASHBOARD
+            Route::get('/dashboard', 'Assistant\UserController@dashboard')->name('assistant_dashboard');
+
+       # PROPOSALS
+            Route::get('/proposal/indented/{indentedProposal}/accepted', 'Assistant\ProposalController@showAcceptedIndentedProposal')->name('assistant_show_pending_proposal');
+            Route::patch('/proposal/indented/{indentedProposal}/update', 'Assistant\ProposalController@updateIndentedProposal')->name('assistant_update_accepted_proposal');
+            Route::get('/proposal/buy_and_sell/{buyAndSellProposal}/accepted', 'Assistant\ProposalController@assistantShowPendingBuyAndSellProposal')->name('assistant_show_pending_buy_and_sell_proposal');
+            Route::patch('/proposal/buy_and_sell/{buyAndSellProposal}/update', 'Assistant\ProposalController@acceptBuyAndSellProposal')->name('assistant_accept_buy_and_sell_proposal');
+   });
 });

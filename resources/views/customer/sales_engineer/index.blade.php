@@ -19,6 +19,7 @@
                         </div>
                     </div>
 
+                    @if(count($customers) != 0)
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="table-reponsive">
@@ -48,7 +49,13 @@
                             {{ $customers->render() }}
                         </div>
                     </div>
-
+                    @else
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="alert alert-danger" role="alert" style="background-color: #d9534f; border-color: #b52b27; color: white;">There are no Customers assigned to you yet.</div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

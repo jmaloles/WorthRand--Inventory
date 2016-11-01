@@ -84,73 +84,63 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group{{ $errors->has('city') ? ' has-error' : '' }}">
-                                            <label for="city" class="col-md-4 control-label">City:</label>
-
-                                            <div class="col-md-6">
-                                                <input id="city" type="text" class="form-control" name="city" value="{{ $sales_engineer->city }}" disabled autofocus>
-
-                                                @if ($errors->has('city'))
-                                                    <span class="help-block">
-                                                    <strong>{{ $errors->first('city') }}</strong>
-                                                </span>
-                                                @endif
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group{{ $errors->has('postal_code') ? ' has-error' : '' }}">
-                                            <label for="postal_code" class="col-md-4 control-label">Part Number:</label>
-
-                                            <div class="col-md-6">
-                                                <input id="postal_code" type="text" class="form-control" name="postal_code" value="{{ $sales_engineer->postal_code }}" disabled autofocus>
-
-                                                @if ($errors->has('postal_code'))
-                                                    <span class="help-block">
-                                                    <strong>{{ $errors->first('postal_code') }}</strong>
-                                                </span>
-                                                @endif
-                                            </div>
-                                        </div>
-
                                     </form>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="col-lg-6">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h1 class="panel-title">
-                                                {{ $sales_engineer->name }}'s Customers
-                                            </h1>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h1 class="panel-title">Target Revenue</h1>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <label for="targetSale">Target Sale</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon">PHP</div>
+                                            <input type="text" class="form-control" name="target_sale" id="targetSale" value="{{ count($sales_engineer->target_revenue) == 0 ? '0.00' : $sales_engineer->target_revenue->target_sale }}" disabled>
                                         </div>
-                                        <ul class="list-group">
-                                            @foreach($sales_engineer->customers as $customer)
-                                                <li class="list-group-item">
-                                                    <div class="row">
-                                                        <div class="col-lg-6" style="margin-top: 0.35rem;">
-                                                            <label for="removeBtn" class="control-label col-lg-12" style="font-size: 15px;">{{ $customer->name }}</label>
-                                                        </div>
-
-                                                        <div class="col-lg-6">
-                                                            <span class=" pull-right" >
-                                                                <a class="btn btn-danger btn-sm" style="font-size: 9px;">
-                                                                    <i class="fa fa-remove fa-2x"></i>
-                                                                </a>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            @endforeach
-                                        </ul>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="targetSale">Current Sale</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon">PHP</div>
+                                            <input type="text" class="form-control" name="target_sale" id="targetSale" value="{{ count($sales_engineer->target_revenue) == "" ? '0.00' : $sales_engineer->target_revenue->current_sale }}" disabled>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
+                        <div class="col-lg-6">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h1 class="panel-title">
+                                        {{ $sales_engineer->name }}'s Customers
+                                    </h1>
+                                </div>
+                                <ul class="list-group">
+                                    @foreach($sales_engineer->customers as $customer)
+                                        <li class="list-group-item">
+                                            <div class="row">
+                                                <div class="col-lg-6" style="margin-top: 0.35rem;">
+                                                    <label for="removeBtn" class="control-label col-lg-12" style="font-size: 15px;">{{ $customer->name }}</label>
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <span class=" pull-right" >
+                                                        <a class="btn btn-danger btn-sm" style="font-size: 9px;">
+                                                            <i class="fa fa-remove fa-2x"></i>
+                                                        </a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>

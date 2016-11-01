@@ -14,6 +14,16 @@
                 </div>
 
                 <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 col-lg-offset-2 col-sm-offset-3 main">
+
+                    @if(Session::has('message'))
+                        <div class="row">
+                            <div class="alert {{ Session::get('alert') }} alert-dismissible" role="alert" style="background-color: {{ Session::get('bg-error') }}; color: white; margin-top: -1.05rem; border-radius: 0px 0px 0px 0px; font-size: 15px; margin-bottom: 1rem;">
+                                <div class="container"><i class="{{ Session::get('alert-icon') }}"></i>&nbsp;&nbsp;{{ Session::get('message') }}
+                                    <button type="button" class="close" style="margin-right: 4rem;" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+                            </div>
+                        </div>
+                    @endif
+
                     <form class="form-horizontal" action="{{ route('collect_indented_proposal', $indentedProposal->id) }}" method="POST" id="AcceptIndentedProposal" enctype="multipart/form-data">
                         {{ csrf_field() }}
 
@@ -181,7 +191,7 @@
                                 <div class="form-group">
                                     <label for="InputBankDetailName" class="col-sm-2 control-label">BANK DETAILS: </label>
                                     <div class="col-sm-5">
-                                        <input class="form-control" disabled id="InputBankDetailName" name="bank_detail_owner" placeholder="Bank Details"  value="{{ $indentedProposal->bank_detail_owner != '' ? $indentedProposal->bank_detail_owner : '' }}">
+                                        <input class="form-control" disabled id="InputBankDetailName" name="bank_detail_owner" placeholder="Bank Details"  value="{{ $indentedProposal->bank_detail_name != '' ? $indentedProposal->bank_detail_name : '' }}">
                                         <br>
                                         <textarea disabled name="bank_detail_address" id="" class="form-control" placeholder="Bank Details Address">{{ $indentedProposal->bank_detail_address != '' ? $indentedProposal->bank_detail_address : '' }}</textarea>
                                         <br>

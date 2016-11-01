@@ -25,6 +25,7 @@
                     </div>
                     <br>
 
+                    @if(count($aftermarkets) != 0)
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="col-lg-12">
@@ -33,8 +34,8 @@
                                         <thead>
                                         <th>#</th>
                                         <th>Name</th>
-                                        <th>Model</th>
                                         <th>Project</th>
+                                        <th>Model</th>
                                         <th>Material Number</th>
                                         <th>Tag Number</th>
                                         <th>Drawing Number</th>
@@ -45,7 +46,7 @@
                                             <tr>
                                                 <td>{{ $aftermarket->id }}</td>
                                                 <td>{{ $aftermarket->name }}</td>
-                                                <td>{{ $aftermarket->project->name }}</td>
+                                                <td><a href="{{ route('admin_project_show', $aftermarket->project->id) }}">{{ $aftermarket->project->name }}</a></td>
                                                 <td>{{ $aftermarket->model }}</td>
                                                 <td>{{ $aftermarket->serial_number }}</td>
                                                 <td>{{ $aftermarket->tag_number }}</td>
@@ -61,6 +62,13 @@
                             </div>
                         </div>
                     </div>
+                    @else
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="alert alert-danger" role="alert" style="background-color: #d9534f; border-color: #b52b27; color: white;">You have 0 records for Aftermarkets.</div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
