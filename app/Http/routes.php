@@ -122,7 +122,7 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
 
         # PROPOSALS
         Route::get('/indented_proposal', 'Admin\ProposalController@adminIndentedProposalIndex')->name('admin_indented_proposal_index');
-        Route::get('/indented_proposal/{indented_proposal}', 'Admin\ProposalController@adminShowPendingProposal')->name('admin_show_pending_proposal');
+        Route::get('/indented_proposal/{indented_proposal}', 'Admin\ProposalController@adminShowPendingIndentedProposal')->name('admin_show_pending_proposal');
         Route::get('export/indented_proposal/{indented_proposal}', function(\App\IndentedProposal $indented_proposal) {
             $excel = Excel::create('Test Files', function($excel) use($indented_proposal) {
                 $excel->sheet('WorthRand Inventory PO', function($sheet) use ($indented_proposal, $excel) {
@@ -182,7 +182,7 @@ Route::group(['middleware' => ['verify_if_user_is_admin']], function() {
         Route::post('/buy_and_sell_proposal/create', 'Admin\ProposalController@adminPostCreateBuyAndSellProposal');
         Route::get('/buy_and_sell_proposal/{buyAndSellProposal}', 'Admin\ProposalController@adminBuyAndSellProposalView');
         Route::patch('/buy_and_sell_proposal/{buyAndSellProposal}/accept', 'Admin\ProposalController@adminAcceptBuyAndSellProposal')->name('admin_accept_buy_and_sell_proposal');
-        Route::get('/buy_and_sell_proposal/{buy_and_sell_proposal}', 'Admin\ProposalController@adminShowPendingBuyAndSellProposal')->name('admin_show_pending_buy_and_sell_proposal');
+        Route::get('/buy_and_sell_proposal/{buy_and_sell_proposal}/pending', 'Admin\ProposalController@adminShowPendingBuyAndSellProposal')->name('admin_show_pending_buy_and_sell_proposal');
     });
 });
 
@@ -232,7 +232,7 @@ Route::group(['middleware' => ['verify_if_user_is_sales_engineer']], function() 
             Route::get('/buy_and_sell_proposal/{buyAndSellProposal}', 'SalesEngineer\ProposalController@salesEngineerBuyAndSellProposalView');
             Route::post('/buy_and_sell/create', 'SalesEngineer\ProposalController@salesEngineerPostCreateBuyAndSellProposal')->name('se_create_buy_and_sale_proposal');
             Route::get('/indented_proposals', 'ProposalController@adminIndexIndentedProposal')->name('admin_index_indented_proposal');
-            Route::get('/indented_proposal/{indentedProposal}/sent', 'SalesEngineer\ProposalController@showSentIndentedProposal');
+            Route::get('/indented_proposal/{indentedProposal}/sent', 'SalesEngineer\ProposalController@showSentIndentedProposal')->name('se_sent_indented_proposal');
             Route::post('/buy_and_sell_proposal/submit', 'SalesEngineer\ProposalController@salesEngineerSubmitBuyAndSellProposal')->name('se_submit_buy_and_sell_proposal');
 
         # SEARCH
@@ -248,8 +248,9 @@ Route::group(['middleware' => ['verify_if_user_is_assistant']], function() {
             Route::get('/dashboard', 'Assistant\UserController@dashboard')->name('assistant_dashboard');
 
        # PROPOSALS
-            Route::get('/proposal/indented/{indentedProposal}/accepted', 'Assistant\ProposalController@showAcceptedProposal')->name('assistant_show_pending_proposal');
+            Route::get('/proposal/indented/{indentedProposal}/accepted', 'Assistant\ProposalController@showAcceptedIndentedProposal')->name('assistant_show_pending_proposal');
             Route::patch('/proposal/indented/{indentedProposal}/update', 'Assistant\ProposalController@updateIndentedProposal')->name('assistant_update_accepted_proposal');
-            Route::get('/proposal/buy_and_sell/{buyAndSellProposal/accepted', 'Assistant\ProposalController@assistantShowPendingBuyAndSellProposal')->name('assistant_show_pending_buy_and_sell_proposal');
+            Route::get('/proposal/buy_and_sell/{buyAndSellProposal}/accepted', 'Assistant\ProposalController@assistantShowPendingBuyAndSellProposal')->name('assistant_show_pending_buy_and_sell_proposal');
+            Route::patch('/proposal/buy_and_sell/{buyAndSellProposal}/update', 'Assistant\ProposalController@acceptBuyAndSellProposal')->name('assistant_accept_buy_and_sell_proposal');
    });
 });
